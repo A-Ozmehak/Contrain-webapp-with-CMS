@@ -33,7 +33,7 @@ const TypewriterTitle = ({ texts }: { texts: string[] }) => {
   return (
     <h1>
       {displayedText}
-      <span style={{ borderRight: '2px solid orange', marginLeft: '2px' }}></span> {/* Simulated cursor */}
+      <span style={{ borderRight: '2px solid white', marginLeft: '2px' }}></span>
     </h1>
   );
 };

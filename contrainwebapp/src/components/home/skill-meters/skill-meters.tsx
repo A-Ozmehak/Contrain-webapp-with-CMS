@@ -3,8 +3,8 @@ import styles from './skill-meters.module.css';
 const SkillMeters = () => {
     return (
         <section className={styles.skillMeters}>
-            <h3>"Tålamod, uthållighet och hårt arbete är en oslagbar kombination för framgång"</h3>
-            <p>NAPOLEON HILL - FÖRFATTARE</p>
+            <h5>Låt Våra Färdigheter tala för oss</h5>
+            <p>Det här är våra spetskompetenser, och vi strävar alltid efter att bli bättre!</p>
         </section>
     );
 } 

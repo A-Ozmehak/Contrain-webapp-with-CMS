@@ -3,8 +3,8 @@ import styles from './skill-sets.module.css';
 const SkillSets = () => {
     return (
         <section className={styles.skillSets}>
-            <h3>"Tålamod, uthållighet och hårt arbete är en oslagbar kombination för framgång"</h3>
-            <p>NAPOLEON HILL - FÖRFATTARE</p>
+            <h3>Vad vi gör Bäst!</h3>
+            <p>Att skapa en prototyp kräver många olika färdigheter, och vi hanterar dem alla för att möta dina behov.</p>
         </section>
     );
 } 
