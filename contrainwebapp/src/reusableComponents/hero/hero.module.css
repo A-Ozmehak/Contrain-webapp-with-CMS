@@ -1,0 +1,61 @@
+.heroContainer {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+  }
+  
+  .imageWrapper {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+
+.backgroundImage {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.typewriterContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    z-index: 2; 
+}
+
+.typewriterTitle {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.subtitle {
+    margin-top: 2rem;
+    color: rgba(255, 255, 255, 1);
+    font-weight: 200;
+    line-height: 49px;
+    font-size: 1rem;
+}
+
+.imageWrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+@media screen and (min-width: 768px) {
+    .typeWriterTitle {
+        font-size: 65px;
+    }
+    .subtitle {
+        font-size: 40px;
+    }
+}
