@@ -76,7 +76,8 @@
     list-style: none;
     margin-left: 10px;
     margin-right: 10px;
-    width: 50%;
+    width: 60%;
+    font-size: 15px;
 }
 
 .desktopNavMenuList a:hover {
