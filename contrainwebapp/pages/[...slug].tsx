@@ -67,7 +67,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     return { notFound: true };
   }
 
-  const pageData = data.data[0]; // Strapi returns an array even for single results
+  const pageData = data.data[0];
 
   return {
     props: { pageData },

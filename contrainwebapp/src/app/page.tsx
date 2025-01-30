@@ -1,31 +1,43 @@
 import BlockManager from '../components/shared/BlockManager/index';
 import { getStrapiURL } from '../../utils';
+import ContactFormComponent from '@/reusableComponents/contactForm/contactForm';
 import HeroComponent from '@/reusableComponents/hero/hero';
 
-const fetchHomePageData = async () => {
-  const res = await fetch(getStrapiURL(`/api/pages?populate=*&filters[Slug][$eq]=/`), {
-    next: { revalidate: 60 }, // Revalidate the data every 60 seconds
-  });
+/* const fetchHomePageData = async () => {
+  try {
+    const apiUrl = getStrapiURL(`/api/pages?populate=*&filters[Slug][$eq]=/`);
+    console.log('Fetching from:', apiUrl);
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch data: ${res.statusText}`);
-  }
+    const res = await fetch('http://localhost:1337/api/pages?populate=*&filters[Slug][$eq]=/', {
+      cache: 'no-store',
+      // next: { revalidate: 60 }, // Revalidate the data every 60 seconds
+    });
 
-  const data = await res.json();
+    if (!res.ok) {
+      const errorMessage = await res.text();
+      throw new Error(`Failed to fetch data (${res.status}): ${errorMessage}`);
+    }
+  
+    const data = await res.json();
+    console.log('API Response:', data);
 
-  if (!data.data || data.data.length === 0) {
-    console.warn('No home page data found');
+    if (!data.data || data.data.length === 0) {
+      console.warn('No home page data found');
+      return null;
+    }
+  
+    return data.data[0];
+  } catch (error) {
+    console.error('Fetch Error:', error);
     return null;
   }
-
-  return data.data[0];
-};
+}; */
 
 export default async function HomePage() {
-  const pageData = await fetchHomePageData();
+  /* const pageData = await fetchHomePageData();
 
   if (!pageData) {
-    return <div>Error: Page data not found.</div>;
+    return <div>Error: Home data not found.</div>;
   }
 
   const { Blocks } = pageData;
@@ -38,17 +50,18 @@ export default async function HomePage() {
   );
 
   // Prepare TypewriterTexts data
-  const typewriterTexts = typewriterTextsBlock ? [{ id: typewriterTextsBlock.id, Text: typewriterTextsBlock.Text }] : [];
+  const typewriterTexts = typewriterTextsBlock ? [{ id: typewriterTextsBlock.id, Text: typewriterTextsBlock.Text }] : []; */
 
   return (
     <div>
-      <BlockManager blocks={Blocks} />
-      <HeroComponent
-      Title={heroBlock?.Title}
-      SubText={heroBlock?.SubText}
-      TypewriterTexts={typewriterTexts}
-      BackgroundImage="/path-to-your-image.jpg"
-    />
+      {/* <BlockManager blocks={Blocks} /> */}
+      {/* <HeroComponent
+        Title={heroBlock?.Title}
+        SubText={heroBlock?.SubText}
+        TypewriterTexts={typewriterTexts}
+        BackgroundImage="/path-to-your-image.jpg"
+      /> */}
+      <ContactFormComponent />
     </div>
   );
 }

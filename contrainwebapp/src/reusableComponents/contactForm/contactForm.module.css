@@ -1,0 +1,90 @@
+.contactFormContainer {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.contactFormTitleContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center;
+    margin-bottom: 40px;
+}
+
+.contactFormTitle {
+    color: var(--white);
+}
+
+.contactFormBottomPartContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.contactInfoContainer {
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.contactInfo p {
+    color: var(--white);
+    margin: 10px 0 10px 0;
+}
+
+.contactInfo p i {
+    margin-right: 15px;
+    color: var(--purple);
+    font-size: 20px;
+}
+
+.socialMediaContainer {
+    margin-top: 40px;
+}
+
+.socialMediaContainer p {
+    margin-top: 40px;
+}
+
+.socialMediaIcons {
+    margin: 20px 0 20px 0;
+} 
+
+.socialMediaIcons a {
+    margin-right: 10px;
+    border: 1px solid var(--purple);
+    border-radius: 5px;
+    background-color: var(--purple);
+    padding: 10px;
+}
+
+.contactForm {
+    width: 500px;
+}
+
+.nameInput, .emailInput, .messageInput {
+    display: flex;
+    flex-direction: column;
+}
+
+.label {
+    color: var(--white);
+}
+
+.input {
+    height: 40px;
+    border: 1px solid rgba(86,104,113,0.53);
+    background-color: rgba(129,144,160,0.13);
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--white);
+}
+
+@media screen and (min-width: 900px) {
+    .contactFormBottomPartContainer {
+        justify-content: space-between;
+        flex-direction: row;
+    }
+
+}

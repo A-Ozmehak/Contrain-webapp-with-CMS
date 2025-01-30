@@ -7,7 +7,7 @@ interface HeroProps {
   Title?: string;
   SubText?: string;
   TypewriterTexts?: Array<{ id: number; Text: string }>;
-  BackgroundImage: string;
+  BackgroundImage?: string;
 }
 
 const HeroComponent: React.FC<HeroProps> = ({ Title, SubText, TypewriterTexts = [], BackgroundImage }) => {

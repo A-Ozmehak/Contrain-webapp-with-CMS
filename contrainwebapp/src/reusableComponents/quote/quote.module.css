@@ -1,0 +1,9 @@
+.quoteContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.quoteContent {
+    color: var(--white);
+}
