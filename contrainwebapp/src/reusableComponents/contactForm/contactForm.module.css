@@ -20,25 +20,6 @@
     flex-direction: column;
 }
 
-.contactInfoContainer {
-    color: var(--white);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.contactInfo p {
-    color: var(--white);
-    margin: 10px 0 10px 0;
-}
-
-.contactInfo p i {
-    margin-right: 15px;
-    color: var(--purple);
-    font-size: 20px;
-}
-
 .socialMediaContainer {
     margin-top: 40px;
 }

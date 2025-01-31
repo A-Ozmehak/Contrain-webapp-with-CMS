@@ -2,44 +2,45 @@
 
 import useIsMobile from '@/hooks/useIsMobile';
 import styles from './contactForm.module.css';
+import ContactInfoComponent from '../contactInfo/contactInfo';
 
 interface ContactFormProps {
-  Title?: string;
-  SubText?: string;
-  FormContainerTitle?: string;
-  NameFormLabel?: string;
-  EpostFormLabel?: string;
-  MessageFormLabel?: string;
+  SectionTitle?: string;
+  SectionSubText?: string;
+  FormTitle?: string;
+  NameLabel?: string;
+  EmailLabel?: string;
+  MessageLabel?: string;
   CompanyName?: string;
   Email?: string;
   Phone?: string;
   Address?: string;
   City?: string;
-  SocialMediaTitle?: string;
-  FacebookLink?: string;
-  InstagramLink?: string;
-  LinkedInLink?: string;
-  SocialMediaText?: string;
+  SocialMediaSectionTitle?: string;
+  FacebookUrl?: string;
+  InstagramUrl?: string;
+  LinkedInUrl?: string;
+  SocialMediaSubText?: string;
   BackgroundImage?: string;
 }
 
 const ContactFormComponent: React.FC<ContactFormProps> = ({ 
-    Title, 
-    SubText, 
-    FormContainerTitle, 
-    NameFormLabel, 
-    EpostFormLabel, 
-    MessageFormLabel, 
+    SectionTitle, 
+    SectionSubText, 
+    FormTitle, 
+    NameLabel, 
+    EmailLabel, 
+    MessageLabel, 
     CompanyName,
     Email,
     Phone,
     Address,
     City,
-    SocialMediaTitle,
-    FacebookLink,
-    InstagramLink,
-    LinkedInLink,
-    SocialMediaText,
+    SocialMediaSectionTitle,
+    FacebookUrl,
+    InstagramUrl,
+    LinkedInUrl,
+    SocialMediaSubText,
     BackgroundImage 
 }) => {
   const isMobile = useIsMobile(); // Default breakpoint is 768px
@@ -47,43 +48,36 @@ const ContactFormComponent: React.FC<ContactFormProps> = ({
   return (
     <div className={styles.contactFormContainer}>
       <div className={styles.contactFormTitleContainer}>
-        <h3 className={styles.contactFormTitle}>{Title || 'Låt oss Börja din resa'}</h3>
-        <p>{SubText || 'Ta steget och förverkliga din drömvision'}</p>
+        <h3 className={styles.contactFormTitle}>{SectionTitle}</h3>
+        <p>{SectionSubText}</p>
       </div>
-      
       <div className={styles.contactFormBottomPartContainer}>
         <div className={styles.contactInfoContainer}>
-          <h5>{CompanyName || 'Contrain'}</h5>
-          <div className={styles.contactInfo}>
-              <p><i className="fa-regular fa-envelope"></i>{Email || 'info@contrain.se'}</p>
-              <p><i className="fa-solid fa-phone"></i>{Phone || '+46 (0) 705 61 46 56'}</p>
-              <p><i className="fa-regular fa-building"></i>{Address || 'Karl Johansgatan 152'}</p>
-              <p><i className="fa-solid fa-location-dot"></i>{City || 'Göteborg'}</p>
-          </div>
+          <ContactInfoComponent email={Email} companyName={CompanyName} phone={Phone} address={Address} city={City} />
           <div className={styles.socialMediaContainer}>
-              <h6>{SocialMediaTitle || 'Kontakta oss'}</h6>
+              <h6>{SocialMediaSectionTitle}</h6>
               <div className={styles.socialMediaIcons}>
-                  <a href={FacebookLink}><i className="fa-brands fa-facebook-f"></i></a>
-                  <a href={InstagramLink}><i className="fa-brands fa-linkedin-in"></i></a>
-                  <a href={LinkedInLink}><i className="fa-brands fa-instagram"></i></a>
+                  <a href={FacebookUrl}><i className="fa-brands fa-facebook-f"></i></a>
+                  <a href={InstagramUrl}><i className="fa-brands fa-linkedin-in"></i></a>
+                  <a href={LinkedInUrl}><i className="fa-brands fa-instagram"></i></a>
               </div>
-              <p>{SocialMediaText || 'Följ oss på social medier'}</p>
+              <p>{SocialMediaSubText}</p>
           </div>
         </div>
 
         <div>
           <form className={styles.contactForm}>
-              <h5>{FormContainerTitle || 'Skicka oss ett Meddelande'}</h5>
+              <h5>{FormTitle}</h5>
               <div className={styles.nameInput}>
-                  <label className={styles.label}>{NameFormLabel || 'Namn'}</label>
+                  <label className={styles.label}>{NameLabel}</label>
                   <input type='text'name='name' className={styles.input} />
               </div>
               <div className={styles.emailInput}>
-                  <label className={styles.label}>{EpostFormLabel || 'E-post'}</label>
+                  <label className={styles.label}>{EmailLabel}</label>
                   <input type='email' name='email' className={styles.input} />
               </div>
               <div className={styles.messageInput}>
-                  <label className={styles.label}>{MessageFormLabel || 'Meddelande(valfritt)'}</label>
+                  <label className={styles.label}>{MessageLabel}</label>
                   <input type='message' name='message' className={styles.input} />
               </div>
           </form>

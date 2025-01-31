@@ -3,8 +3,7 @@ import { getStrapiURL } from '../utils';
 import BlockManager from '../src/components/shared/BlockManager/index';
 
 interface PageData {
-  Title: string;
-  Blocks: any[]; // Replace `any[]` with a proper block type if you have it
+  Blocks: any[];
 }
 
 interface UniversalsProps {
@@ -31,11 +30,10 @@ interface StrapiResponse {
 }
 
 const Universals: React.FC<UniversalsProps> = ({ pageData }) => {
-  const { Title, Blocks } = pageData;
+  const { Blocks } = pageData;
 
   return (
     <div>
-      <h1>{Title}</h1>
       <BlockManager blocks={Blocks} />
     </div>
   );

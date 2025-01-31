@@ -1,6 +1,10 @@
 import React from 'react';
 import Hero from '../../../reusableComponents/hero/hero';
 import TypewriterTexts from '../../../components/typewriterTexts/typewriterTexts';
+import ContactFormComponent from '../../../reusableComponents/contactForm/contactForm';
+import ContactInfoComponent from '../../../reusableComponents/contactInfo/contactInfo';
+import SocialMediaComponent from '../../../reusableComponents/socialMedia/socialMedia';
+import QuoteComponent from '../../../reusableComponents/quote/quote';
 
 interface BlockProps {
   __component: string;
@@ -13,8 +17,13 @@ interface BlockManagerProps {
 }
 
 const blockRegistry: { [key: string]: React.ElementType } = {
-  'blocks.hero': Hero, // Register the Hero component
-  'blocks.typewriter-texts': TypewriterTexts,
+    'blocks.hero': Hero,
+    'blocks.typewriter-texts': TypewriterTexts,
+    'blocks.contact-form': ContactFormComponent,
+    'blocks.contact-info': ContactInfoComponent,
+    'blocks.social-media': SocialMediaComponent,
+    'blocks.quote': QuoteComponent,
+   
   // Add more blocks here
 };
 

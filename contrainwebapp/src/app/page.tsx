@@ -1,14 +1,13 @@
 import BlockManager from '../components/shared/BlockManager/index';
 import { getStrapiURL } from '../../utils';
-import ContactFormComponent from '@/reusableComponents/contactForm/contactForm';
 import HeroComponent from '@/reusableComponents/hero/hero';
 
-/* const fetchHomePageData = async () => {
+ const fetchHomePageData = async () => {
   try {
     const apiUrl = getStrapiURL(`/api/pages?populate=*&filters[Slug][$eq]=/`);
     console.log('Fetching from:', apiUrl);
 
-    const res = await fetch('http://localhost:1337/api/pages?populate=*&filters[Slug][$eq]=/', {
+    const res = await fetch(apiUrl, {
       cache: 'no-store',
       // next: { revalidate: 60 }, // Revalidate the data every 60 seconds
     });
@@ -31,10 +30,10 @@ import HeroComponent from '@/reusableComponents/hero/hero';
     console.error('Fetch Error:', error);
     return null;
   }
-}; */
+};
 
 export default async function HomePage() {
-  /* const pageData = await fetchHomePageData();
+  const pageData = await fetchHomePageData();
 
   if (!pageData) {
     return <div>Error: Home data not found.</div>;
@@ -50,18 +49,17 @@ export default async function HomePage() {
   );
 
   // Prepare TypewriterTexts data
-  const typewriterTexts = typewriterTextsBlock ? [{ id: typewriterTextsBlock.id, Text: typewriterTextsBlock.Text }] : []; */
+  const typewriterTexts = typewriterTextsBlock ? [{ id: typewriterTextsBlock.id, Text: typewriterTextsBlock.Text }] : [];
 
   return (
     <div>
-      {/* <BlockManager blocks={Blocks} /> */}
-      {/* <HeroComponent
+      <BlockManager blocks={Blocks} />
+      <HeroComponent
         Title={heroBlock?.Title}
         SubText={heroBlock?.SubText}
         TypewriterTexts={typewriterTexts}
         BackgroundImage="/path-to-your-image.jpg"
-      /> */}
-      <ContactFormComponent />
+      />
     </div>
   );
 }

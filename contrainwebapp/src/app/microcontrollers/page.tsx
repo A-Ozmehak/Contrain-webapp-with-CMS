@@ -22,7 +22,7 @@ const fetchPageData = async () => {
       console.log('API Response:', data);
   
       if (!data.data || data.data.length === 0) {
-        console.warn('No home page data found');
+        console.warn('No page data found');
         return null;
       }
     
@@ -44,7 +44,6 @@ const fetchPageData = async () => {
 
     return (
         <div>
-            <h1>Mikrokontrollers</h1>
             <BlockManager blocks={Blocks} />
         </div>
     )
