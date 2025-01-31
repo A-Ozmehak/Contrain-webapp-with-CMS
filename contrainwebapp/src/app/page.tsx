@@ -5,7 +5,6 @@ import HeroComponent from '@/reusableComponents/hero/hero';
  const fetchHomePageData = async () => {
   try {
     const apiUrl = getStrapiURL(`/api/pages?populate=*&filters[Slug][$eq]=/`);
-    console.log('Fetching from:', apiUrl);
 
     const res = await fetch(apiUrl, {
       cache: 'no-store',
@@ -18,7 +17,6 @@ import HeroComponent from '@/reusableComponents/hero/hero';
     }
   
     const data = await res.json();
-    console.log('API Response:', data);
 
     if (!data.data || data.data.length === 0) {
       console.warn('No home page data found');
@@ -41,25 +39,26 @@ export default async function HomePage() {
 
   const { Blocks } = pageData;
 
+  console.log('Blocks from API:', Blocks);
+
   // Find the Hero block
   const heroBlock = Blocks.find((block: any) => block.__component === 'blocks.hero');
-  // Find the TypewriterTexts block
-  const typewriterTextsBlock = Blocks.find(
-    (block: any) => block.__component === 'blocks.typewriter-texts'
-  );
 
-  // Prepare TypewriterTexts data
-  const typewriterTexts = typewriterTextsBlock ? [{ id: typewriterTextsBlock.id, Text: typewriterTextsBlock.Text }] : [];
+  if (!heroBlock) {
+    console.warn('Hero block not found');
+    return <div>Error: Hero block missing.</div>;
+  }
+
+  // Extract TypewriterTexts from inside Hero block
+  const typewriterTexts = heroBlock.TypewriterTexts
+    ? heroBlock.TypewriterTexts.map((item: any) => ({ id: item.id, Text: item.Text }))
+    : [];
+
+  console.log('Extracted TypewriterTexts:', typewriterTexts); // ✅ Check if texts are found
 
   return (
     <div>
       <BlockManager blocks={Blocks} />
-      <HeroComponent
-        Title={heroBlock?.Title}
-        SubText={heroBlock?.SubText}
-        TypewriterTexts={typewriterTexts}
-        BackgroundImage="/path-to-your-image.jpg"
-      />
     </div>
   );
 }
