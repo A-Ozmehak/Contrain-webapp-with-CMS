@@ -4,6 +4,8 @@ import ContactInfoComponent from '@/reusableComponents/contactInfo/contactInfo';
 import SocialMediaComponent from '@/reusableComponents/socialMedia/socialMedia';
 import QuoteComponent from '@/reusableComponents/quote/quote';
 import HeroComponent from '@/reusableComponents/hero/hero';
+import SliderComponent from '@/reusableComponents/slider/slider';
+import TextWithBackgroundImageComponent from '@/reusableComponents/textWithBackgroundImage/textWithBackgroundImage';
 
 interface BlockProps {
   __component: string;
@@ -21,6 +23,8 @@ const blockRegistry: { [key: string]: React.ElementType } = {
     'blocks.contact-info': ContactInfoComponent,
     'blocks.social-media': SocialMediaComponent,
     'blocks.quote': QuoteComponent,
+    'blocks.slider': SliderComponent,
+    'blocks.text-with-background-image': TextWithBackgroundImageComponent,
    
   // Add more blocks here
 };

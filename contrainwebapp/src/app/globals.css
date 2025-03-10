@@ -5,6 +5,7 @@
   --purple: rgba(113,0,184,1);
   --blue: linear-gradient(90deg, rgba(0,242,255,1) 0%, rgba(0,187,255,1) 100%);
   --textBlue: #A5C3D6;
+  --black: #000000;
 }
 
 @media (prefers-color-scheme: dark) {

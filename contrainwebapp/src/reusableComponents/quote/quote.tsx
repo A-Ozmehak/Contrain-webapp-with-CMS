@@ -7,7 +7,7 @@ interface QuoteProps {
 const QuoteComponent: React.FC<QuoteProps> = ({ Text }) => {
   return (
     <div className={styles.quoteContainer}>
-        <h5 className={styles.quoteContent}>{Text || 'Quote text'}</h5>
+        <h5 className={styles.quoteContent}>"{Text || 'Quote text'}"</h5>
       </div>
   );
 };
