@@ -1,5 +1,4 @@
 'use client';
-import { useState, useEffect } from 'react';
 import useIsMobile from '@/hooks/useIsMobile';
 import TypewriterTitle from '@/components/typewriterTexts/typewriterTexts';
 import styles from './hero.module.css';
@@ -14,8 +13,6 @@ interface HeroProps {
 const HeroComponent: React.FC<HeroProps> = ({ Title, SubText, TypewriterTexts = [], BackgroundImage }) => {
   const isMobile = useIsMobile(); // Detect if mobile
   const typewriterTextsArray = TypewriterTexts.map((item) => item.Text);
-
-  console.log('Received Typewriter Texts in Hero:', typewriterTextsArray); // ✅ Debugging
 
   return (
     <div className={styles.heroContainer}>

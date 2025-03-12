@@ -6,16 +6,19 @@ import BlockManager from '@/components/shared/BlockManager';
 const fetchHomePageData = async () => {
   const apiUrl = getStrapiURL(`/api/pages?populate=*&filters[Slug][$eq]=/`);
   const heroDataUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.hero][populate][TypewriterTexts][populate]=*`);
+  const sliderImagesUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.slider][populate][Images][populate]=*`);
 
-  const [res, heroRes] = await Promise.all([
+  const [res, heroRes, sliderRes] = await Promise.all([
     fetch(apiUrl, { cache: 'no-store' }),
-    fetch(heroDataUrl, { cache: 'no-store' })
+    fetch(heroDataUrl, { cache: 'no-store' }),
+    fetch(sliderImagesUrl, { cache: 'no-store' }),
   ]);
 
-  if (!res.ok || !heroRes.ok) return null;
+  if (!res.ok || !heroRes.ok || !sliderRes.ok) return null;
 
   const data = await res.json();
   const heroData = await heroRes.json();
+  const sliderData = await sliderRes.json();
 
   const pageData = data?.data?.length > 0 ? data.data[0] : null;
   if (!pageData) return null; // If no data is found, return null
@@ -37,8 +40,23 @@ const fetchHomePageData = async () => {
     }
   }
 
+  // Extract and merge slider block data
+  const sliderPageData = sliderData?.data?.length > 0 ? sliderData.data[0] : null;
+  if (sliderPageData?.Blocks) {
+    const sliderBlocks = sliderPageData.Blocks.filter(
+      (block: any) => block.__component === "blocks.slider"
+    );
+
+    if (sliderBlocks.length > 0) {
+      pageData.Blocks = (pageData.Blocks || []).map((block: any) =>
+        block.__component === "blocks.slider" ? sliderBlocks[0] : block
+      );
+    }
+  }
+
   return pageData;
 };
+
 
 export default async function HomePage() {
   const pageData = await fetchHomePageData();
