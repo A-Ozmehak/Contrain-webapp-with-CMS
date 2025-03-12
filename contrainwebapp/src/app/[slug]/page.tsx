@@ -1,28 +1,57 @@
 import { getStrapiURL } from '@/utils';
 import BlockManager from '@/components/shared/BlockManager';
 
-// ✅ Function to fetch page data
 const fetchPageData = async (slug: string) => {
   try {
     // Ensure slug always has a leading "/"
     const formattedSlug = slug.startsWith('/') ? slug : `/${slug}`;
+
+    // General page data URL (fetches everything)
     const apiUrl = getStrapiURL(`/api/pages?populate=*&filters[Slug][$eq]=${formattedSlug}`);
 
-    const res = await fetch(apiUrl, {
-      cache: 'no-store',
-    });
+    // Hero-specific deeply nested data URL
+    const heroDataUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.hero][populate][TypewriterTexts][populate]=*`);
 
-    if (!res.ok) {
-      return null;
-    }
+    // Fetch both general page data and hero-specific data in parallel
+    const [res, heroRes] = await Promise.all([
+      fetch(apiUrl, { cache: 'no-store' }),
+      fetch(heroDataUrl, { cache: 'no-store' })
+    ]);
+
+    if (!res.ok || !heroRes.ok) return null;
 
     const data = await res.json();
-    return data.data.length > 0 ? data.data[0] : null;
+    const heroData = await heroRes.json();
+
+    // Extract page data
+    const pageData = data?.data?.length > 0 ? data.data[0] : null;
+    if (!pageData) return null; // If no data is found, return null
+
+    // Extract hero block data
+    const heroPageData = heroData?.data?.length > 0 ? heroData.data[0] : null;
+
+    if (heroPageData?.Blocks) {
+      const heroBlocks = heroPageData.Blocks.filter(
+        (block: any) => block.__component === "blocks.hero"
+      );
+
+      if (heroBlocks.length > 0) {
+        // Maintain the original order of Blocks
+        pageData.Blocks = (pageData.Blocks || []).map((block: any) =>
+          block.__component === "blocks.hero" ? heroBlocks[0] : block
+        );
+      }
+    }
+
+    return pageData;
 
   } catch (error) {
+    console.error("Error fetching page data:", error);
     return null;
   }
 };
+
+
 
 // ✅ Default export: Page Component
 export default async function Page(props: { params: { slug?: string | string[] } }) {
