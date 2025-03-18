@@ -57,9 +57,9 @@ const ContactFormComponent: React.FC<ContactFormProps> = ({
           <div className={styles.socialMediaContainer}>
               <h6>{SocialMediaSectionTitle}</h6>
               <div className={styles.socialMediaIcons}>
-                  <a href={FacebookUrl}><i className="fa-brands fa-facebook-f"></i></a>
-                  <a href={InstagramUrl}><i className="fa-brands fa-linkedin-in"></i></a>
-                  <a href={LinkedInUrl}><i className="fa-brands fa-instagram"></i></a>
+                <a href={FacebookUrl}><i className="fa-brands fa-facebook-f"></i></a>
+                <a href={InstagramUrl}><i className="fa-brands fa-linkedin-in"></i></a>
+                <a href={LinkedInUrl}><i className="fa-brands fa-instagram"></i></a>
               </div>
               <p>{SocialMediaSubText}</p>
           </div>
@@ -67,19 +67,20 @@ const ContactFormComponent: React.FC<ContactFormProps> = ({
 
         <div>
           <form className={styles.contactForm}>
-              <h5>{FormTitle}</h5>
-              <div className={styles.nameInput}>
-                  <label className={styles.label}>{NameLabel}</label>
-                  <input type='text'name='name' className={styles.input} />
-              </div>
-              <div className={styles.emailInput}>
-                  <label className={styles.label}>{EmailLabel}</label>
-                  <input type='email' name='email' className={styles.input} />
-              </div>
-              <div className={styles.messageInput}>
-                  <label className={styles.label}>{MessageLabel}</label>
-                  <input type='message' name='message' className={styles.input} />
-              </div>
+            <h5>{FormTitle}</h5>
+            <div className={styles.nameInput}>
+              <label className={styles.label}>{NameLabel}</label>
+              <input type='text'name='name' className={styles.input} />
+            </div>
+            <div className={styles.emailInput}>
+              <label className={styles.label}>{EmailLabel}</label>
+              <input type='email' name='email' className={styles.input} />
+            </div>
+            <div className={styles.messageInput}>
+              <label className={styles.label}>{MessageLabel}</label>
+              <input type='message' name='message' className={styles.input} />
+            </div>
+            <button id='contactFormBtn' className={styles.submitButton}>Skicka</button>
           </form>
         </div>
       </div>

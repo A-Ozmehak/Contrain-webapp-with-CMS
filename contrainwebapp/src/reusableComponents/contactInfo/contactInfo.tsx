@@ -10,7 +10,7 @@ interface ContactInfoProps {
 
 const ContactInfoComponent: React.FC<ContactInfoProps> = ({ companyName, email, phone, address, city }) => {
   return (
-    <div className={styles.quoteContainer}>
+    <div className={styles.contactInfoContainer}>
       <h5>{companyName}</h5>
         <div className={styles.contactInfo}>
           <p><i className="fa-regular fa-envelope"></i>{email}</p>

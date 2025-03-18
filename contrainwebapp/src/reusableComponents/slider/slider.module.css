@@ -1,0 +1,86 @@
+.sliderContainer {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    height: 400px;
+    margin: 40px auto;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.imageWrapper {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+    height: 350px;
+}
+
+.slide {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+.sliderImage {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.pagination {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+    cursor: pointer;
+}
+
+.dot.active {
+    opacity: 1;
+    background: var(--purple);
+}
+
+/* 🔹 Tablet Layout (2 Images Per Slide) */
+@media (max-width: 1024px) {
+    .sliderContainer {
+        height: 300px;
+    }
+
+    .sliderImage {
+        height: 250px;
+    }
+
+    .slide {
+        grid-template-columns: repeat(2, 1fr); /* ✅ Show 2 images per slide */
+    }
+}
+
+/* 🔹 Mobile Layout (1 Image Per Slide) */
+@media (max-width: 768px) {
+    .sliderContainer {
+        height: 250px;
+    }
+
+    .slide {
+        grid-template-columns: 1fr; /* ✅ Show 1 image per slide */
+    }
+
+    .sliderImage {
+        height: 200px;
+    }
+}

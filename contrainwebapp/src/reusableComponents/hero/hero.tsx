@@ -8,9 +8,12 @@ interface HeroProps {
   SubText?: string;
   TypewriterTexts?: Array<{ id: number; Text: string }>; // ✅ Ensure correct type
   BackgroundImage?: string;
+  ShowButton: boolean;
+  ButtonLabel?: string;
+  ButtonUrl?: string;
 }
 
-const HeroComponent: React.FC<HeroProps> = ({ Title, SubText, TypewriterTexts = [], BackgroundImage }) => {
+const HeroComponent: React.FC<HeroProps> = ({ Title, SubText, TypewriterTexts = [], BackgroundImage, ShowButton, ButtonLabel, ButtonUrl }) => {
   const isMobile = useIsMobile(); // Detect if mobile
   const typewriterTextsArray = TypewriterTexts.map((item) => item.Text);
 
@@ -24,14 +27,21 @@ const HeroComponent: React.FC<HeroProps> = ({ Title, SubText, TypewriterTexts = 
         />
         <div className={styles.typewriterContainer}>
           {isMobile ? (
-            <h1 className={styles.typeWriterTitle}>{Title}</h1>
+            <h1 className={styles.typewriterTitle}>{Title}</h1>
           ) : (
             <div>
               {typewriterTextsArray.length > 0 && <TypewriterTitle texts={typewriterTextsArray} />}
               <h2 className={styles.subtitle}>{SubText}</h2>
             </div>
           )}
+
+          {ShowButton && (
+            <a href={ButtonUrl || '/'} className={styles.heroButton}>
+              {ButtonLabel || 'Learn More'}
+            </a>
+          )}
         </div>
+       
       </div>
     </div>
   );

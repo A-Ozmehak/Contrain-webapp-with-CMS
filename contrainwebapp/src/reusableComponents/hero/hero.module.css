@@ -3,13 +3,13 @@
     width: 100%;
     height: auto;
     overflow: hidden;
-  }
-  
-  .imageWrapper {
+}
+
+.imageWrapper {
     position: relative;
     width: 100%;
     height: auto;
-  }
+}
 
 .backgroundImage {
     width: 100%;
@@ -26,19 +26,22 @@
     text-align: center;
     z-index: 2; 
     width: 100%;
+    padding: 0 1rem;
 }
 
 .typewriterTitle {
-    font-size: 2rem;
+    font-size: 24px;
     font-weight: bold;
+    line-height: 1.2;
 }
 
 .subtitle {
-    margin-top: 2rem;
+    margin-top: 1rem;
     color: rgba(255, 255, 255, 1);
     font-weight: 200;
-    line-height: 49px;
-    font-size: 1rem;
+    line-height: 30px;
+    font-size: 14px;
+    padding-bottom: 20px;
 }
 
 .imageWrapper::before {
@@ -52,11 +55,35 @@
     z-index: 1;
 }
 
+.heroButton {
+    margin-top: 1.5rem;
+    padding: 0.8rem 1.5rem;
+    background-color: var(--purple);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* 🔹 Media Query for Larger Screens */
 @media screen and (min-width: 768px) {
-    .typeWriterTitle {
-        font-size: 65px;
+    .typewriterTitle {
+        font-size: 36px; 
     }
     .subtitle {
-        font-size: 40px;
+        font-size: 18px;
+        line-height: 32px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .typewriterTitle {
+        font-size: 70px;
+    }
+    .subtitle {
+        font-size: 30px;
+        line-height: 40px;
     }
 }

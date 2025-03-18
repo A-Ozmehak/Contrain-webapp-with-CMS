@@ -37,7 +37,7 @@ const TypewriterTitle: React.FC<TypewriterTextProps> = ({ texts = [] }) => {
   }, [displayedText, isDeleting, textIndex, texts]);
 
   return (
-    <h1 className={styles.typeWriterTitle}>
+    <h1 className={styles.typewriterTitle}>
       {displayedText}
       <span style={{ borderRight: '2px solid white', marginLeft: '2px' }}></span>
     </h1>

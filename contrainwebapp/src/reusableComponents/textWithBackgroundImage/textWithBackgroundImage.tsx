@@ -31,8 +31,7 @@ const TextWithBackgroundImageComponent: React.FC<componentProps> = ({ SectionTit
                     <a href={ButtonUrl} className={styles.button}>{ButtonLabel}</a>
                 }
             </div>
-        </div>
-      
+        </div> 
     </div>
   );
 };

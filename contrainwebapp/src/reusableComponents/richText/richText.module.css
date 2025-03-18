@@ -1,0 +1,51 @@
+.richTextContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    font-size: 16px;
+    color: #97ACB4;
+}
+
+/* 🔹 Headings */
+.richTextContainer h1 h2 h3 h4 h5 h6 {
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.richTextContainer h1 { font-size: 38px; }
+.richTextContainer h2 { font-size: 28px; }
+.richTextContainer h3 { font-size: 24px; }
+.richTextContainer h4 { font-size: 18px; }
+.richTextContainer h5 { font-size: 16px; }
+.richTextContainer h6 { font-size: 14px; }
+
+/* 🔹 Paragraph */
+.paragraph {
+    margin-bottom: 12px;
+}
+
+/* 🔹 Lists */
+.list {
+    margin-bottom: 40px;
+    padding-left: 20px;
+}
+
+.listItem {
+    margin-bottom: 8px;
+}
+
+/* 🔹 Links */
+.link {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.link:hover {
+    color: #0056b3;
+}
+
+/* 🔹 Bold Text */
+.bold {
+    font-weight: bold;
+}
