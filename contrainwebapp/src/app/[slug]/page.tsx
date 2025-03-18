@@ -8,20 +8,24 @@ const fetchPageData = async (slug: string) => {
 
     // General page data URL (fetches everything)
     const apiUrl = getStrapiURL(`/api/pages?populate=*&filters[Slug][$eq]=${formattedSlug}`);
-
-    // Hero-specific deeply nested data URL
     const heroDataUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.hero][populate][TypewriterTexts][populate]=*`);
-
+    const sliderImagesUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.slider][populate][Images][populate]=*`);
+    const ourServicesUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.our-services][populate][Service][populate]=*`);
+    
     // Fetch both general page data and hero-specific data in parallel
-    const [res, heroRes] = await Promise.all([
+    const [res, heroRes, sliderRes, ourServicesRes] = await Promise.all([
       fetch(apiUrl, { cache: 'no-store' }),
-      fetch(heroDataUrl, { cache: 'no-store' })
+      fetch(heroDataUrl, { cache: 'no-store' }),
+      fetch(sliderImagesUrl, { cache: 'no-store' }),
+      fetch(ourServicesUrl, { cache: 'no-store' }),
     ]);
 
-    if (!res.ok || !heroRes.ok) return null;
+    if (!res.ok || !heroRes.ok || !sliderRes.ok || !ourServicesRes.ok) return null;
 
     const data = await res.json();
     const heroData = await heroRes.json();
+    const sliderData = await sliderRes.json();
+    const ourServicesData = await ourServicesRes.json();
 
     // Extract page data
     const pageData = data?.data?.length > 0 ? data.data[0] : null;
@@ -43,10 +47,35 @@ const fetchPageData = async (slug: string) => {
       }
     }
 
+     // Extract and merge slider block data
+  const sliderPageData = sliderData?.data?.length > 0 ? sliderData.data[0] : null;
+  if (sliderPageData?.Blocks) {
+    const sliderBlocks = sliderPageData.Blocks.filter(
+      (block: any) => block.__component === "blocks.slider"
+    );
+
+    if (sliderBlocks.length > 0) {
+      pageData.Blocks = (pageData.Blocks || []).map((block: any) =>
+        block.__component === "blocks.slider" ? sliderBlocks[0] : block
+      );
+    }
+  }
+
+  const ourServicesPageData = ourServicesData?.data?.length > 0 ? ourServicesData.data[0] : null;
+  if (ourServicesPageData?.Blocks) {
+    const ourServicesBlocks = ourServicesPageData.Blocks.filter(
+      (block: any) => block.__component === "blocks.our-services"
+    );
+
+    if (ourServicesBlocks.length > 0) {
+      pageData.Blocks = (pageData.Blocks || []).map((block: any) =>
+        block.__component === "blocks.our-services" ? ourServicesBlocks[0] : block
+      );
+    }
+  }
     return pageData;
 
   } catch (error) {
-    console.error("Error fetching page data:", error);
     return null;
   }
 };

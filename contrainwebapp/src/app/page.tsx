@@ -7,55 +7,72 @@ const fetchHomePageData = async () => {
   const apiUrl = getStrapiURL(`/api/pages?populate=*&filters[Slug][$eq]=/`);
   const heroDataUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.hero][populate][TypewriterTexts][populate]=*`);
   const sliderImagesUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.slider][populate][Images][populate]=*`);
+  const ourServicesUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.our-services][populate][Service][populate]=*`);
 
-  const [res, heroRes, sliderRes] = await Promise.all([
+  const [res, heroRes, sliderRes, ourServicesRes] = await Promise.all([
     fetch(apiUrl, { cache: 'no-store' }),
     fetch(heroDataUrl, { cache: 'no-store' }),
     fetch(sliderImagesUrl, { cache: 'no-store' }),
+    fetch(ourServicesUrl, { cache: 'no-store' }),
   ]);
 
-  if (!res.ok || !heroRes.ok || !sliderRes.ok) return null;
+  if (!res.ok || !heroRes.ok || !sliderRes.ok || !ourServicesRes.ok) return null;
 
   const data = await res.json();
   const heroData = await heroRes.json();
   const sliderData = await sliderRes.json();
+  const ourServicesData = await ourServicesRes.json();
 
   const pageData = data?.data?.length > 0 ? data.data[0] : null;
-  if (!pageData) return null; // If no data is found, return null
+  if (!pageData) return null;
 
-  // Extract hero block data
+  // Ensure Blocks exists
+  pageData.Blocks = pageData.Blocks || [];
+
+  // 🔹 Merge Hero Block in Correct Position
   const heroPageData = heroData?.data?.length > 0 ? heroData.data[0] : null;
-
-  // Merge hero-specific data **without overwriting other Blocks**
   if (heroPageData?.Blocks) {
-    const heroBlocks = heroPageData.Blocks.filter(
+    const heroBlock = heroPageData.Blocks.find(
       (block: any) => block.__component === "blocks.hero"
     );
 
-    if (heroBlocks.length > 0) {
-      // Maintain the original order of Blocks
-      pageData.Blocks = (pageData.Blocks || []).map((block: any) =>
-        block.__component === "blocks.hero" ? heroBlocks[0] : block
+    if (heroBlock) {
+      pageData.Blocks = pageData.Blocks.map((block: any) =>
+        block.__component === "blocks.hero" ? heroBlock : block
       );
     }
   }
 
-  // Extract and merge slider block data
+  // 🔹 Merge Slider Block in Correct Position
   const sliderPageData = sliderData?.data?.length > 0 ? sliderData.data[0] : null;
   if (sliderPageData?.Blocks) {
-    const sliderBlocks = sliderPageData.Blocks.filter(
+    const sliderBlock = sliderPageData.Blocks.find(
       (block: any) => block.__component === "blocks.slider"
     );
 
-    if (sliderBlocks.length > 0) {
-      pageData.Blocks = (pageData.Blocks || []).map((block: any) =>
-        block.__component === "blocks.slider" ? sliderBlocks[0] : block
+    if (sliderBlock) {
+      pageData.Blocks = pageData.Blocks.map((block: any) =>
+        block.__component === "blocks.slider" ? sliderBlock : block
       );
     }
   }
 
+  // 🔹 Merge Our Services Block in Correct Position
+  const ourServicesPageData = ourServicesData?.data?.length > 0 ? ourServicesData.data[0] : null;
+  if (ourServicesPageData?.Blocks) {
+    const ourServicesBlock = ourServicesPageData.Blocks.find(
+      (block: any) => block.__component === "blocks.our-services"
+    );
+
+    if (ourServicesBlock) {
+      pageData.Blocks = pageData.Blocks.map((block: any) =>
+        block.__component === "blocks.our-services" ? ourServicesBlock : block
+      );
+    }
+  }
   return pageData;
 };
+
 
 
 export default async function HomePage() {
