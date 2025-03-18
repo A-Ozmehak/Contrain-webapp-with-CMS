@@ -6,6 +6,8 @@ import QuoteComponent from '@/reusableComponents/quote/quote';
 import HeroComponent from '@/reusableComponents/hero/hero';
 import SliderComponent from '@/reusableComponents/slider/slider';
 import TextWithBackgroundImageComponent from '@/reusableComponents/textWithBackgroundImage/textWithBackgroundImage';
+import OurServicesComponent from '@/reusableComponents/ourServices/ourServices';
+import RichTextComponent from '@/reusableComponents/richText/richText';
 
 interface BlockProps {
   __component: string;
@@ -25,6 +27,8 @@ const blockRegistry: { [key: string]: React.ElementType } = {
     'blocks.quote': QuoteComponent,
     'blocks.slider': SliderComponent,
     'blocks.text-with-background-image': TextWithBackgroundImageComponent,
+    'blocks.our-services': OurServicesComponent,
+    'blocks.rich-text': RichTextComponent,
    
   // Add more blocks here
 };
@@ -40,7 +44,13 @@ const BlockManager: React.FC<BlockManagerProps> = ({ blocks }) => {
           return null;
         }
 
-        return <Block key={block.id} {...block} />;
+            // 🔹 Fix: Convert "Service" → "Services" before passing to OurServicesComponent
+            const updatedBlockProps =
+            block.__component === 'blocks.our-services'
+              ? { ...block, Services: block.Service || [] } // ✅ Rename Service → Services
+              : block;
+
+        return <Block key={block.id} {...updatedBlockProps} />;
       })}
     </div>
   );
