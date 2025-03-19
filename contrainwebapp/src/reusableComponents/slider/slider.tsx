@@ -65,7 +65,7 @@ const SliderComponent: React.FC<SliderProps> = ({ Images = [] }) => {
   }
   // 
   return (
-    <div className={styles.sliderContainer} ref={sliderRef}>
+    <div id='our-projects' className={styles.sliderContainer} ref={sliderRef}>
       {/* ✅ Slide Wrapper */}
       <div className={styles.imageWrapper} style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
         {groupedImages.map((group, index) => (
