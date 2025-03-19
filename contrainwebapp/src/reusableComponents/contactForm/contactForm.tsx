@@ -70,15 +70,15 @@ const ContactFormComponent: React.FC<ContactFormProps> = ({
             <h5>{FormTitle}</h5>
             <div className={styles.nameInput}>
               <label className={styles.label}>{NameLabel}</label>
-              <input type='text'name='name' className={styles.input} />
+              <input type='text'name='contactName' className={styles.input} />
             </div>
             <div className={styles.emailInput}>
               <label className={styles.label}>{EmailLabel}</label>
-              <input type='email' name='email' className={styles.input} />
+              <input type='email' name='contactEmail' className={styles.input} />
             </div>
             <div className={styles.messageInput}>
               <label className={styles.label}>{MessageLabel}</label>
-              <input type='message' name='message' className={styles.input} />
+              <input type='message' name='contactMessage' className={styles.input} />
             </div>
             <button id='contactFormBtn' className={styles.submitButton}>Skicka</button>
           </form>

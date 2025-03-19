@@ -1,0 +1,69 @@
+.printingForm {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #0E1621;
+}
+
+.printingFormGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.printingFormGroup label {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    text-align: start;
+    width: 100%;
+    max-width: 885px;
+}
+
+.printingFormGroup input {
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    background-color: var(--white);
+    color: var(--black);
+    width: 100%;
+    max-width: 885px;
+}
+
+.printingFormGroup textarea {
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    background-color: var(--white);
+    color: var(--black);
+    width: 100%;
+    max-width: 885px;
+}
+
+.printingFormGroup .file {
+    background-color: transparent;
+    color: var(--white);
+    border: 0.2px solid var(--white);
+}
+
+.printingFormButton {
+    background-color: var(--white);
+    color: var(--black);
+    padding: 0.5rem 1rem;
+    font-size: 1.2rem;
+    border: 1px solid var(--white);
+    cursor: pointer;
+    margin-top: 1rem;
+    background-color: #61CE70;
+    width: 100%;
+    max-width: 885px;
+}
+
+.printingFormButton:hover {
+    background-color: #4F9E5D;
+    border: 1px solid var(--purple);
+}

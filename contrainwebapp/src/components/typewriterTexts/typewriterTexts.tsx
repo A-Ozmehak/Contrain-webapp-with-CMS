@@ -11,7 +11,7 @@ const TypewriterTitle: React.FC<TypewriterTextProps> = ({ texts = [] }) => {
   const [textIndex, setTextIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
-  const typingSpeed = isDeleting ? 100 : 200;
+  const typingSpeed = isDeleting ? 100 : 100;
 
   useEffect(() => {
     if (texts.length === 0) return; // Do nothing if `texts` is empty
