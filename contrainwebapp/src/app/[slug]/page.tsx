@@ -11,21 +11,35 @@ const fetchPageData = async (slug: string) => {
     const heroDataUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.hero][populate][TypewriterTexts][populate]=*`);
     const sliderImagesUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.slider][populate][Images][populate]=*`);
     const ourServicesUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.our-services][populate][Service][populate]=*`);
-    
+    const aboutUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.about][populate][AboutKeyPoints][populate]=*&populate[Blocks][on][blocks.about][populate][AboutImages][populate]=*`);
+    const skillsUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.skills][populate][Skills][populate]=*&populate[Blocks][on][blocks.skills][populate][SkillImage][populate]=*`);
+
     // Fetch both general page data and hero-specific data in parallel
-    const [res, heroRes, sliderRes, ourServicesRes] = await Promise.all([
+    const [res, heroRes, sliderRes, ourServicesRes, aboutRes, skillsRes] = await Promise.all([
       fetch(apiUrl, { cache: 'no-store' }),
       fetch(heroDataUrl, { cache: 'no-store' }),
       fetch(sliderImagesUrl, { cache: 'no-store' }),
       fetch(ourServicesUrl, { cache: 'no-store' }),
+      fetch(aboutUrl, { cache: 'no-store' }),
+      fetch(skillsUrl, { cache: 'no-store' }),
     ]);
 
-    if (!res.ok || !heroRes.ok || !sliderRes.ok || !ourServicesRes.ok) return null;
+    if (
+      !res.ok || 
+      !heroRes.ok || 
+      !sliderRes.ok || 
+      !ourServicesRes.ok || 
+      !aboutRes.ok ||  
+      !skillsRes.ok
+    ) 
+      return null;
 
     const data = await res.json();
     const heroData = await heroRes.json();
     const sliderData = await sliderRes.json();
     const ourServicesData = await ourServicesRes.json();
+    const aboutData = await aboutRes.json();
+    const skillsData = await skillsRes.json();
 
     // Extract page data
     const pageData = data?.data?.length > 0 ? data.data[0] : null;
@@ -73,6 +87,43 @@ const fetchPageData = async (slug: string) => {
       );
     }
   }
+
+  const aboutPageData = aboutData?.data?.length > 0 ? aboutData.data[0] : null;
+  if (aboutPageData?.Blocks) {
+    const aboutBlocks = aboutPageData.Blocks.find((block:any) => block.__component === "blocks.about");
+    
+    if (aboutBlocks) {
+      pageData.Blocks = (pageData.Blocks || []).map((block: any) => {
+        if (block.__component === "blocks.about") {
+          return {
+            ...block,
+            AboutKeyPoints: aboutBlocks.AboutKeyPoints || [],
+            AboutImages: aboutBlocks.AboutImages || [],
+          };
+        }
+        return block;
+      });
+    }
+  }
+  
+  const skillsPageData = skillsData?.data?.length > 0 ? skillsData.data[0] : null;
+    if (skillsPageData?.Blocks) {
+      const skillsBlock = skillsPageData.Blocks.find((block: any) => block.__component === "blocks.skills");
+
+      if (skillsBlock) {
+        pageData.Blocks = (pageData.Blocks || []).map((block: any) => {
+          if (block.__component === "blocks.skills") {
+            return {
+              ...block,
+              Skills: skillsBlock.Skills || [],
+              SkillImage: skillsBlock.SkillImage || [],
+            };
+          }
+          return block;
+        });
+      }
+    }
+
     return pageData;
 
   } catch (error) {

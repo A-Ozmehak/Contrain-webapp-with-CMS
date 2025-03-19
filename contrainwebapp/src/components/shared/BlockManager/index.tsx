@@ -8,6 +8,9 @@ import SliderComponent from '@/reusableComponents/slider/slider';
 import TextWithBackgroundImageComponent from '@/reusableComponents/textWithBackgroundImage/textWithBackgroundImage';
 import OurServicesComponent from '@/reusableComponents/ourServices/ourServices';
 import RichTextComponent from '@/reusableComponents/richText/richText';
+import AboutComponent from '@/reusableComponents/about/about';
+import PrintingFormComponent from '@/reusableComponents/printingForm/printingForm';
+import SkillsComponent from '@/reusableComponents/skills/skills';
 
 interface BlockProps {
   __component: string;
@@ -29,6 +32,9 @@ const blockRegistry: { [key: string]: React.ElementType } = {
     'blocks.text-with-background-image': TextWithBackgroundImageComponent,
     'blocks.our-services': OurServicesComponent,
     'blocks.rich-text': RichTextComponent,
+    'blocks.about': AboutComponent,
+    'blocks.printing-form': PrintingFormComponent,
+    'blocks.skills': SkillsComponent,
    
   // Add more blocks here
 };

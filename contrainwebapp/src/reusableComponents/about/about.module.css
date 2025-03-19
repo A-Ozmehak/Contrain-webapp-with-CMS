@@ -1,0 +1,166 @@
+.aboutContainer {
+    max-width: 1300px;
+    margin: 30px auto;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+/* 🔹 Title & Text */
+.aboutTitle {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.aboutText {
+    max-width: 700px;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin-bottom: 30px;
+}
+
+
+/* 🔹 Key Points Section */
+.aboutKeyPoints {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 80%;
+    margin-bottom: 50px;
+}
+
+.keyPoint {
+    display: flex;
+    align-items: center;
+    max-width: 350px;
+    padding: 15px;
+}
+
+.keyPoint i {
+    font-size: 30px;
+    color: var(--purple);
+    margin-right: 15px;
+}
+
+/* 🔹 Image section */
+.aboutImages {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 0;
+    width: 100%;
+    max-width: 1140px;
+    margin-top: 20px;
+    padding: 0 10px;
+    position: relative;
+}
+
+.aboutImages img {
+    width: 30%;
+    max-width: 320px;
+    height: auto;
+    border-radius: 20px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.aboutImages img:nth-child(2) { 
+    transform: translateY(-8px);
+    height: 432px;
+    width: 544px;
+    z-index: 2;
+}
+
+.aboutImages img:nth-child(1),
+.aboutImages img:nth-child(3) {
+    transform: translateY(-10px); 
+    margin-left: -20px;
+    margin-right: -20px; 
+    z-index: 1; 
+    height: 383px;
+    width: 387px;
+}
+
+@media (max-width: 1200px) {
+    .aboutImages img {
+        max-width: 300px;
+    }
+
+    .aboutImages img:nth-child(2) {
+        transform: translateY(-5px);
+        height: 310px;
+        width: 444px;
+    }
+
+    .aboutImages img:nth-child(1),
+    .aboutImages img:nth-child(3) {
+        transform: translateY(-5px);
+        margin-left: -15px;
+        margin-right: -15px;
+        height: 283px;
+        width: 287px;
+    }
+}
+
+@media (max-width: 900px) {
+    .aboutImages img {
+        max-width: 250px;
+    }
+}
+
+/* 🔹 Mobile Styles */
+@media (max-width: 768px) {
+    .aboutTitle {
+        font-size: 1.8rem;
+    }
+
+    .aboutText {
+        font-size: 1rem;
+        padding: 0 15px;
+    }
+
+    .aboutKeyPoints {
+        flex-direction: column;
+        width: 90%;
+        align-items: center;
+    }
+
+    .keyPoint {
+        max-width: 100%;
+        text-align: left;
+    }
+
+    .aboutImages img {
+        max-width: 190px;
+    }
+}
+
+@media (max-width: 600px) {
+    .aboutImages img {
+        max-width: 130px;
+    }
+}
+
+/* 🔹 Extra Small Screens (360px) */
+@media (max-width: 400px) {
+    .aboutTitle {
+        font-size: 1.5rem;
+    }
+
+    .aboutText {
+        font-size: 0.95rem;
+    }
+
+    .keyPoint i {
+        font-size: 25px;
+    }
+
+    .aboutImages img {
+        max-width: 120px;
+    }
+}
