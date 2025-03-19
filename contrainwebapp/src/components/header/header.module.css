@@ -85,6 +85,10 @@
     color: #87A1AD;
 }
 
+.desktopNavMenuList a {
+    font-weight: bold;
+}
+
 .navMenuList li {
     font-size: 12px;
 }
@@ -104,3 +108,34 @@
     align-items: center;
     justify-content: center;
 }
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    z-index: 2;
+  }
+  
+  .dropdownMenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--background);
+    border-radius: 5px;
+    display: none;
+    padding: 10px;
+    min-width: 150px;
+    list-style: none;
+  }
+  
+  .dropdown:hover .dropdownMenu {
+    display: block;
+  }
+  
+  .parentLink {
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .dropdownMenu li a {
+    color: var(--white);
+  }
