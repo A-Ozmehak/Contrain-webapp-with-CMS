@@ -11,6 +11,8 @@ import RichTextComponent from '@/reusableComponents/richText/richText';
 import AboutComponent from '@/reusableComponents/about/about';
 import PrintingFormComponent from '@/reusableComponents/printingForm/printingForm';
 import SkillsComponent from '@/reusableComponents/skills/skills';
+import ServicesLargeComponent from '@/reusableComponents/servicesLarge/servicesLarge';
+import ServiceFormComponent from '@/reusableComponents/servicesForm/serviceForm';
 
 interface BlockProps {
   __component: string;
@@ -35,6 +37,8 @@ const blockRegistry: { [key: string]: React.ElementType } = {
     'blocks.about': AboutComponent,
     'blocks.printing-form': PrintingFormComponent,
     'blocks.skills': SkillsComponent,
+    'blocks.services-large': ServicesLargeComponent,
+    'blocks.services-form': ServiceFormComponent,
    
   // Add more blocks here
 };
