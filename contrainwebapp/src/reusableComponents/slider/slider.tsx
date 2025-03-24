@@ -1,6 +1,11 @@
 'use client';
-import useIsMobile from '@/hooks/useIsMobile';
-import { useState, useEffect, useRef } from 'react';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/autoplay';
+import 'swiper/css/navigation';
 import styles from './slider.module.css';
 
 interface ImageFormat {
@@ -21,72 +26,50 @@ interface ImageObject {
 interface SliderProps {
   Images: Array<{
     id: number;
-    Image: ImageObject[];
     Url?: string;
     Alt?: string;
+    HoverTitle?: string;
+    HoverDescription?: string;
+    Image: ImageObject[];
   }>;
 }
 
 const SliderComponent: React.FC<SliderProps> = ({ Images = [] }) => {
-  const isMobile = useIsMobile(); // Detect if mobile
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const sliderRef = useRef<HTMLDivElement | null>(null);
-
-  // ✅ Adjust images per page dynamically based on screen size
-  const getImagesPerPage = () => {
-    if (window.innerWidth <= 768) return 1; // Mobile
-    if (window.innerWidth <= 1024) return 2; // Tablet
-    return 4; // Desktop
-  };
-
-  const [imagesPerPage, setImagesPerPage] = useState(getImagesPerPage());
-
-  useEffect(() => {
-    const updateImagesPerPage = () => setImagesPerPage(getImagesPerPage());
-    window.addEventListener('resize', updateImagesPerPage);
-    return () => window.removeEventListener('resize', updateImagesPerPage);
-  }, []);
-
-  const totalPages = Math.ceil(Images.length / imagesPerPage);
-
-  // ✅ Auto-scroll every 5 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % totalPages);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [currentSlide, totalPages]);
-
-  // ✅ Group images into slides (each slide contains `imagesPerPage` images)
-  const groupedImages = [];
-  for (let i = 0; i < Images.length; i += imagesPerPage) {
-    groupedImages.push(Images.slice(i, i + imagesPerPage));
-  }
-  // 
   return (
-    <div id='our-projects' className={styles.sliderContainer} ref={sliderRef}>
-      {/* ✅ Slide Wrapper */}
-      <div className={styles.imageWrapper} style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
-        {groupedImages.map((group, index) => (
-          <div key={index} className={styles.slide}>
-            {group.map((item) =>
-              item.Image.map((img) => (
-                <a key={img.id} href={item.Url || '#'}>
-                  <img src={'/microcontroller.webp'} alt={item.Alt || 'Image'} className={styles.sliderImage} />
-                </a>
-              ))
-            )}
-          </div>
+    <div id="our-projects" className={styles.sliderContainer}>
+      <Swiper
+        modules={[Autoplay, Pagination, Navigation]}
+        slidesPerView={1}
+        spaceBetween={20}
+        navigation
+        pagination={{ clickable: true }}
+        autoplay={{ delay: 5000, disableOnInteraction: false }}
+        breakpoints={{
+          768: { slidesPerView: 2 },
+          1024: { slidesPerView: 4 },
+        }}
+        className={styles.swiper}
+      >
+        {Images.map((item) => (
+          <SwiperSlide key={item.id} className={styles.swiperSlide}>
+            {item.Image.map((img) => (
+              <a key={img.id} href={item.Url || '#'} className={styles.imageLink}>
+                <div className={styles.sliderImageWrapper}>
+                  <img
+                    src={'/microcontroller.webp'}
+                    alt={item.Alt || 'Image'}
+                    className={styles.sliderImage}
+                  />
+                  <div className={styles.hoverOverlay}>
+                    <h3>{item.HoverTitle}</h3>
+                    <p>{item.HoverDescription}</p>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </SwiperSlide>
         ))}
-      </div>
-
-      {/* ✅ Pagination Dots */}
-      <div className={styles.pagination}>
-        {Array.from({ length: totalPages }).map((_, index) => (
-          <span key={index} className={`${styles.dot} ${index === currentSlide ? styles.active : ''}`} onClick={() => setCurrentSlide(index)}></span>
-        ))}
-      </div>
+      </Swiper>
     </div>
   );
 };
