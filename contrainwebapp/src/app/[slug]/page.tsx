@@ -13,15 +13,19 @@ const fetchPageData = async (slug: string) => {
     const ourServicesUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.our-services][populate][Service][populate]=*`);
     const aboutUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.about][populate][AboutKeyPoints][populate]=*&populate[Blocks][on][blocks.about][populate][AboutImages][populate]=*`);
     const skillsUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.skills][populate][Skills][populate]=*&populate[Blocks][on][blocks.skills][populate][SkillImage][populate]=*`);
-
+    const servicesLargeUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.services-large][populate][Services][populate]=*`);
+    const servicesFormUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.services-form][populate]=*`);
+        
     // Fetch both general page data and hero-specific data in parallel
-    const [res, heroRes, sliderRes, ourServicesRes, aboutRes, skillsRes] = await Promise.all([
+    const [res, heroRes, sliderRes, ourServicesRes, aboutRes, skillsRes, servicesLargeRes, servicesFormRes] = await Promise.all([
       fetch(apiUrl, { cache: 'no-store' }),
       fetch(heroDataUrl, { cache: 'no-store' }),
       fetch(sliderImagesUrl, { cache: 'no-store' }),
       fetch(ourServicesUrl, { cache: 'no-store' }),
       fetch(aboutUrl, { cache: 'no-store' }),
       fetch(skillsUrl, { cache: 'no-store' }),
+      fetch(servicesLargeUrl, { cache: 'no-store' }),
+      fetch(servicesFormUrl, { cache: 'no-store' }),
     ]);
 
     if (
@@ -30,7 +34,9 @@ const fetchPageData = async (slug: string) => {
       !sliderRes.ok || 
       !ourServicesRes.ok || 
       !aboutRes.ok ||  
-      !skillsRes.ok
+      !skillsRes.ok ||
+      !servicesLargeRes.ok ||
+      !servicesFormRes.ok
     ) 
       return null;
 
@@ -40,6 +46,8 @@ const fetchPageData = async (slug: string) => {
     const ourServicesData = await ourServicesRes.json();
     const aboutData = await aboutRes.json();
     const skillsData = await skillsRes.json();
+    const servicesLargeData = await servicesLargeRes.json();
+    const servicesFormData = await servicesFormRes.json();
 
     // Extract page data
     const pageData = data?.data?.length > 0 ? data.data[0] : null;
@@ -121,6 +129,33 @@ const fetchPageData = async (slug: string) => {
           }
           return block;
         });
+      }
+    }
+
+    const servicesPageData = servicesLargeData?.data?.length > 0 ? servicesLargeData.data[0] : null;
+
+    if (servicesPageData?.Blocks) {
+      const servicesLargeBlock = servicesPageData.Blocks.find(
+        (block: any) => block.__component === "blocks.services-large"
+      );
+
+      if (servicesLargeBlock) {
+        pageData.Blocks = (pageData.Blocks || []).map((block: any) =>
+          block.__component === "blocks.services-large" ? servicesLargeBlock : block
+        );
+      }
+    }
+
+    const servicesFormPageData = servicesFormData?.data?.length > 0 ? servicesFormData.data[0] : null;
+    if (servicesFormPageData?.Blocks) {
+      const servicesFormBlock = servicesFormPageData.Blocks.find(
+        (block: any) => block.__component === "blocks.services-form"
+      );
+
+      if (servicesFormBlock) {
+        pageData.Blocks = (pageData.Blocks || []).map((block: any) =>
+          block.__component === "blocks.services-form" ? servicesFormBlock : block
+        );
       }
     }
 

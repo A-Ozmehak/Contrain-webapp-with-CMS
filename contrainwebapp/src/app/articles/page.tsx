@@ -17,8 +17,6 @@ export default async function ArticlePage() {
       {/* ✅ Render Hero First */}
       {heroData && <HeroComponent {...heroData} />}
 
-      <h1>Artiklar</h1>
-
       {/* ✅ Render Articles */}
       <ArticlesComponent articles={articles} />
     </div>
