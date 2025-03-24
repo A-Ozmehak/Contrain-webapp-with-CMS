@@ -11,15 +11,20 @@ const TypewriterTitle: React.FC<TypewriterTextProps> = ({ texts = [] }) => {
   const [textIndex, setTextIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
+
   const typingSpeed = isDeleting ? 100 : 100;
+  const isSingleText = texts.length === 1;
 
   useEffect(() => {
-    if (texts.length === 0) return; // Do nothing if `texts` is empty
+    if (texts.length === 0) return;
 
     const currentText = texts[textIndex];
     let timeout: NodeJS.Timeout;
 
     if (!isDeleting && displayedText === currentText) {
+      if (isSingleText) {
+        return; // ✅ Stop animation if only one text and it's complete
+      }
       timeout = setTimeout(() => setIsDeleting(true), 1000);
     } else if (isDeleting && displayedText === '') {
       setIsDeleting(false);
@@ -34,7 +39,7 @@ const TypewriterTitle: React.FC<TypewriterTextProps> = ({ texts = [] }) => {
     }
 
     return () => clearTimeout(timeout);
-  }, [displayedText, isDeleting, textIndex, texts]);
+  }, [displayedText, isDeleting, textIndex, texts, isSingleText]);
 
   return (
     <h1 className={styles.typewriterTitle}>
