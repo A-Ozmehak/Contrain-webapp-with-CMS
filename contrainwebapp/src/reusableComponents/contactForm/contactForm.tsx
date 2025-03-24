@@ -46,7 +46,7 @@ const ContactFormComponent: React.FC<ContactFormProps> = ({
   const isMobile = useIsMobile(); // Default breakpoint is 768px
 
   return (
-    <div className={styles.contactFormContainer}>
+    <div id='contact-us' className={styles.contactFormContainer}>
       <div className={styles.contactFormTitleContainer}>
         <h3 className={styles.contactFormTitle}>{SectionTitle}</h3>
         <p>{SectionSubText}</p>

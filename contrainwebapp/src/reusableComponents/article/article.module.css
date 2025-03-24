@@ -1,0 +1,37 @@
+.articleContainer {
+    margin: 10px;
+    border: 1px solid var(--white);
+    border-radius: 10px;
+    max-width: 300px;
+    max-height: 450px;
+}
+
+.articleImage {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.articleTextContent {
+    padding: 15px;
+}
+
+.articleTextContent h3 {
+    font-size: 30px;
+}
+
+.articleHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.articleButton {
+    background-color: var(--purple);
+    color: var(--white);
+    padding: 15px 25px;
+    font-size: 20px;
+    margin-top: 20px;
+}

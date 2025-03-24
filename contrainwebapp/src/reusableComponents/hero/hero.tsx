@@ -6,7 +6,7 @@ import styles from './hero.module.css';
 interface HeroProps {
   Title?: string;
   SubText?: string;
-  TypewriterTexts?: Array<{ id: number; Text: string }>; // ✅ Ensure correct type
+  TypewriterTexts?: Array<{ id: number; Text: string }>; 
   BackgroundImage?: string;
   ShowButton: boolean;
   ButtonLabel?: string;

@@ -22,9 +22,9 @@ const ArticleComponent: React.FC<ArticleItem> = ({ Image, Author, Date, Categori
 
   return (
     <div className={styles.articleContainer}>
-      <img src={Image} alt="article" className={styles.articleImage} />
+      <img src={'/microcontroller.webp'} alt="article" className={styles.articleImage} />
       <div className={styles.articleTextContent}>
-        <div>
+        <div className={styles.articleHeader}>
           <p>by {Author}</p>
           <p>{Date}</p>
         </div>
@@ -33,7 +33,7 @@ const ArticleComponent: React.FC<ArticleItem> = ({ Image, Author, Date, Categori
         ))}
         <h3>{Title}</h3>
         <p>{Text}</p>
-        <button className={styles.ArticleButton}>Läs mer</button>
+        <button className={styles.articleButton}>Läs mer</button>
       </div>
     </div>
   );
