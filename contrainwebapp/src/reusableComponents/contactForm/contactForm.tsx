@@ -65,7 +65,6 @@ const ContactFormComponent: React.FC<ContactFormProps> = ({
           </div>
         </div>
 
-        <div>
           <form className={styles.contactForm}>
             <h5>{FormTitle}</h5>
             <div className={styles.nameInput}>
@@ -82,7 +81,6 @@ const ContactFormComponent: React.FC<ContactFormProps> = ({
             </div>
             <button id='contactFormBtn' className={styles.submitButton}>Skicka</button>
           </form>
-        </div>
       </div>
       
     </div>

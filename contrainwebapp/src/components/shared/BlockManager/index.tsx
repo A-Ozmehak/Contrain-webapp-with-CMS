@@ -60,7 +60,8 @@ const BlockManager: React.FC<BlockManagerProps> = ({ blocks }) => {
               ? { ...block, Services: block.Service || [] } // ✅ Rename Service → Services
               : block;
 
-        return <Block key={block.id} {...updatedBlockProps} />;
+          return <Block key={`${block.__component}-${block.id}`} {...updatedBlockProps} />;
+
       })}
     </div>
   );

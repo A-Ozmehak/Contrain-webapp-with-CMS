@@ -17,7 +17,23 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Contrain",
-  description: "Contrain is a prototype company",
+  description: "Rapid prototyping with 3D printing, electronics, and software.",
+  metadataBase: new URL("https://www.contrain.se"),
+  openGraph: {
+    title: "Contrain",
+    description: "Bring your ideas to life with Contrain.",
+    url: "https://www.contrain.se",
+    siteName: "Contrain",
+    images: [
+      {
+        url: "/default-og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Contrain – Prototype Services",
+      },
+    ],
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {

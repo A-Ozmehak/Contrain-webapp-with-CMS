@@ -99,7 +99,7 @@ const Header: React.FC = () => {
 
   return (
     <header className={styles.header}>
-      <a href='/'><Image src="/logo/logo-big-shadow.png" alt="contrain logo" width={125} height={80} /></a>
+      <a href='/'><Image src="/logo/logo-big-shadow.png" alt="contrain logo" className={styles.logo} width={125} height={80} /></a>
 
       {isDesktop ? (
         // ✅ Desktop Menu
@@ -139,7 +139,7 @@ const Header: React.FC = () => {
       ) : (
         // ✅ Mobile Menu
         <>
-          <i className="fas fa-bars" onClick={() => setMenuOpen(!menuOpen)}></i>
+          <i id={styles.mobilIcon} className="fas fa-bars" onClick={() => setMenuOpen(!menuOpen)}></i>
           {menuOpen && (
             <aside ref={menuRef} className={`${styles.mobileMenu} ${styles.open}`}>
               <button className={styles.closeButton} onClick={() => setMenuOpen(false)}>&times;</button>

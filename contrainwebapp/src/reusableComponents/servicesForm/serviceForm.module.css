@@ -12,13 +12,13 @@
   }
   
   .servicesFormTextContent h2 {
-    font-size: 2rem;
+    font-size: 1.625rem;
     margin-bottom: 1rem;
   }
   
   .servicesFormTextContent p {
     font-size: 1rem;
-    color: #666;
+    color: rgba(158,199,217,1);
   }
   
   .servicesFormWrapper {
@@ -28,6 +28,8 @@
   
   .servicesFormWrapper h3 {
     margin-bottom: 20px;
+    font-size: 1.625rem;
+    font-weight: 400;
   }
   
   .servicesForm {
@@ -44,6 +46,7 @@
     width: 100%;
     font-size: 14px;
     font-weight: 300;
+    color: var(--white);
   }
 
   .servicesForm input {

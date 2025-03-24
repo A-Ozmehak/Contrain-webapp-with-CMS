@@ -10,9 +10,14 @@
     color: white;
 }
 
-.fas.fa-bars {
+#mobilIcon {
     font-size: 2rem;
     cursor: pointer;
+    color: var(--white);
+}
+
+.mobileMenuItem {
+  width: 150px;
 }
 
 .mobileMenu {
@@ -198,11 +203,12 @@
 /* ✅ MOBILE DROPDOWN */
 .mobileDropdownMenu {
     background-color: #333;
-    padding: 0.5rem 1rem;
+    padding: 0.7rem 1.3rem;
     margin: 0.5rem 0;
     border-radius: 5px;
     list-style: none;
     width: 100%;
+    text-align: center;
   }
   
   .mobileDropdownMenu li a {
