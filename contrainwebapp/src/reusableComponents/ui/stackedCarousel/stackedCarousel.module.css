@@ -1,0 +1,110 @@
+/* stackedCarousel.module.css */
+
+.carouselWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5rem 1rem;
+    box-sizing: border-box;
+    overflow: visible;
+  }
+  
+  .carouselInner {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    height: 400px;
+    overflow: visible;
+  }
+  
+  .arrowButton {
+    position: absolute;
+    top: 50%;
+    z-index: 50;
+    transform: translateY(-50%);
+    padding: 0.5rem 0.7rem;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    backdrop-filter: blur(6px);
+    border: none;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .arrowButton:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  
+  .leftArrow {
+    left: 0rem;
+  }
+  
+  .rightArrow {
+    right: 0rem;
+  }
+  
+  .slideContent {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 1rem;
+    border-radius: 0 0 1rem 1rem;
+  }
+  
+  .dots {
+    position: absolute;
+    bottom: -3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .dot {
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .dot:hover {
+    background: rgba(255, 255, 255, 0.75);
+  }
+  
+  .dotActive {
+    background: white;
+    width: 1.5rem;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 840px) {
+    .carouselInner {
+      max-width: 50%;
+      height: 320px;
+    }
+
+    .slideContent h3 {
+        font-size: 17px;
+      }
+  
+    .arrowButton.leftArrow {
+      left: -2rem;
+    }
+  
+    .arrowButton.rightArrow {
+      right: -2rem;
+    }
+  
+    .dots {
+      bottom: -2rem;
+    }
+  }
+  

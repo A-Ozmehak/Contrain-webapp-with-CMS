@@ -8,14 +8,16 @@ const fetchHomePageData = async () => {
     const ourServicesUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.our-services][populate][Service][populate]=*`);
     const aboutUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.about][populate][AboutKeyPoints][populate]=*&populate[Blocks][on][blocks.about][populate][AboutImages][populate]=*`);
     const skillsUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.skills][populate][Skills][populate]=*&populate[Blocks][on][blocks.skills][populate][SkillImage][populate]=*`);
-    
-    const [res, heroRes, sliderRes, ourServicesRes, aboutRes, skillsRes] = await Promise.all([
+    const stackedSliderUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.stacked-slider][populate][Images][populate]=*`);
+
+    const [res, heroRes, sliderRes, ourServicesRes, aboutRes, skillsRes, stackedSliderRes] = await Promise.all([
       fetch(apiUrl, { cache: 'no-store' }),
       fetch(heroDataUrl, { cache: 'no-store' }),
       fetch(sliderImagesUrl, { cache: 'no-store' }),
       fetch(ourServicesUrl, { cache: 'no-store' }),
       fetch(aboutUrl, { cache: 'no-store' }),
       fetch(skillsUrl, { cache: 'no-store' }),
+      fetch(stackedSliderUrl, { cache: 'no-store' }),
     ]);
   
     if (!res.ok || 
@@ -23,7 +25,9 @@ const fetchHomePageData = async () => {
       !sliderRes.ok || 
       !ourServicesRes.ok || 
       !aboutRes.ok || 
-      !skillsRes.ok) 
+      !skillsRes.ok ||
+      !stackedSliderRes.ok
+    ) 
       return null;
   
     const data = await res.json();
@@ -32,6 +36,7 @@ const fetchHomePageData = async () => {
     const ourServicesData = await ourServicesRes.json();
     const aboutData = await aboutRes.json();
     const skillsData = await skillsRes.json();
+    const stackedSliderData = await stackedSliderRes.json();
   
     const pageData = data?.data?.length > 0 ? data.data[0] : null;
     if (!pageData) return null;
@@ -115,6 +120,19 @@ const fetchHomePageData = async () => {
             }
             return block;
           });
+        }
+      }
+
+      const stackedSliderPageData = stackedSliderData?.data?.length > 0 ? stackedSliderData.data[0] : null;
+      if (stackedSliderPageData?.Blocks) {
+        const stackedSliderBlock = stackedSliderPageData.Blocks.find(
+          (block: any) => block.__component === "blocks.stacked-slider"
+        );
+  
+        if (stackedSliderBlock) {
+          pageData.Blocks = (pageData.Blocks || []).map((block: any) =>
+            block.__component === "blocks.stacked-slider" ? stackedSliderBlock : block
+          );
         }
       }
   

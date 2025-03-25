@@ -1,4 +1,5 @@
 import React from 'react';
+import { getStrapiMedia } from '@/utils';
 import ContactFormComponent from '@/reusableComponents/contactForm/contactForm';
 import ContactInfoComponent from '@/reusableComponents/contactInfo/contactInfo';
 import SocialMediaComponent from '@/reusableComponents/socialMedia/socialMedia';
@@ -13,6 +14,7 @@ import PrintingFormComponent from '@/reusableComponents/printingForm/printingFor
 import SkillsComponent from '@/reusableComponents/skills/skills';
 import ServicesLargeComponent from '@/reusableComponents/servicesLarge/servicesLarge';
 import ServiceFormComponent from '@/reusableComponents/servicesForm/serviceForm';
+import StackedCarousel from '@/reusableComponents/ui/stackedCarousel/stackedCarousel';
 
 interface BlockProps {
   __component: string;
@@ -39,6 +41,7 @@ const blockRegistry: { [key: string]: React.ElementType } = {
     'blocks.skills': SkillsComponent,
     'blocks.services-large': ServicesLargeComponent,
     'blocks.services-form': ServiceFormComponent,
+    'blocks.stacked-slider': StackedCarousel,
    
   // Add more blocks here
 };
@@ -47,24 +50,53 @@ const BlockManager: React.FC<BlockManagerProps> = ({ blocks }) => {
   return (
     <div>
       {blocks.map((block) => {
-        const Block = blockRegistry[block.__component];
+        const Component = blockRegistry[block.__component];
 
-        if (!Block) {
+        if (!Component) {
           console.warn(`Unknown block type: ${block.__component}`);
           return null;
         }
 
-            // 🔹 Fix: Convert "Service" → "Services" before passing to OurServicesComponent
-            const updatedBlockProps =
-            block.__component === 'blocks.our-services'
-              ? { ...block, Services: block.Service || [] } // ✅ Rename Service → Services
-              : block;
+        // 🔹 Fix "Service" → "Services"
+        if (block.__component === 'blocks.our-services') {
+          return (
+            <Component
+              key={`${block.__component}-${block.id}`}
+              {...block}
+              Services={block.Service || []}
+            />
+          );
+        }
 
-          return <Block key={`${block.__component}-${block.id}`} {...updatedBlockProps} />;
+        if (block.__component === 'blocks.stacked-slider') {
+          const slides = (block.Images || []).map((item: any) => ({
+            image:
+              getStrapiMedia(
+                item.Image?.formats?.medium?.url ||
+                item.Image?.url ||
+                '/microcontroller.webp'
+              ),
+            HoverTitle: item.HoverTitle,
+            HoverDescription: item.HoverDescription,
+            Url: item.Url,
+          }));
+        
+          return (
+            <Component
+              key={`${block.__component}-${block.id}`}
+              slides={slides}
+            />
+          );
+        }
 
+        // 🔹 Default render
+        return (
+          <Component key={`${block.__component}-${block.id}`} {...block} />
+        );
       })}
     </div>
   );
 };
+
 
 export default BlockManager;

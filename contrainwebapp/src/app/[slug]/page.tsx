@@ -53,9 +53,10 @@ const fetchPageData = async (slug: string) => {
     const skillsUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.skills][populate][Skills][populate]=*&populate[Blocks][on][blocks.skills][populate][SkillImage][populate]=*`);
     const servicesLargeUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.services-large][populate][Services][populate]=*`);
     const servicesFormUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.services-form][populate]=*`);
-        
+    const stackedSliderUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.stacked-slider][populate][Images][populate]=*`);
+
     // Fetch both general page data and hero-specific data in parallel
-    const [res, heroRes, sliderRes, ourServicesRes, aboutRes, skillsRes, servicesLargeRes, servicesFormRes] = await Promise.all([
+    const [res, heroRes, sliderRes, ourServicesRes, aboutRes, skillsRes, servicesLargeRes, servicesFormRes, stackedSliderRes] = await Promise.all([
       fetch(apiUrl, { cache: 'no-store' }),
       fetch(heroDataUrl, { cache: 'no-store' }),
       fetch(sliderImagesUrl, { cache: 'no-store' }),
@@ -64,6 +65,7 @@ const fetchPageData = async (slug: string) => {
       fetch(skillsUrl, { cache: 'no-store' }),
       fetch(servicesLargeUrl, { cache: 'no-store' }),
       fetch(servicesFormUrl, { cache: 'no-store' }),
+      fetch(stackedSliderUrl, { cache: 'no-store' }),
     ]);
 
     if (
@@ -74,7 +76,8 @@ const fetchPageData = async (slug: string) => {
       !aboutRes.ok ||  
       !skillsRes.ok ||
       !servicesLargeRes.ok ||
-      !servicesFormRes.ok
+      !servicesFormRes.ok ||
+      !stackedSliderRes.ok
     ) 
       return null;
 
@@ -86,6 +89,7 @@ const fetchPageData = async (slug: string) => {
     const skillsData = await skillsRes.json();
     const servicesLargeData = await servicesLargeRes.json();
     const servicesFormData = await servicesFormRes.json();
+    const stackedSliderData = await stackedSliderRes.json();
 
     // Extract page data
     const pageData = data?.data?.length > 0 ? data.data[0] : null;
@@ -193,6 +197,19 @@ const fetchPageData = async (slug: string) => {
       if (servicesFormBlock) {
         pageData.Blocks = (pageData.Blocks || []).map((block: any) =>
           block.__component === "blocks.services-form" ? servicesFormBlock : block
+        );
+      }
+    }
+
+    const stackedSliderPageData = stackedSliderData?.data?.length > 0 ? stackedSliderData.data[0] : null;
+    if (stackedSliderPageData?.Blocks) {
+      const stackedSliderBlock = stackedSliderPageData.Blocks.find(
+        (block: any) => block.__component === "blocks.stacked-slider"
+      );
+
+      if (stackedSliderBlock) {
+        pageData.Blocks = (pageData.Blocks || []).map((block: any) =>
+          block.__component === "blocks.stacked-slider" ? stackedSliderBlock : block
         );
       }
     }
