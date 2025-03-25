@@ -7,19 +7,18 @@ interface HeroProps {
   Title?: string;
   SubText?: string;
   TypewriterTexts?: Array<{ id: number; Text: string }>; 
-  BackgroundImage?: { url: string };
+  BackgroundImageUrl?: string;
 }
 
-const HeroComponent: React.FC<HeroProps> = ({ Title, SubText, TypewriterTexts = [], BackgroundImage }) => {
+const HeroComponent: React.FC<HeroProps> = ({ Title, SubText, TypewriterTexts = [], BackgroundImageUrl }) => {
   const isMobile = useIsMobile();
   const typewriterTextsArray = TypewriterTexts.map((item) => item.Text);
 
-  // BackgroundImage?.url || 
   return (
     <div className={styles.articleHeroContainer}>
       <div className={styles.articleImageWrapper}>
         <img
-          src={"/microcontroller.webp"}
+          src={BackgroundImageUrl}
           alt="background"
           className={styles.articleBackgroundImage}
         />

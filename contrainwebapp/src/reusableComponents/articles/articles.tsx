@@ -1,6 +1,5 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import ArticleComponent from '@/reusableComponents/article/article';
 import styles from './articles.module.css';
 
