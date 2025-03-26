@@ -1,6 +1,5 @@
 'use client';
 
-import useIsMobile from '@/hooks/useIsMobile';
 import styles from './article.module.css';
 
 interface CategoryItem {
@@ -18,11 +17,11 @@ interface ArticleItem {
 }
 
 const ArticleComponent: React.FC<ArticleItem> = ({ Image, Author, Date, Categories = [], Title, Text }) => {
-  const isMobile = useIsMobile(); // Default breakpoint is 768px
-
   return (
     <div className={styles.articleContainer}>
-      <img src={Image} alt="article" className={styles.articleImage} />
+      <div className={styles.articleImageWrapper}>
+        <img src={Image} alt="article" className={styles.articleImage} />
+      </div>
       <div className={styles.articleTextContent}>
         <div className={styles.articleHeader}>
           <p>by {Author}</p>

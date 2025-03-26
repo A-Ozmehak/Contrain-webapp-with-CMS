@@ -6,12 +6,38 @@
     height: 450px;
 }
 
+.articleImageWrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    height: 200px;
+  }
+
 .articleImage {
     width: 100%;
-    height: 200px;
+    height: 100%;
     object-fit: cover;
-    border-radius: 10px;
+    transition: transform 0.8s ease;
+    display: block;
 }
+
+.articleImageWrapper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color 0.8s ease;
+    border-radius: 10px;
+    z-index: 1;
+  }
+
+  .articleImageWrapper:hover .articleImage {
+    transform: scale(1.1);
+  }
+  
+  .articleImageWrapper:hover::after {
+    background-color: rgba(0, 0, 0, 0.45);
+  }
 
 .articleTextContent {
     padding: 15px;
