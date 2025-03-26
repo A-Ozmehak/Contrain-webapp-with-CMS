@@ -61,7 +61,8 @@ const fetchPageData = async (slug: string) => {
 
     // General page data URL (fetches everything)
     const apiUrl = getStrapiURL(`/api/pages?populate=*&filters[Slug][$eq]=${formattedSlug}`);
-    const heroDataUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.hero][populate][TypewriterTexts][populate]=*`);
+    const heroDataUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.hero][populate][BackgroundImage]=true&populate[Blocks][on][blocks.hero][populate][TypewriterTexts]=true
+    `);
     const sliderImagesUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.slider][populate][Images][populate]=*`);
     const ourServicesUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.our-services][populate][Service][populate]=*`);
     const aboutUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.about][populate][AboutKeyPoints][populate]=*&populate[Blocks][on][blocks.about][populate][AboutImages][populate]=*`);
@@ -116,16 +117,26 @@ const fetchPageData = async (slug: string) => {
 
     // Extract hero block data
     const heroPageData = heroData?.data?.length > 0 ? heroData.data[0] : null;
-
     if (heroPageData?.Blocks) {
-      const heroBlocks = heroPageData.Blocks.filter(
+      const heroBlock = heroPageData.Blocks.find(
         (block: any) => block.__component === "blocks.hero"
       );
-
-      if (heroBlocks.length > 0) {
-        // Maintain the original order of Blocks
-        pageData.Blocks = (pageData.Blocks || []).map((block: any) =>
-          block.__component === "blocks.hero" ? heroBlocks[0] : block
+    
+      if (heroBlock) {
+        // 🖼️ Enrich the BackgroundImage
+        const imageFile = heroBlock.BackgroundImage;
+        const backgroundImageUrl = getStrapiMedia(
+          imageFile?.formats?.medium?.url || imageFile?.url || "/fallback-hero.webp"
+        );
+    
+        // 🔄 Replace the block in the pageData and inject enriched BackgroundImage
+        pageData.Blocks = pageData.Blocks.map((block: any) =>
+          block.__component === "blocks.hero"
+            ? {
+                ...heroBlock,
+                BackgroundImage: backgroundImageUrl,
+              }
+            : block
         );
       }
     }

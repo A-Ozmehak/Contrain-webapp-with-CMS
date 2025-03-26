@@ -3,7 +3,8 @@ import { getStrapiURL, getStrapiMedia } from '@/utils';
 // ✅ Fetch home page data
 const fetchHomePageData = async () => {
     const apiUrl = getStrapiURL(`/api/pages?populate=*&filters[Slug][$eq]=/`);
-    const heroDataUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.hero][populate][TypewriterTexts][populate]=*`);
+    const heroDataUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.hero][populate][BackgroundImage]=true&populate[Blocks][on][blocks.hero][populate][TypewriterTexts]=true
+`);
     const sliderImagesUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.slider][populate][Images][populate]=*`);
     const ourServicesUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.our-services][populate][Service][populate]=*`);
     const aboutUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.about][populate][AboutKeyPoints][populate]=*&populate[Blocks][on][blocks.about][populate][AboutImages][populate]=*`);
@@ -50,10 +51,22 @@ const fetchHomePageData = async () => {
       const heroBlock = heroPageData.Blocks.find(
         (block: any) => block.__component === "blocks.hero"
       );
-  
+    
       if (heroBlock) {
+        // 🖼️ Enrich the BackgroundImage
+        const imageFile = heroBlock.BackgroundImage;
+        const backgroundImageUrl = getStrapiMedia(
+          imageFile?.formats?.medium?.url || imageFile?.url || "/fallback-hero.webp"
+        );
+    
+        // 🔄 Replace the block in the pageData and inject enriched BackgroundImage
         pageData.Blocks = pageData.Blocks.map((block: any) =>
-          block.__component === "blocks.hero" ? heroBlock : block
+          block.__component === "blocks.hero"
+            ? {
+                ...heroBlock,
+                BackgroundImage: backgroundImageUrl,
+              }
+            : block
         );
       }
     }
