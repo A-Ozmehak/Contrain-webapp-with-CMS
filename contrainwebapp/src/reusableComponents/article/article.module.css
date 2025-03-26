@@ -3,7 +3,8 @@
     border: 1px solid var(--white);
     border-radius: 10px;
     width: 300px;
-    height: 450px;
+    height: 480px;
+    max-height: 500px;
 }
 
 .articleImageWrapper {
@@ -20,6 +21,17 @@
     transition: transform 0.8s ease;
     display: block;
 }
+
+.articleAuthor {
+  font-style: italic;
+}
+
+  .articleCategory {
+    color: #969fa9;
+    font-size: 14px;
+    font-weight: 300;
+    margin: 5px 0;
+  }
 
 .articleImageWrapper::after {
     content: '';
@@ -45,6 +57,16 @@
 
 .articleTextContent h3 {
     font-size: 30px;
+}
+
+.articleDescription {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;       /* 🔥 Limits text to 2 lines */
+  -webkit-box-orient: vertical;
+  color: #8aaec0;
+  font-size: 16px;
 }
 
 .articleHeader {

@@ -47,7 +47,7 @@ const fetchArticlePageData = async () => {
         Date: item.Date
           ? new Date(item.Date).toLocaleDateString("sv-SE")
           : "",
-        Categories: item.Categories || [],
+        Category: item.Category || "Uncategorized",
         Title: item.Title || "No Title",
         Text: item.Text || "No content available.",
       };

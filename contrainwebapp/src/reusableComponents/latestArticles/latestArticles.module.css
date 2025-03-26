@@ -31,22 +31,26 @@
     flex-shrink: 0;
   }
   
-  .latestArticleText {
+  .latestArticleTextContent {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     width: 200px;
     height: 77px;
     overflow: hidden;
   }
   
-  .latestArticleText p {
+  .latestArticleTextContent p {
     margin: 0;
     font-size: 0.9rem;
     line-height: 1.3;
-    color: var(--white);
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .latestArticleText {
+    color: #86a7b9;
   }
   

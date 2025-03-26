@@ -11,12 +11,12 @@ interface ArticleItem {
   Image: string;
   Author: string;
   Date: string
-  Categories: CategoryItem[];
+  Category: string;
   Title: string;
   Text: string;
 }
 
-const ArticleComponent: React.FC<ArticleItem> = ({ Image, Author, Date, Categories = [], Title, Text }) => {
+const ArticleComponent: React.FC<ArticleItem> = ({ Image, Author, Date, Category, Title, Text }) => {
   return (
     <div className={styles.articleContainer}>
       <div className={styles.articleImageWrapper}>
@@ -24,12 +24,10 @@ const ArticleComponent: React.FC<ArticleItem> = ({ Image, Author, Date, Categori
       </div>
       <div className={styles.articleTextContent}>
         <div className={styles.articleHeader}>
-          <p>by {Author}</p>
+          <p className={styles.articleAuthor}>by {Author}</p>
           <p>{Date}</p>
         </div>
-        {Categories.map((category) => ( 
-          <p key={category.id}>{category.Category}</p>
-        ))}
+        <p className={styles.articleCategory}>{Category}</p>
         <h3>{Title}</h3>
         <p className={styles.articleDescription}>{Text}</p>
         <button className={styles.articleButton}>Läs mer</button>

@@ -13,7 +13,7 @@ interface CategoryItem {
     Image: string;
     Author: string;
     Date: string;
-    Categories: CategoryItem[];
+    Category: string;
     Title: string;
     Text: string;
   }
@@ -26,9 +26,11 @@ interface CategoryItem {
     return (
       <div className={styles.articlesContainer}>
         {articles.length > 0 ? (
-          articles.map((article) => (
-            <ArticleComponent key={article.id} {...article} />
-          ))
+          [...articles]
+            .sort((a, b) => new Date(b.Date).getTime() - new Date(a.Date).getTime())
+            .map((article) => (
+              <ArticleComponent key={article.id} {...article} />
+            ))
         ) : (
           <p>No articles found.</p>
         )}

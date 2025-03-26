@@ -34,14 +34,17 @@ const LatestArticlesComponent: React.FC<LatestArticles> = ({ articles = [] }) =>
     <div className={styles.latestArticlesContainer}>
       <h4>Senaste artiklar</h4>
       <div className={styles.latestArticles}>
-        {articles.map((item) => (
-          <div key={item.id} className={styles.articleItem}>
-            <img src={item.Image} alt='' />
-            <div className={styles.latestArticleText}>
-              <p>{item.Date}</p>
-              <p>{item.Text}</p>
+        {articles
+          .sort((a, b) => new Date(b.Date).getTime() - new Date(a.Date).getTime())
+          .slice(0, 5)
+          .map((item) => (
+            <div key={item.id} className={styles.articleItem}>
+              <img src={item.Image} alt='' />
+              <div className={styles.latestArticleTextContent}>
+                <p>{item.Date}</p>
+                <p className={styles.latestArticleText}>{item.Text}</p>
+              </div>
             </div>
-          </div>
         ))}
       </div>
     </div>
