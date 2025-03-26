@@ -8,21 +8,6 @@ import 'swiper/css/autoplay';
 import 'swiper/css/navigation';
 import styles from './slider.module.css';
 
-interface ImageFormat {
-  url: string;
-}
-
-interface ImageObject {
-  id: number;
-  url: string;
-  formats?: {
-    thumbnail?: ImageFormat;
-    small?: ImageFormat;
-    medium?: ImageFormat;
-    large?: ImageFormat;
-  };
-}
-
 interface SliderProps {
   Images: Array<{
     id: number;
@@ -30,7 +15,7 @@ interface SliderProps {
     Alt?: string;
     HoverTitle?: string;
     HoverDescription?: string;
-    Image: ImageObject[];
+    image: string; // Image URL as a string
   }>;
 }
 
@@ -50,13 +35,13 @@ const SliderComponent: React.FC<SliderProps> = ({ Images = [] }) => {
         }}
         className={styles.swiper}
       >
-        {Images.map((item) => (
-          <SwiperSlide key={item.id} className={styles.swiperSlide}>
-            {item.Image.map((img) => (
-              <a key={img.id} href={item.Url || '#'} className={styles.imageLink}>
+        {Images.length > 0 ? (
+          Images.map((item) => (
+            <SwiperSlide key={item.id} className={styles.swiperSlide}>
+              <a href={item.Url || '#'} className={styles.imageLink}>
                 <div className={styles.sliderImageWrapper}>
                   <img
-                    src={'/microcontroller.webp'}
+                    src={item.image || '/microservices.webp'}
                     alt={item.Alt || 'Image'}
                     className={styles.sliderImage}
                   />
@@ -66,9 +51,11 @@ const SliderComponent: React.FC<SliderProps> = ({ Images = [] }) => {
                   </div>
                 </div>
               </a>
-            ))}
-          </SwiperSlide>
-        ))}
+            </SwiperSlide>
+          ))
+        ) : (
+          <p>No images available</p>  // Show a message when no images are available
+        )}
       </Swiper>
     </div>
   );

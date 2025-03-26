@@ -57,6 +57,24 @@ const BlockManager: React.FC<BlockManagerProps> = ({ blocks }) => {
           return null;
         }
 
+        if (block.__component === 'blocks.slider') {
+          const slides = (block.Images || []).map((item: any) => {
+            return {
+              image: item.Image,
+              HoverTitle: item.HoverTitle,
+              HoverDescription: item.HoverDescription,
+              Url: item.Url,
+            };
+          });
+        
+          return (
+            <Component
+              key={`${block.__component}-${block.id}`}
+              Images={slides}
+            />
+          );
+        }
+
         // 🔹 Fix "Service" → "Services"
         if (block.__component === 'blocks.our-services') {
           return (
@@ -89,7 +107,21 @@ const BlockManager: React.FC<BlockManagerProps> = ({ blocks }) => {
           );
         }
 
-        // 🔹 Default render
+        if (block.__component === 'blocks.printing-form') {
+
+          return (
+            <Component
+              key={`${block.__component}-${block.id}`}
+              {...block}
+              MaterialOptions={block.MaterialOptions || []}
+              ColorOptions={block.ColorOptions || []}
+              DeliveryTimeOptions={block.DeliveryTimeOptions || []}
+              ExtraServicesOptions={block.ExtraServicesOptions || []}
+            />
+          );
+        }
+
+        // 🔹 Default render for all other blocks
         return (
           <Component key={`${block.__component}-${block.id}`} {...block} />
         );
@@ -97,6 +129,7 @@ const BlockManager: React.FC<BlockManagerProps> = ({ blocks }) => {
     </div>
   );
 };
+
 
 
 export default BlockManager;

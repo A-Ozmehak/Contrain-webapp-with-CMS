@@ -22,27 +22,40 @@
     text-align: start;
     width: 100%;
     max-width: 885px;
-    color: var(--white);
+    color: rgba(100,125,137,1);
 }
 
 .printingFormGroup input {
     font-size: 1.2rem;
     padding: 0.5rem;
     margin-bottom: 1rem;
-    background-color: var(--white);
+    background-color: rgba(129,144,160,0.13);
     color: var(--black);
     width: 100%;
     max-width: 885px;
+}
+
+.printingFormGroup input::placeholder {
+    color: var(--white);
+}
+
+.printingFormGroup textarea::placeholder {
+    color: var(--white);
+}
+
+.printingFormGroup input[type="date"] {
+    color: var(--white);
 }
 
 .printingFormGroup textarea {
     font-size: 1.2rem;
     padding: 0.5rem;
     margin-bottom: 1rem;
-    background-color: var(--white);
+    background-color:rgba(129,144,160,0.13);
     color: var(--black);
     width: 100%;
     max-width: 885px;
+    height: 300px;
 }
 
 .printingFormGroup .file {
@@ -68,3 +81,45 @@
     background-color: #4F9E5D;
     border: 1px solid var(--purple);
 }
+
+.printingFormSelect {
+    width: 100%;
+    max-width: 885px;
+    margin: 5px 0 10px 0;
+}
+
+.printingFormSelect select {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    background-color: rgba(129,144,160,0.13);
+    color: var(white);
+    border: 0.2px solid var(--white);
+    cursor: pointer;
+    width: 100%;
+    max-width: 885px;
+}
+
+
+.printingFormRadio {
+    display: flex;    
+    width: 100%;
+    max-width: 885px;
+    gap: 20px; 
+    margin: 5px 0 10px 0;
+  }
+  
+  .printingFormRadioGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+  }
+  
+  .printingFormRadioGroup input[type="radio"] {
+    margin-bottom: 5px;
+  }
+  
+  .printingFormRadioGroup label {
+    font-size: 16px;
+    font-weight: normal;
+  }

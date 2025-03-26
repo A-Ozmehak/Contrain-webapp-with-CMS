@@ -1,5 +1,4 @@
 'use client';
-import useIsMobile from '@/hooks/useIsMobile';
 import styles from './ourServices.module.css';
 
 interface ServiceItem {
@@ -17,8 +16,6 @@ interface OurServicesProps {
 }
 
 const OurServicesComponent: React.FC<OurServicesProps> = ({ Title, SubText, Services = [] }) => {
-    const isMobile = useIsMobile(); // Detect if mobile    
-
     return (
         <div className={styles.ourServicesContainer}>
             <div className={styles.ourServicesHeader}>

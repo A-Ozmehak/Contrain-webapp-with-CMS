@@ -1,42 +1,57 @@
 import { getStrapiURL, getStrapiMedia } from '@/utils';
 import BlockManager from '@/components/shared/BlockManager';
 
-export async function generateMetadata(slug: string) {
-  try {
-    const formattedSlug = slug.startsWith('/') ? slug : `/${slug}`;
+// export async function generateMetadata(slug: any) {
+//   try {
+//     // Check if the slug is a Promise (which means it's not resolved yet)
+//     if (slug instanceof Promise) {
+//       slug = await slug;
+//     }
 
-    const res = await fetch(
-      getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate=Seo.MetaImage`),
-      { cache: 'no-store' }
-    );
-    const json = await res.json();
-    const seo = json?.data?.[0]?.Seo;
+//     // Log the resolved slug
+//     console.log('Resolved slug:', slug);
 
-    return {
-      title: seo?.MetaTitle || 'Contrain – Prototyping Experts',
-      description: seo?.MetaDescription || '',
-      openGraph: {
-        title: seo?.MetaTitle,
-        description: seo?.MetaDescription,
-        images: seo?.MetaImage?.url ? [getStrapiMedia(seo.MetaImage.url)] : [],
-        url: 'https://www.contrain.se/',
-        type: 'website',
-      },
-      twitter: {
-        card: 'summary_large_image',
-        title: seo?.MetaTitle,
-        description: seo?.MetaDescription,
-        images: seo?.MetaImage?.url ? [getStrapiMedia(seo.MetaImage.url)] : [],
-      },
-      robots: seo?.PreventIndexing ? 'noindex, nofollow' : 'index, follow',
-    };
-  } catch (err) {
-    console.error('Failed to generate metadata', err);
-    return {
-      title: 'Contrain',
-    };
-  }
-}
+//     if (typeof slug !== 'string') {
+//       throw new Error('slug is not a string');
+//     }
+
+//     const formattedSlug = slug.startsWith('/') ? slug : `/${slug}`;
+
+//     const res = await fetch(
+//       getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate=Seo.MetaImage`),
+//       { cache: 'no-store' }
+//     );
+//     const json = await res.json();
+//     const seo = json?.data?.[0]?.Seo;
+
+//     // Handle null or missing MetaImage
+//     const metaImageUrl = seo?.MetaImage?.url ? getStrapiMedia(seo.MetaImage.url) : null;
+
+//     return {
+//       title: seo?.MetaTitle || 'Contrain – Prototyping Experts',
+//       description: seo?.MetaDescription || '',
+//       openGraph: {
+//         title: seo?.MetaTitle,
+//         description: seo?.MetaDescription,
+//         images: metaImageUrl ? [metaImageUrl] : [],
+//         url: 'https://www.contrain.se/',
+//         type: 'website',
+//       },
+//       twitter: {
+//         card: 'summary_large_image',
+//         title: seo?.MetaTitle,
+//         description: seo?.MetaDescription,
+//         images: metaImageUrl ? [metaImageUrl] : [],
+//       },
+//       robots: seo?.PreventIndexing ? 'noindex, nofollow' : 'index, follow',
+//     };
+//   } catch (err) {
+//     console.error('Failed to generate metadata', err);
+//     return {
+//       title: 'Contrain',
+//     };
+//   }
+// }
 
 
 const fetchPageData = async (slug: string) => {
@@ -54,9 +69,10 @@ const fetchPageData = async (slug: string) => {
     const servicesLargeUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.services-large][populate][Services][populate]=*`);
     const servicesFormUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.services-form][populate]=*`);
     const stackedSliderUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.stacked-slider][populate][Images][populate]=*`);
+    const printingFormUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.printing-form][populate][MaterialOptions]=*&populate[Blocks][on][blocks.printing-form][populate][ColorOptions]=*&populate[Blocks][on][blocks.printing-form][populate][DeliveryTimeOptions]=*&populate[Blocks][on][blocks.printing-form][populate][ExtraServicesOptions]=*`);
 
     // Fetch both general page data and hero-specific data in parallel
-    const [res, heroRes, sliderRes, ourServicesRes, aboutRes, skillsRes, servicesLargeRes, servicesFormRes, stackedSliderRes] = await Promise.all([
+    const [res, heroRes, sliderRes, ourServicesRes, aboutRes, skillsRes, servicesLargeRes, servicesFormRes, stackedSliderRes, printingFormRes] = await Promise.all([
       fetch(apiUrl, { cache: 'no-store' }),
       fetch(heroDataUrl, { cache: 'no-store' }),
       fetch(sliderImagesUrl, { cache: 'no-store' }),
@@ -66,6 +82,7 @@ const fetchPageData = async (slug: string) => {
       fetch(servicesLargeUrl, { cache: 'no-store' }),
       fetch(servicesFormUrl, { cache: 'no-store' }),
       fetch(stackedSliderUrl, { cache: 'no-store' }),
+      fetch(printingFormUrl, { cache: 'no-store' }),
     ]);
 
     if (
@@ -77,7 +94,8 @@ const fetchPageData = async (slug: string) => {
       !skillsRes.ok ||
       !servicesLargeRes.ok ||
       !servicesFormRes.ok ||
-      !stackedSliderRes.ok
+      !stackedSliderRes.ok ||
+      !printingFormRes.ok
     ) 
       return null;
 
@@ -90,10 +108,11 @@ const fetchPageData = async (slug: string) => {
     const servicesLargeData = await servicesLargeRes.json();
     const servicesFormData = await servicesFormRes.json();
     const stackedSliderData = await stackedSliderRes.json();
+    const printingFormData = await printingFormRes.json();
 
     // Extract page data
     const pageData = data?.data?.length > 0 ? data.data[0] : null;
-    if (!pageData) return null; // If no data is found, return null
+    if (!pageData) return null;
 
     // Extract hero block data
     const heroPageData = heroData?.data?.length > 0 ? heroData.data[0] : null;
@@ -112,67 +131,67 @@ const fetchPageData = async (slug: string) => {
     }
 
      // Extract and merge slider block data
-  const sliderPageData = sliderData?.data?.length > 0 ? sliderData.data[0] : null;
-  if (sliderPageData?.Blocks) {
-    const sliderBlocks = sliderPageData.Blocks.filter(
-      (block: any) => block.__component === "blocks.slider"
-    );
-
-    if (sliderBlocks.length > 0) {
-      pageData.Blocks = (pageData.Blocks || []).map((block: any) =>
-        block.__component === "blocks.slider" ? sliderBlocks[0] : block
+    const sliderPageData = sliderData?.data?.length > 0 ? sliderData.data[0] : null;
+    if (sliderPageData?.Blocks) {
+      const sliderBlocks = sliderPageData.Blocks.filter(
+        (block: any) => block.__component === "blocks.slider"
       );
+
+      if (sliderBlocks.length > 0) {
+        pageData.Blocks = (pageData.Blocks || []).map((block: any) =>
+          block.__component === "blocks.slider" ? sliderBlocks[0] : block
+        );
+      }
     }
-  }
 
-  const ourServicesPageData = ourServicesData?.data?.length > 0 ? ourServicesData.data[0] : null;
-  if (ourServicesPageData?.Blocks) {
-    const ourServicesBlocks = ourServicesPageData.Blocks.filter(
-      (block: any) => block.__component === "blocks.our-services"
-    );
-
-    if (ourServicesBlocks.length > 0) {
-      pageData.Blocks = (pageData.Blocks || []).map((block: any) =>
-        block.__component === "blocks.our-services" ? ourServicesBlocks[0] : block
+    const ourServicesPageData = ourServicesData?.data?.length > 0 ? ourServicesData.data[0] : null;
+    if (ourServicesPageData?.Blocks) {
+      const ourServicesBlocks = ourServicesPageData.Blocks.filter(
+        (block: any) => block.__component === "blocks.our-services"
       );
-    }
-  }
 
-  const aboutPageData = aboutData?.data?.length > 0 ? aboutData.data[0] : null;
-  if (aboutPageData?.Blocks) {
-    const aboutBlocks = aboutPageData.Blocks.find((block:any) => block.__component === "blocks.about");
-    
-    if (aboutBlocks) {
-      pageData.Blocks = (pageData.Blocks || []).map((block: any) => {
-        if (block.__component === "blocks.about") {
-          return {
-            ...block,
-            AboutKeyPoints: aboutBlocks.AboutKeyPoints || [],
-            AboutImages: aboutBlocks.AboutImages || [],
-          };
-        }
-        return block;
-      });
+      if (ourServicesBlocks.length > 0) {
+        pageData.Blocks = (pageData.Blocks || []).map((block: any) =>
+          block.__component === "blocks.our-services" ? ourServicesBlocks[0] : block
+        );
+      }
     }
-  }
-  
-  const skillsPageData = skillsData?.data?.length > 0 ? skillsData.data[0] : null;
-    if (skillsPageData?.Blocks) {
-      const skillsBlock = skillsPageData.Blocks.find((block: any) => block.__component === "blocks.skills");
 
-      if (skillsBlock) {
+    const aboutPageData = aboutData?.data?.length > 0 ? aboutData.data[0] : null;
+    if (aboutPageData?.Blocks) {
+      const aboutBlocks = aboutPageData.Blocks.find((block:any) => block.__component === "blocks.about");
+      
+      if (aboutBlocks) {
         pageData.Blocks = (pageData.Blocks || []).map((block: any) => {
-          if (block.__component === "blocks.skills") {
+          if (block.__component === "blocks.about") {
             return {
               ...block,
-              Skills: skillsBlock.Skills || [],
-              SkillImage: skillsBlock.SkillImage || [],
+              AboutKeyPoints: aboutBlocks.AboutKeyPoints || [],
+              AboutImages: aboutBlocks.AboutImages || [],
             };
           }
           return block;
         });
       }
     }
+  
+    const skillsPageData = skillsData?.data?.length > 0 ? skillsData.data[0] : null;
+      if (skillsPageData?.Blocks) {
+        const skillsBlock = skillsPageData.Blocks.find((block: any) => block.__component === "blocks.skills");
+
+        if (skillsBlock) {
+          pageData.Blocks = (pageData.Blocks || []).map((block: any) => {
+            if (block.__component === "blocks.skills") {
+              return {
+                ...block,
+                Skills: skillsBlock.Skills || [],
+                SkillImage: skillsBlock.SkillImage || [],
+              };
+            }
+            return block;
+          });
+        }
+      }
 
     const servicesPageData = servicesLargeData?.data?.length > 0 ? servicesLargeData.data[0] : null;
 
@@ -211,6 +230,29 @@ const fetchPageData = async (slug: string) => {
         pageData.Blocks = (pageData.Blocks || []).map((block: any) =>
           block.__component === "blocks.stacked-slider" ? stackedSliderBlock : block
         );
+      }
+    }
+
+    const printingFormPageData = printingFormData?.data?.[0] || null;
+    if (!printingFormPageData) return null;
+
+    if (printingFormPageData) {
+      // Merge MaterialOptions, ColorOptions, DeliveryTimeOptions, and ExtraServicesOptions into the block data
+      const printingFormBlock = printingFormPageData.Blocks.find((block: any) => block.__component === 'blocks.printing-form');
+      
+      if (printingFormBlock) {
+        pageData.Blocks = pageData.Blocks.map((block: any) => {
+          if (block.__component === 'blocks.printing-form') {
+            return {
+              ...block,
+              MaterialOptions: printingFormBlock.MaterialOptions || [],
+              ColorOptions: printingFormBlock.ColorOptions || [],
+              DeliveryTimeOptions: printingFormBlock.DeliveryTimeOptions || [],
+              ExtraServicesOptions: printingFormBlock.ExtraServicesOptions || [],
+            };
+          }
+          return block;
+        });
       }
     }
 

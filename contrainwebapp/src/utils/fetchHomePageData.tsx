@@ -1,4 +1,4 @@
-import { getStrapiURL } from '@/utils';
+import { getStrapiURL, getStrapiMedia } from '@/utils';
 
 // ✅ Fetch home page data
 const fetchHomePageData = async () => {
@@ -58,58 +58,104 @@ const fetchHomePageData = async () => {
       }
     }
   
-    // 🔹 Merge Slider Block in Correct Position
-    const sliderPageData = sliderData?.data?.length > 0 ? sliderData.data[0] : null;
-    if (sliderPageData?.Blocks) {
-      const sliderBlock = sliderPageData.Blocks.find(
-        (block: any) => block.__component === "blocks.slider"
-      );
-  
-      if (sliderBlock) {
-        pageData.Blocks = pageData.Blocks.map((block: any) =>
-          block.__component === "blocks.slider" ? sliderBlock : block
+  const sliderPageData = sliderData?.data?.length > 0 ? sliderData.data[0] : null;
+  if (sliderPageData?.Blocks) {
+    const sliderBlock = sliderPageData.Blocks.find((block: any) => block.__component === "blocks.slider");
+    if (sliderBlock?.Images) {
+      const images = sliderBlock.Images.map((item: any) => {
+        const imageFile = Array.isArray(item.Image) ? item.Image[0] : item.Image;
+    
+        const imageUrl = getStrapiMedia(
+          imageFile?.formats?.medium?.url || imageFile?.url || '/microcontroller.webp'
         );
-      }
-    }
-  
-    // 🔹 Merge Our Services Block in Correct Position
-    const ourServicesPageData = ourServicesData?.data?.length > 0 ? ourServicesData.data[0] : null;
-    if (ourServicesPageData?.Blocks) {
-      const ourServicesBlock = ourServicesPageData.Blocks.find(
-        (block: any) => block.__component === "blocks.our-services"
+        
+        return {
+          id: item.id,
+          Url: item.Url,
+          Alt: item.Alt,
+          HoverTitle: item.HoverTitle,
+          HoverDescription: item.HoverDescription,
+          Image: imageUrl,
+        };
+      });
+    
+      pageData.Blocks = pageData.Blocks.map((block: any) =>
+        block.__component === 'blocks.slider'
+          ? { ...block, Images: images }
+          : block
       );
-  
-      if (ourServicesBlock) {
-        pageData.Blocks = pageData.Blocks.map((block: any) =>
-          block.__component === "blocks.our-services" ? ourServicesBlock : block
-        );
-      }
     }
-  
-    const aboutPageData = aboutData?.data?.length > 0 ? aboutData.data[0] : null;
-    if (aboutPageData?.Blocks) {
-      const aboutBlocks = aboutPageData.Blocks.find((block:any) => block.__component === "blocks.about");
-      
-      if (aboutBlocks) {
-        pageData.Blocks = (pageData.Blocks || []).map((block: any) => {
-          if (block.__component === "blocks.about") {
-            return {
+  }
+   
+     
+  // 🔹 Merge Our Services Block with full image URLs
+  const ourServicesPageData = ourServicesData?.data?.length > 0 ? ourServicesData.data[0] : null;
+  if (ourServicesPageData?.Blocks) {
+    const ourServicesBlock = ourServicesPageData.Blocks.find(
+      (block: any) => block.__component === "blocks.our-services"
+    );
+
+    if (ourServicesBlock) {
+      const enrichedServices = (ourServicesBlock.Service || []).map((service: any) => ({
+        id: service.id,
+        Text: service.Text,
+        Icon: service.Icon || null,
+        Url: service.Url,
+        Image: {
+          url: getStrapiMedia(
+            service.Image?.formats?.medium?.url || service.Image?.url || "/fallback.webp"
+          ),
+        },
+      }));
+
+      pageData.Blocks = pageData.Blocks.map((block: any) =>
+        block.__component === "blocks.our-services"
+          ? {
               ...block,
-              AboutKeyPoints: aboutBlocks.AboutKeyPoints || [],
-              AboutImages: aboutBlocks.AboutImages || [],
-            };
-          }
-          return block;
-        });
-      }
+              Title: ourServicesBlock.Title || "",
+              SubText: ourServicesBlock.SubText || "",
+              Service: enrichedServices,
+            }
+          : block
+      );
     }
+  }
   
+  // ✅ Merge About Block with full image URLs
+  const aboutPageData = aboutData?.data?.length > 0 ? aboutData.data[0] : null;
+  if (aboutPageData?.Blocks) {
+    const aboutBlock = aboutPageData.Blocks.find(
+      (block: any) => block.__component === "blocks.about"
+    );
+
+    if (aboutBlock) {
+      const enrichedImages = (aboutBlock.AboutImages || []).map((img: any) => ({
+        id: img.id,
+        ImageAltText: img.ImageAltText || "",
+        Image: getStrapiMedia(
+          img.Image?.formats?.medium?.url || img.Image?.url || "/fallback-image.webp"
+        ),
+      }));
+
+      pageData.Blocks = pageData.Blocks.map((block: any) =>
+        block.__component === "blocks.about"
+          ? {
+              ...block,
+              Title: aboutBlock.Title || "",
+              AboutText: aboutBlock.AboutText || "",
+              AboutKeyPoints: aboutBlock.AboutKeyPoints || [],
+              AboutImages: enrichedImages,
+            }
+          : block
+      );
+    }
+  }
+
     const skillsPageData = skillsData?.data?.length > 0 ? skillsData.data[0] : null;
       if (skillsPageData?.Blocks) {
         const skillsBlock = skillsPageData.Blocks.find((block: any) => block.__component === "blocks.skills");
   
         if (skillsBlock) {
-          // 🔹 Find existing "blocks.skills" and merge Skills & SkillImage
           pageData.Blocks = (pageData.Blocks || []).map((block: any) => {
             if (block.__component === "blocks.skills") {
               return {
