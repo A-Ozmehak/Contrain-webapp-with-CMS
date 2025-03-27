@@ -1,6 +1,38 @@
 import { getStrapiURL, getStrapiMedia } from "@/utils";
 
-const fetchArticlePageData = async () => {
+export interface ArticleItem {
+  id: number;
+  Image: string;
+  Author: string;
+  Date: string;
+  Category: string;
+  Title: string;
+  Text: string;
+  Tags: string; // comma-separated tag string
+}
+
+export interface TagItem {
+  id: number;
+  name: string;
+}
+
+export interface CategoryItem {
+  id: number;
+  name: string;
+}
+
+export interface ArticlePageData {
+  heroData: {
+    Title?: string;
+    SubText?: string;
+    // BackgroundImageUrl?: string | null;
+  };
+  articles: ArticleItem[];
+  categories: CategoryItem[];
+  tags: TagItem[];
+}
+
+const fetchArticlePageData = async (): Promise<ArticlePageData | null> => {
   const apiUrl = getStrapiURL(`/api/article-page?populate[Hero][populate]=*`);
   const articlesUrl = getStrapiURL(`/api/articles?populate=*`); 
   const categoriesUrl = getStrapiURL(`/api/article-categories?populate=*`);
@@ -23,7 +55,6 @@ const fetchArticlePageData = async () => {
     const articlePageData = pageJson.data;
     if (!articlePageData) return null;
 
-    // ✅ Extract Hero with image URL
     const heroRaw = articlePageData.Hero || null;
     const heroData = {
       ...heroRaw,
@@ -32,8 +63,7 @@ const fetchArticlePageData = async () => {
         : null,
     };
 
-    // ✅ Format articles with full image URL
-    const formattedArticles = articlesJson.data.map((item: any) => {
+    const formattedArticles: ArticleItem[] = articlesJson.data.map((item: any) => {
       const rawImageUrl =
         item.Image?.formats?.medium?.url || item.Image?.url || "";
       const fullImageUrl = rawImageUrl
@@ -50,16 +80,36 @@ const fetchArticlePageData = async () => {
         Category: item.Category || "Uncategorized",
         Title: item.Title || "No Title",
         Text: item.Text || "No content available.",
+        Tags: item.Tags || "",
       };
     });
 
-        // ✅ Format categories
-        const formattedCategories = categoriesJson.data.map((cat: any) => ({
-          id: cat.id,
-          name: cat.Category || "Unnamed",
-        }));
+    // ✅ Extract unique tag list
+    const rawTags = formattedArticles
+      .map((article) => article.Tags)
+      .filter(Boolean)
+      .flatMap((tagString) =>
+        tagString.split(",").map((tag) => tag.trim())
+      );
 
-    return { heroData, articles: formattedArticles, categories: formattedCategories, };
+    const uniqueTags = [...new Set(rawTags)];
+
+    const formattedTags: TagItem[] = uniqueTags.map((tag, index) => ({
+      id: index,
+      name: tag,
+    }));
+
+    const formattedCategories: CategoryItem[] = categoriesJson.data.map((cat: any) => ({
+      id: cat.id,
+      name: cat.Category || "Unnamed",
+    }));
+
+    return {
+      heroData,
+      articles: formattedArticles,
+      categories: formattedCategories,
+      tags: formattedTags,
+    };
   } catch (error) {
     console.error("Error fetching Article Page:", error);
     return null;

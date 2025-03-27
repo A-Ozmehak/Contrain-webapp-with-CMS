@@ -29,13 +29,13 @@ const TagsComponent: React.FC<TagProps> = ({ tags = [] }) => {
   if (!showComponent) return null;
 
   return (
-    <div className={styles.categoryContainer}>
+    <div className={styles.articleTagsContainer}>
       <h4>Taggar</h4>
       <div>
         {tags.map((item) => (
-          <ul key={item.id} className={styles.categoryItem}>
-            <li>{item.name}</li>
-          </ul>
+          <a key={item.id} className={styles.tagItem}>
+            <p>{item.name}</p>
+          </a>
         ))}
       </div>
     </div>

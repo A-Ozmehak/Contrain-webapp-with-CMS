@@ -1,0 +1,10 @@
+.articlePageContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.articlesSidebar {
+    display: flex;
+    flex-direction: column;
+}

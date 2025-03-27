@@ -10,9 +10,15 @@ interface CategoryItem {
 
 interface CategoriesProps {
   categories: CategoryItem[];
+  selectedCategory: string | null;
+  onSelectCategory: (category: string | null) => void;
 }
 
-const CategoriesComponent: React.FC<CategoriesProps> = ({ categories = [] }) => {
+const CategoriesComponent: React.FC<CategoriesProps> = ({
+  categories = [],
+  selectedCategory,
+  onSelectCategory,
+}) => {
   const [showComponent, setShowComponent] = useState(true);
 
   useEffect(() => {
@@ -20,9 +26,8 @@ const CategoriesComponent: React.FC<CategoriesProps> = ({ categories = [] }) => 
       setShowComponent(window.innerWidth >= 1400);
     };
 
-    handleResize(); // Initial check
+    handleResize();
     window.addEventListener('resize', handleResize);
-
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
@@ -31,13 +36,23 @@ const CategoriesComponent: React.FC<CategoriesProps> = ({ categories = [] }) => 
   return (
     <div className={styles.categoryContainer}>
       <h4>Kategorier</h4>
-      <div>
+      <ul className={styles.categoryList}>
+        <li
+          onClick={() => onSelectCategory(null)}
+          className={selectedCategory === null ? styles.active : ""}
+        >
+          Alla
+        </li>
         {categories.map((item) => (
-          <ul key={item.id} className={styles.categoryItem}>
-            <li>{item.name}</li>
-          </ul>
+          <li
+            key={item.id}
+            onClick={() => onSelectCategory(item.name)}
+            className={selectedCategory === item.name ? styles.active : ""}
+          >
+            {item.name}
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 };
