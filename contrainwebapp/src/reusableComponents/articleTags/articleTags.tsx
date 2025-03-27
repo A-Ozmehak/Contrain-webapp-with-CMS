@@ -10,9 +10,15 @@ interface TagItem {
 
 interface TagProps {
   tags: TagItem[];
+  selectedTag: string | null;
+  onSelectTag: (tag: string | null) => void;
 }
 
-const TagsComponent: React.FC<TagProps> = ({ tags = [] }) => {
+const TagsComponent: React.FC<TagProps> = ({ 
+  tags = [], 
+  selectedTag,
+   onSelectTag 
+  }) => {
   const [showComponent, setShowComponent] = useState(true);
 
   useEffect(() => {
@@ -20,7 +26,7 @@ const TagsComponent: React.FC<TagProps> = ({ tags = [] }) => {
       setShowComponent(window.innerWidth >= 1400);
     };
 
-    handleResize(); // Initial check
+    handleResize();
     window.addEventListener('resize', handleResize);
 
     return () => window.removeEventListener('resize', handleResize);
@@ -31,11 +37,15 @@ const TagsComponent: React.FC<TagProps> = ({ tags = [] }) => {
   return (
     <div className={styles.articleTagsContainer}>
       <h4>Taggar</h4>
-      <div>
+      <div className={styles.tagList}>
         {tags.map((item) => (
-          <a key={item.id} className={styles.tagItem}>
-            <p>{item.name}</p>
-          </a>
+          <p
+            key={item.id}
+            onClick={() => onSelectTag(item.name)}
+            className={`${styles.tagItem} ${selectedTag === item.name ? styles.active : ""}`}
+          >
+            {item.name}
+          </p>
         ))}
       </div>
     </div>

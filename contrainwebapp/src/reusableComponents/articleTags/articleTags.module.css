@@ -1,19 +1,37 @@
 .articleTagsContainer {
     width: 335px;
     margin: 20px auto 0 auto;
-}
-
-.articleTagsContainer h4 {
+  }
+  
+  .articleTagsContainer h4 {
     font-size: 1.2rem;
     color: var(--white);
     margin-bottom: 0.5rem;
-}
+  }
 
-.tagItem {
-    margin: 0.5rem 0 0.5rem 0;
-}
-
-.tagItem p:hover {
-    color: var(--purple);
+  .tagList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .tagItem {
+    color: var(--white);
+    font-size: 1rem;
+    line-height: 1.4;
     cursor: pointer;
-}
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+  
+  .tagItem:hover {
+    color: var(--purple);
+    transform: translateX(4px);
+  }
+  
+  .tagItem.active {
+    font-weight: bold;
+    color: var(--purple);
+  }
+  

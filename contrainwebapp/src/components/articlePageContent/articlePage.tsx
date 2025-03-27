@@ -11,6 +11,7 @@ import { useState } from 'react';
 
 export default function ArticlePageClient({ data }: { data: Awaited<ReturnType<typeof fetchArticlePageData>> }) {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    const [selectedTag, setSelectedTag] = useState<string | null>(null);
   
     if (!data) {
       return <div>Error: Article Page data not found.</div>;
@@ -18,11 +19,28 @@ export default function ArticlePageClient({ data }: { data: Awaited<ReturnType<t
   
     const { heroData, articles, categories, tags } = data;
   
-    // ✅ Filter articles
-    const filteredArticles = selectedCategory
-      ? articles.filter((a) => a.Category === selectedCategory)
-      : articles;
-  
+    // Wrap setters to make them exclusive
+    const handleCategorySelect = (category: string | null) => {
+      setSelectedCategory(category);
+      setSelectedTag(null); // reset tag when category is picked
+    };
+
+    const handleTagSelect = (tag: string | null) => {
+      setSelectedTag(tag);
+      setSelectedCategory(null); // reset category when tag is picked
+    };
+
+    const filteredArticles = articles.filter((a) => {
+      if (selectedCategory) {
+        return a.Category === selectedCategory;
+      }
+      if (selectedTag) {
+        const tagList = a.Tags.split(',').map((tag) => tag.trim());
+        return tagList.includes(selectedTag);
+      }
+      return true; // show all if no filter
+    });
+
     return (
       <div>
         {heroData && <HeroComponent {...heroData} />}
@@ -35,9 +53,12 @@ export default function ArticlePageClient({ data }: { data: Awaited<ReturnType<t
             <CategoriesComponent
               categories={categories}
               selectedCategory={selectedCategory}
-              onSelectCategory={setSelectedCategory}
+              onSelectCategory={handleCategorySelect}
             />
-            <TagsComponent tags={tags} />
+            <TagsComponent 
+              tags={tags} 
+              selectedTag={selectedTag}
+              onSelectTag={handleTagSelect} />
           </div>
         </div>
       </div>
