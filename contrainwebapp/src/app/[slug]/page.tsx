@@ -1,57 +1,33 @@
 import { getStrapiURL, getStrapiMedia } from '@/utils';
 import BlockManager from '@/components/shared/BlockManager';
 
-// export async function generateMetadata(slug: any) {
-//   try {
-//     // Check if the slug is a Promise (which means it's not resolved yet)
-//     if (slug instanceof Promise) {
-//       slug = await slug;
-//     }
+export async function generateMetadata({ params }: { params: { slug?: string | string[] } }) {
+  const slugArray = Array.isArray(params.slug) ? params.slug : [params.slug].filter(Boolean);
+  const slug = slugArray.length > 0 ? `/${slugArray.join('/')}` : '/';
 
-//     // Log the resolved slug
-//     console.log('Resolved slug:', slug);
+  const res = await fetch(getStrapiURL(`/api/pages?filters[Slug][$eq]=${slug}&populate=Seo.MetaImage`), {
+    cache: 'no-store',
+  });
 
-//     if (typeof slug !== 'string') {
-//       throw new Error('slug is not a string');
-//     }
+  const json = await res.json();
+  const seo = json?.data?.[0]?.Seo;
+  const metaImageUrl = seo?.MetaImage?.url ? getStrapiMedia(seo.MetaImage.url) : null;
 
-//     const formattedSlug = slug.startsWith('/') ? slug : `/${slug}`;
+  return {
+    title: seo?.MetaTitle || 'Contrain – Prototyping Experts',
+    description: seo?.MetaDescription || '',
+    openGraph: {
+      title: seo?.MetaTitle,
+      description: seo?.MetaDescription,
+      images: metaImageUrl ? [metaImageUrl] : [],
+      url: `https://www.contrain.se${slug}`,
+      type: 'website',
+    },
+    robots: seo?.PreventIndexing ? 'noindex, nofollow' : 'index, follow',
+  };
+}
 
-//     const res = await fetch(
-//       getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate=Seo.MetaImage`),
-//       { cache: 'no-store' }
-//     );
-//     const json = await res.json();
-//     const seo = json?.data?.[0]?.Seo;
 
-//     // Handle null or missing MetaImage
-//     const metaImageUrl = seo?.MetaImage?.url ? getStrapiMedia(seo.MetaImage.url) : null;
-
-//     return {
-//       title: seo?.MetaTitle || 'Contrain – Prototyping Experts',
-//       description: seo?.MetaDescription || '',
-//       openGraph: {
-//         title: seo?.MetaTitle,
-//         description: seo?.MetaDescription,
-//         images: metaImageUrl ? [metaImageUrl] : [],
-//         url: 'https://www.contrain.se/',
-//         type: 'website',
-//       },
-//       twitter: {
-//         card: 'summary_large_image',
-//         title: seo?.MetaTitle,
-//         description: seo?.MetaDescription,
-//         images: metaImageUrl ? [metaImageUrl] : [],
-//       },
-//       robots: seo?.PreventIndexing ? 'noindex, nofollow' : 'index, follow',
-//     };
-//   } catch (err) {
-//     console.error('Failed to generate metadata', err);
-//     return {
-//       title: 'Contrain',
-//     };
-//   }
-// }
 
 
 const fetchPageData = async (slug: string) => {
@@ -277,11 +253,8 @@ const fetchPageData = async (slug: string) => {
 
 
 // ✅ Default export: Page Component
-export default async function Page(props: { params: { slug?: string | string[] } }) {
+export default async function Page({ params }: { params: { slug?: string | string[] } }) {
   try {
-    const { params } = await Promise.resolve(props); // ✅ Await params
-
-    // Ensure `params.slug` is always an array
     const slugArray = Array.isArray(params.slug) ? params.slug : [params.slug].filter(Boolean);
     const slug = slugArray.length > 0 ? `/${slugArray.join('/')}` : '/';
 
@@ -291,7 +264,13 @@ export default async function Page(props: { params: { slug?: string | string[] }
       return <div>Error: Page not found.</div>;
     }
 
-    return <BlockManager blocks={pageData.Blocks} />;
+    const slugId = `page-${slug.replace(/\//g, '-')}`;
+
+    return (
+      <div id={slugId}>
+        <BlockManager blocks={pageData.Blocks} />
+      </div>
+    );
   } catch (error) {
     return <div>Something went wrong. Please try again later.</div>;
   }

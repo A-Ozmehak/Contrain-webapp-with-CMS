@@ -1,6 +1,7 @@
 import BlockManager from '@/components/shared/BlockManager';
 import fetchHomePageData from '@/utils/fetchHomePageData';
 import { getStrapiURL, getStrapiMedia } from '@/utils';
+import styles from './page.module.css';
 
 export async function generateMetadata() {
   try {
@@ -21,12 +22,6 @@ export async function generateMetadata() {
         url: 'https://www.contrain.se/',
         type: 'website',
       },
-      twitter: {
-        card: 'summary_large_image',
-        title: seo?.MetaTitle,
-        description: seo?.MetaDescription,
-        images: seo?.MetaImage?.url ? [getStrapiMedia(seo.MetaImage.url)] : [],
-      },
       robots: seo?.PreventIndexing ? 'noindex, nofollow' : 'index, follow',
     };
   } catch (err) {
@@ -43,6 +38,11 @@ export default async function HomePage() {
   if (!pageData) {
     return <div>Error: Home data not found.</div>;
   }
+  
 
-  return <BlockManager blocks={pageData.Blocks} />;
+  return (
+    <div id="homePage">
+      <BlockManager blocks={pageData.Blocks} />
+    </div>
+  );
 }

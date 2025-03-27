@@ -1,19 +1,19 @@
 .heroContainer {
     position: relative;
     width: 100%;
-    height: auto;
     overflow: hidden;
 }
 
 .imageWrapper {
     position: relative;
-    width: 100%;
-    height: auto;
+    height: 100%;
+    min-height: 292px;
 }
 
 .backgroundImage {
     width: 100%;
-    height: auto;
+    height: 100%;
+    min-height: 292px;
     object-fit: cover;
 }
 

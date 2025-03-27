@@ -18,12 +18,13 @@ const HeroComponent: React.FC<HeroProps> = ({ Title, SubText, TypewriterTexts = 
   const typewriterTextsArray = TypewriterTexts.map((item) => item.Text);
 
   return (
-    <div className={styles.heroContainer}>
-      <div className={styles.imageWrapper}>
+    <div id="heroContainer" className={styles.heroContainer}>
+      <div id='heroImageWrapper' className={styles.imageWrapper}>
         <img
           src={BackgroundImage || '/microcontroller.webp'}
           alt="background"
           className={styles.backgroundImage}
+          id='heroImage'
         />
         <div className={styles.typewriterContainer}>
           {isMobile ? (
