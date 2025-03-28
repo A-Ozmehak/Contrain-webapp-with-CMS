@@ -53,12 +53,16 @@
     width: 100%;
     height: 41px;
     border: 1px solid #ccc;
+    background-color: rgba(129,144,160,0.13);
+    color: var(--white);
   }
 
   .servicesForm textarea {
     width: 100%;
     height: 270px;
     border: 1px solid #ccc;
+    background-color: rgba(129,144,160,0.13);
+    color: var(--white);
   }
   
   .servicesForm input 

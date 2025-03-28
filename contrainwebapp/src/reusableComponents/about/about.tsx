@@ -18,7 +18,7 @@ const AboutComponent: React.FC<AboutProps> = ({ Title, AboutText, AboutKeyPoints
         {AboutKeyPoints.map((keyPoint) => (
           <div key={keyPoint.id} className={styles.keyPoint}>
             <i className={keyPoint.Icon} />
-            <p>{keyPoint.Text}</p>
+            <p className={styles.aboutTextContent}>{keyPoint.Text}</p>
           </div>
         ))}
       </div>

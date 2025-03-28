@@ -17,7 +17,7 @@ const TextWithBackgroundImageComponent: React.FC<componentProps> = ({ SectionTit
     <div className={styles.sectionContainer}>
         <div className={styles.imageWrapper}>
             <img
-                src={BackgroundImage || '/section-background.jpg'}
+                src={BackgroundImage}
                 alt="background"
                 className={styles.backgroundImage}
             />

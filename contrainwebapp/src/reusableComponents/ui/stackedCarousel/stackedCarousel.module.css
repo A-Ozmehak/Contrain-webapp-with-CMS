@@ -83,6 +83,10 @@
     background: white;
     width: 1.5rem;
   }
+
+  .slideContent h3 {
+    font-size: 30px;
+  }
   
   /* Responsive Design */
   @media (max-width: 840px) {
