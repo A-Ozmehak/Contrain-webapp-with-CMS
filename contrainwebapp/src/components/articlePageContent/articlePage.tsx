@@ -8,10 +8,12 @@ import styles from "./articlePageContent.module.css";
 import CategoriesComponent from "@/reusableComponents/categories/categories";
 import TagsComponent from "@/reusableComponents/articleTags/articleTags";
 import { useState } from 'react';
+import CalenderComponent from "@/reusableComponents/ui/calender/calender";
 
 export default function ArticlePageClient({ data }: { data: Awaited<ReturnType<typeof fetchArticlePageData>> }) {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [selectedTag, setSelectedTag] = useState<string | null>(null);
+    const [date, setDate] = useState<Date>(new Date());
   
     if (!data) {
       return <div>Error: Article Page data not found.</div>;
@@ -59,6 +61,7 @@ export default function ArticlePageClient({ data }: { data: Awaited<ReturnType<t
               tags={tags} 
               selectedTag={selectedTag}
               onSelectTag={handleTagSelect} />
+            <CalenderComponent value={date} onChange={setDate} variant="gradient" />
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@
     border: 1px solid var(--white);
     border-radius: 10px;
     width: 300px;
-    height: 480px;
+    height: 490px;
     max-height: 500px;
 }
 
@@ -56,7 +56,7 @@
 }
 
 .articleTextContent h3 {
-    font-size: 30px;
+    font-size: 18px;
 }
 
 .articleDescription {
@@ -66,7 +66,22 @@
   -webkit-line-clamp: 4;       /* 🔥 Limits text to 2 lines */
   -webkit-box-orient: vertical;
   color: #8aaec0;
-  font-size: 16px;
+  font-size: 1rem;
+}
+
+.articleDescription h1,
+.articleDescription h2,
+.articleDescription h3,
+.articleDescription h4,
+.articleDescription h5,
+.articleDescription h6,
+.articleDescription p {
+  font-size: inherit;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+  line-height: inherit;
+  color: #8aaec0;
 }
 
 .articleHeader {
@@ -79,7 +94,7 @@
 .articleButton {
     background-color: var(--purple);
     color: var(--white);
-    padding: 15px 25px;
-    font-size: 20px;
+    padding: 6px 15px;
+    font-size: 15px;
     margin-top: 20px;
 }
