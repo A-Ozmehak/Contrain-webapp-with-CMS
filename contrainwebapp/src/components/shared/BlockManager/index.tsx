@@ -15,6 +15,7 @@ import SkillsComponent from '@/reusableComponents/skills/skills';
 import ServicesLargeComponent from '@/reusableComponents/servicesLarge/servicesLarge';
 import ServiceFormComponent from '@/reusableComponents/servicesForm/serviceForm';
 import StackedCarousel from '@/reusableComponents/ui/stackedCarousel/stackedCarousel';
+import ProjectDetailsComponent from '@/reusableComponents/projectDetails/projectDetails';
 
 interface BlockProps {
   __component: string;
@@ -42,6 +43,7 @@ const blockRegistry: { [key: string]: React.ElementType } = {
     'blocks.services-large': ServicesLargeComponent,
     'blocks.services-form': ServiceFormComponent,
     'blocks.stacked-slider': StackedCarousel,
+    'blocks.project-details': ProjectDetailsComponent,
    
   // Add more blocks here
 };

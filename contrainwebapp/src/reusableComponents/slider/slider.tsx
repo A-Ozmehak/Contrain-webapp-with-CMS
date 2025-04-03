@@ -61,7 +61,7 @@ const SliderComponent: React.FC<SliderProps> = ({ Images = [], BackgroundColor, 
               </SwiperSlide>
             ))
           ) : (
-            <p>No images available</p>  // Show a message when no images are available
+            <p>No images available</p>
           )}
         </Swiper>
       </div>

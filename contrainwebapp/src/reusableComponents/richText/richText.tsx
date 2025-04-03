@@ -4,7 +4,7 @@ import React, { JSX } from 'react';
 import styles from './richText.module.css';
 import { useBackgroundClass } from '@/hooks/useBackgroundColor';
 
-interface RichTextNode {
+export interface RichTextNode {
   type: string;
   text?: string;
   url?: string;
@@ -62,7 +62,7 @@ const RichTextComponent: React.FC<RichTextProps> = ({ RichText, BackgroundColor 
 
   return (
     <div className={`${styles.richTextContainer} ${backgroundClass}`.trim()}>
-    <div className={styles.richTextContent}>{RichText.map((node, index) => renderNode(node, index))}</div>
+      <div className={styles.richTextContent}>{RichText.map((node, index) => renderNode(node, index))}</div>
     </div>
   )
 };
