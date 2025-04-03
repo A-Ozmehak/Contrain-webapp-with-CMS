@@ -1,5 +1,4 @@
 'use client';
-import useIsMobile from '@/hooks/useIsMobile';
 import styles from './textWithBackgroundImage.module.css';
 
 interface componentProps {
@@ -11,8 +10,6 @@ interface componentProps {
 }
 
 const TextWithBackgroundImageComponent: React.FC<componentProps> = ({ SectionTitle, SubText, BackgroundImage, ButtonLabel, ButtonUrl }) => {
-  const isMobile = useIsMobile(); // Detect if mobile
-
   return (
     <div className={styles.sectionContainer}>
         <div className={styles.imageWrapper}>

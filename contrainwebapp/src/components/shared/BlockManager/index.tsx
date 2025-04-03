@@ -71,6 +71,8 @@ const BlockManager: React.FC<BlockManagerProps> = ({ blocks }) => {
             <Component
               key={`${block.__component}-${block.id}`}
               Images={slides}
+              SectionTitle={block.SectionTitle || ""}
+              BackgroundColor={block.BackgroundColor || ""}
             />
           );
         }
@@ -103,6 +105,8 @@ const BlockManager: React.FC<BlockManagerProps> = ({ blocks }) => {
             <Component
               key={`${block.__component}-${block.id}`}
               slides={slides}
+              SectionTitle={block.SectionTitle || ""}
+              BackgroundColor={block.BackgroundColor || ""}
             />
           );
         }

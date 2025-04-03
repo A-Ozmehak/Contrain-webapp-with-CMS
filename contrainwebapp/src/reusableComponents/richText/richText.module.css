@@ -1,10 +1,13 @@
 .richTextContainer {
-    max-width: 800px;
-    margin: 0 auto;
     padding: 20px;
     line-height: 1.6;
     font-size: 16px;
     color: #97ACB4;
+}
+
+.richTextContent {
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 /* 🔹 Headings */

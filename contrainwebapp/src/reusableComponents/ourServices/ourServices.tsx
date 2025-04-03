@@ -1,5 +1,6 @@
 'use client';
 import styles from './ourServices.module.css';
+import { useBackgroundClass } from '@/hooks/useBackgroundColor';
 
 interface ServiceItem {
     id: number;
@@ -13,11 +14,14 @@ interface OurServicesProps {
     Title: string;
     SubText?: string;
     Services: ServiceItem[];
+    BackgroundColor?: string;
 }
 
-const OurServicesComponent: React.FC<OurServicesProps> = ({ Title, SubText, Services = [] }) => {
+const OurServicesComponent: React.FC<OurServicesProps> = ({ Title, SubText, Services = [], BackgroundColor }) => {
+    const backgroundClass = useBackgroundClass(BackgroundColor);
+
     return (
-        <div className={styles.ourServicesContainer}>
+        <div id='our-services' className={`${styles.ourServicesContainer} ${backgroundClass}`.trim()}>
             <div className={styles.ourServicesHeader}>
                 <h4>{Title}</h4>
                 {SubText && <p>{SubText}</p>}

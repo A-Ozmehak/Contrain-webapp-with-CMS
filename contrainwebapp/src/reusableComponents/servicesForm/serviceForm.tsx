@@ -1,6 +1,7 @@
 'use client';
 
 import styles from './serviceForm.module.css';
+import { useBackgroundClass } from '@/hooks/useBackgroundColor';
 
 interface ServiceFormProps {
   SectionTitle: string;
@@ -12,6 +13,7 @@ interface ServiceFormProps {
   MessageInputLabel?: string;
   ButtonLabel: string;
   ButtonUrl?: string;
+  BackgroundColor?: string;
 }
 
 const ServiceFormComponent: React.FC<ServiceFormProps> = ({
@@ -23,36 +25,41 @@ const ServiceFormComponent: React.FC<ServiceFormProps> = ({
   SubjectInputLabel,
   MessageInputLabel,
   ButtonLabel,
-  ButtonUrl
+  ButtonUrl,
+  BackgroundColor
 }) => {
-  return (
-    <section className={styles.servicesFormContainer}>
-      <div className={styles.servicesFormTextContent}>
-        <h2>{SectionTitle}</h2>
-        <p>{SubText}</p>
-      </div>
+  const backgroundClass = useBackgroundClass(BackgroundColor);
 
-      <div className={styles.servicesFormWrapper}>
-        <h3>{FormTitle}</h3>
-        <form action={ButtonUrl || '#'} method="POST" className={styles.servicesForm}>
-          <div className={styles.servicesFormInputWrapper}>
-            <label>{NameInputLabel}</label>
-            <input type="text" name="name" required />
-          </div>
-          <div className={styles.servicesFormInputWrapper}>
-            <label>{EmailInputLabel}</label>
-            <input type="email" name="email" required />
-          </div>
-          <div className={styles.servicesFormInputWrapper}>
-            <label>{SubjectInputLabel}</label>
-            <input type="text" name="subject" required />
-          </div>
-          <div className={styles.servicesFormInputWrapper}>
-            <label>{MessageInputLabel}</label>
-            <textarea name="message" rows={4}></textarea>
-          </div>
-          <button type="submit">{ButtonLabel}</button>
-        </form>
+  return (
+    <section id='services-form' className={`${styles.servicesFormContainer} ${backgroundClass}`.trim()}>
+      <div className={styles.servicesFormContent}>
+        <div className={styles.servicesFormTextContent}>
+          <h2>{SectionTitle}</h2>
+          <p>{SubText}</p>
+        </div>
+
+        <div className={styles.servicesFormWrapper}>
+          <h3>{FormTitle}</h3>
+          <form action={ButtonUrl || '#'} method="POST" className={styles.servicesForm}>
+            <div className={styles.servicesFormInputWrapper}>
+              <label>{NameInputLabel}</label>
+              <input type="text" name="name" required />
+            </div>
+            <div className={styles.servicesFormInputWrapper}>
+              <label>{EmailInputLabel}</label>
+              <input type="email" name="email" required />
+            </div>
+            <div className={styles.servicesFormInputWrapper}>
+              <label>{SubjectInputLabel}</label>
+              <input type="text" name="subject" required />
+            </div>
+            <div className={styles.servicesFormInputWrapper}>
+              <label>{MessageInputLabel}</label>
+              <textarea name="message" rows={4}></textarea>
+            </div>
+            <button type="submit">{ButtonLabel}</button>
+          </form>
+        </div>
       </div>
     </section>
   );

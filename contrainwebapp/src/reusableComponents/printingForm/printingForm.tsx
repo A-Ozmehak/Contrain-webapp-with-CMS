@@ -1,6 +1,7 @@
 'use client';
 
 import styles from './printingForm.module.css';
+import { useBackgroundClass } from '@/hooks/useBackgroundColor';
 
 interface PrintingFormProps {
   CompanyInputLabel: string;
@@ -26,6 +27,7 @@ interface PrintingFormProps {
   ExtraServicesOptions: { id: number; Option: string }[];
   MessageInputLabel: string;
   ButtonLabel: string;
+  BackgroundColor?: string;
 }
 
 const PrintingComponent: React.FC<PrintingFormProps> = ({ 
@@ -51,11 +53,14 @@ const PrintingComponent: React.FC<PrintingFormProps> = ({
   ExtraServicesLabel,
   ExtraServicesOptions = [],
   MessageInputLabel,
-  ButtonLabel 
+  ButtonLabel,
+  BackgroundColor 
 }) => {
+  const backgroundClass = useBackgroundClass(BackgroundColor);
+
 
   return (
-    <form className={styles.printingForm}>
+    <form className={`${styles.printingForm} ${backgroundClass}`.trim()}>
        <div className={styles.printingFormGroup}>
         <label htmlFor="companyName" className={styles.label}>{CompanyInputLabel}:</label>
         <input type="text" id="companyName" name="printingCompanyName" className={styles.input} placeholder={CompanyPlaceholder} />

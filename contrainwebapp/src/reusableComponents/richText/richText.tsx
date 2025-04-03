@@ -2,6 +2,7 @@
 
 import React, { JSX } from 'react';
 import styles from './richText.module.css';
+import { useBackgroundClass } from '@/hooks/useBackgroundColor';
 
 interface RichTextNode {
   type: string;
@@ -15,9 +16,12 @@ interface RichTextNode {
 
 interface RichTextProps {
   RichText: RichTextNode[];
+  BackgroundColor?: string;
 }
 
-const RichTextComponent: React.FC<RichTextProps> = ({ RichText }) => {
+const RichTextComponent: React.FC<RichTextProps> = ({ RichText, BackgroundColor }) => {
+  const backgroundClass = useBackgroundClass(BackgroundColor);
+
   const renderNode = (node: RichTextNode, index: number) => {
     if (node.type === 'heading') {
       const HeadingTag = (`h${node.level || 3}` as keyof JSX.IntrinsicElements); 
@@ -56,7 +60,11 @@ const RichTextComponent: React.FC<RichTextProps> = ({ RichText }) => {
     return null;
   };
 
-  return <div className={styles.richTextContainer}>{RichText.map((node, index) => renderNode(node, index))}</div>;
+  return (
+    <div className={`${styles.richTextContainer} ${backgroundClass}`.trim()}>
+    <div className={styles.richTextContent}>{RichText.map((node, index) => renderNode(node, index))}</div>
+    </div>
+  )
 };
 
 export default RichTextComponent;

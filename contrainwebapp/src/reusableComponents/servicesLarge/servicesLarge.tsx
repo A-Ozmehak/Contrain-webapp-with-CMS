@@ -2,6 +2,7 @@
 import useIsMobile from '@/hooks/useIsMobile';
 import TypewriterTitle from '@/components/typewriterTexts/typewriterTexts';
 import styles from './servicesLarge.module.css';
+import { useBackgroundClass } from '@/hooks/useBackgroundColor';
 
 interface ServiceProps {
   Title: string;
@@ -15,13 +16,15 @@ interface ServiceProps {
 
 interface ServicesLargeProps {
   Services: Array<ServiceProps>;
+  BackgroundColor?: string;
 }
 
-const ServicesLargeComponent: React.FC<ServicesLargeProps> = ({ Services = [] }) => {
+const ServicesLargeComponent: React.FC<ServicesLargeProps> = ({ Services = [], BackgroundColor }) => {
   const isMobile = useIsMobile();
+  const backgroundClass = useBackgroundClass(BackgroundColor);
 
   return (
-    <div className={styles.servicesLargeContainer}>
+    <div className={`${styles.servicesLargeContainer} ${backgroundClass}`.trim()}>
       {Services.map((service) => {
         const typewriterTextsArray = service.TypewriterTexts?.map((item) => item.Text) || [];
         const bgImageUrl = service.BackgroundImage?.url || '/microcontroller.webp';
@@ -30,7 +33,7 @@ const ServicesLargeComponent: React.FC<ServicesLargeProps> = ({ Services = [] })
           <a key={service.Url} href={service.Url} className={styles.serviceCard}>
             <div className={styles.servicesLargeImageWrapper}>
               <img
-                src={'/microcontroller.webp'} // replace with bgImageUrl
+                src={bgImageUrl}
                 alt={service.Title}
                 className={styles.servicesLargeBackgroundImage}
               />

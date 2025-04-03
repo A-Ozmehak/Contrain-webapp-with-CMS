@@ -1,7 +1,10 @@
 .contactFormContainer {
+   padding: 20px 0;
+}
+
+.contactFormContent {
     max-width: 800px;
-    margin: 30px auto;
-    padding: 0 15px;
+    margin: 0 auto;
 }
 
 .contactFormTitleContainer {

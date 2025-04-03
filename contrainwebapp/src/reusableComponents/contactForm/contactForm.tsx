@@ -1,8 +1,8 @@
 'use client';
 
-import useIsMobile from '@/hooks/useIsMobile';
 import styles from './contactForm.module.css';
 import ContactInfoComponent from '../contactInfo/contactInfo';
+import { useBackgroundClass } from '@/hooks/useBackgroundColor';
 
 interface ContactFormProps {
   SectionTitle?: string;
@@ -22,6 +22,7 @@ interface ContactFormProps {
   LinkedInUrl?: string;
   SocialMediaSubText?: string;
   BackgroundImage?: string;
+  BackgroundColor?: string;
 }
 
 const ContactFormComponent: React.FC<ContactFormProps> = ({ 
@@ -41,48 +42,50 @@ const ContactFormComponent: React.FC<ContactFormProps> = ({
     InstagramUrl,
     LinkedInUrl,
     SocialMediaSubText,
-    BackgroundImage 
+    BackgroundImage,
+    BackgroundColor
 }) => {
-  const isMobile = useIsMobile(); // Default breakpoint is 768px
+    const backgroundClass = useBackgroundClass(BackgroundColor);
 
   return (
-    <div id='contact-us' className={styles.contactFormContainer}>
-      <div className={styles.contactFormTitleContainer}>
-        <h3 className={styles.contactFormTitle}>{SectionTitle}</h3>
-        <p>{SectionSubText}</p>
-      </div>
-      <div className={styles.contactFormBottomPartContainer}>
-        <div className={styles.contactInfoContainer}>
-          <ContactInfoComponent email={Email} companyName={CompanyName} phone={Phone} address={Address} city={City} />
-          <div className={styles.socialMediaContainer}>
-              <h6>{SocialMediaSectionTitle}</h6>
-              <div className={styles.socialMediaIcons}>
-                <a href={FacebookUrl}><i className="fa-brands fa-facebook-f"></i></a>
-                <a href={InstagramUrl}><i className="fa-brands fa-linkedin-in"></i></a>
-                <a href={LinkedInUrl}><i className="fa-brands fa-instagram"></i></a>
-              </div>
-              <p>{SocialMediaSubText}</p>
-          </div>
+    <div id='contact-us' className={`${styles.contactFormContainer} ${backgroundClass}`.trim()}>
+      <div className={styles.contactFormContent}>
+        <div className={styles.contactFormTitleContainer}>
+          <h3 className={styles.contactFormTitle}>{SectionTitle}</h3>
+          <p>{SectionSubText}</p>
         </div>
+        <div className={styles.contactFormBottomPartContainer}>
+          <div className={styles.contactInfoContainer}>
+            <ContactInfoComponent email={Email} companyName={CompanyName} phone={Phone} address={Address} city={City} />
+            <div className={styles.socialMediaContainer}>
+                <h6>{SocialMediaSectionTitle}</h6>
+                <div className={styles.socialMediaIcons}>
+                  <a href={FacebookUrl}><i className="fa-brands fa-facebook-f"></i></a>
+                  <a href={InstagramUrl}><i className="fa-brands fa-linkedin-in"></i></a>
+                  <a href={LinkedInUrl}><i className="fa-brands fa-instagram"></i></a>
+                </div>
+                <p>{SocialMediaSubText}</p>
+            </div>
+          </div>
 
-          <form className={styles.contactForm}>
-            <h5>{FormTitle}</h5>
-            <div className={styles.nameInput}>
-              <label className={styles.label}>{NameLabel}</label>
-              <input type='text'name='contactName' className={styles.input} />
-            </div>
-            <div className={styles.emailInput}>
-              <label className={styles.label}>{EmailLabel}</label>
-              <input type='email' name='contactEmail' className={styles.input} />
-            </div>
-            <div className={styles.messageInput}>
-              <label className={styles.label}>{MessageLabel}</label>
-              <input type='message' name='contactMessage' className={styles.input} />
-            </div>
-            <button id='contactFormBtn' className={styles.submitButton}>Skicka</button>
-          </form>
+            <form className={styles.contactForm}>
+              <h5>{FormTitle}</h5>
+              <div className={styles.nameInput}>
+                <label className={styles.label}>{NameLabel}</label>
+                <input type='text'name='contactName' className={styles.input} />
+              </div>
+              <div className={styles.emailInput}>
+                <label className={styles.label}>{EmailLabel}</label>
+                <input type='email' name='contactEmail' className={styles.input} />
+              </div>
+              <div className={styles.messageInput}>
+                <label className={styles.label}>{MessageLabel}</label>
+                <input type='message' name='contactMessage' className={styles.input} />
+              </div>
+              <button id='contactFormBtn' className={styles.submitButton}>Skicka</button>
+            </form>
+        </div> 
       </div>
-      
     </div>
   );
 };

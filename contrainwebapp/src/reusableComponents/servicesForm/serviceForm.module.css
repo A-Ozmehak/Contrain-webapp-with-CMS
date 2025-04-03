@@ -1,10 +1,13 @@
 .servicesFormContainer {
-    max-width: 1200px;
-    margin: 50px auto;
-    padding: 20px;
+    padding: 0 20px;
     display: flex;
     flex-direction: column;
     gap: 40px;
+  }
+
+  .servicesFormContent {
+    max-width: 1200px;
+    margin: 30px auto;
   }
   
   .servicesFormTextContent {

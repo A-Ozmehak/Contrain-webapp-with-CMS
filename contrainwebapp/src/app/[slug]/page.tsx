@@ -37,8 +37,8 @@ const fetchPageData = async (slug: string) => {
 
     // General page data URL (fetches everything)
     const apiUrl = getStrapiURL(`/api/pages?populate=*&filters[Slug][$eq]=${formattedSlug}`);
-    const heroDataUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.hero][populate][BackgroundImage]=true&populate[Blocks][on][blocks.hero][populate][TypewriterTexts]=true
-    `);
+    const heroDataUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.hero][populate][BackgroundImage]=true&populate[Blocks][on][blocks.hero][populate][TypewriterTexts]=true`);
+    const textWithBackgroundUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.text-with-background-image][populate][BackgroundImage]=true`);    
     const sliderImagesUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.slider][populate][Images][populate]=*`);
     const ourServicesUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.our-services][populate][Service][populate]=*`);
     const aboutUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.about][populate][AboutKeyPoints][populate]=*&populate[Blocks][on][blocks.about][populate][AboutImages][populate]=*`);
@@ -49,7 +49,18 @@ const fetchPageData = async (slug: string) => {
     const printingFormUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.printing-form][populate][MaterialOptions]=*&populate[Blocks][on][blocks.printing-form][populate][ColorOptions]=*&populate[Blocks][on][blocks.printing-form][populate][DeliveryTimeOptions]=*&populate[Blocks][on][blocks.printing-form][populate][ExtraServicesOptions]=*`);
 
     // Fetch both general page data and hero-specific data in parallel
-    const [res, heroRes, sliderRes, ourServicesRes, aboutRes, skillsRes, servicesLargeRes, servicesFormRes, stackedSliderRes, printingFormRes] = await Promise.all([
+    const [res, 
+      heroRes, 
+      sliderRes, 
+      ourServicesRes, 
+      aboutRes, 
+      skillsRes, 
+      servicesLargeRes, 
+      servicesFormRes, 
+      stackedSliderRes, 
+      printingFormRes,
+      textWithBackgroundRes,
+    ] = await Promise.all([
       fetch(apiUrl, { cache: 'no-store' }),
       fetch(heroDataUrl, { cache: 'no-store' }),
       fetch(sliderImagesUrl, { cache: 'no-store' }),
@@ -60,6 +71,7 @@ const fetchPageData = async (slug: string) => {
       fetch(servicesFormUrl, { cache: 'no-store' }),
       fetch(stackedSliderUrl, { cache: 'no-store' }),
       fetch(printingFormUrl, { cache: 'no-store' }),
+      fetch(textWithBackgroundUrl, { cache: 'no-store'})
     ]);
 
     if (
@@ -72,7 +84,8 @@ const fetchPageData = async (slug: string) => {
       !servicesLargeRes.ok ||
       !servicesFormRes.ok ||
       !stackedSliderRes.ok ||
-      !printingFormRes.ok
+      !printingFormRes.ok ||
+      !textWithBackgroundRes.ok
     ) 
       return null;
 
@@ -86,6 +99,7 @@ const fetchPageData = async (slug: string) => {
     const servicesFormData = await servicesFormRes.json();
     const stackedSliderData = await stackedSliderRes.json();
     const printingFormData = await printingFormRes.json();
+    const textWithBackgroundData = await textWithBackgroundRes.json();
 
     // Extract page data
     const pageData = data?.data?.length > 0 ? data.data[0] : null;
@@ -99,13 +113,11 @@ const fetchPageData = async (slug: string) => {
       );
     
       if (heroBlock) {
-        // 🖼️ Enrich the BackgroundImage
         const imageFile = heroBlock.BackgroundImage;
         const backgroundImageUrl = getStrapiMedia(
           imageFile?.formats?.medium?.url || imageFile?.url || "/fallback-hero.webp"
         );
     
-        // 🔄 Replace the block in the pageData and inject enriched BackgroundImage
         pageData.Blocks = pageData.Blocks.map((block: any) =>
           block.__component === "blocks.hero"
             ? {
@@ -117,7 +129,32 @@ const fetchPageData = async (slug: string) => {
       }
     }
 
-     // Extract and merge slider block data
+  // Extract textWithBg block data
+    const textWithBgData = textWithBackgroundData?.data?.length > 0 ? textWithBackgroundData.data[0] : null;
+    if (textWithBgData?.Blocks) {
+      const textWithBgBlock = textWithBgData.Blocks.find(
+        (block: any) => block.__component === "blocks.text-with-background-image"
+      );
+      
+      if (textWithBgBlock?.BackgroundImage) {
+        const imageFile = textWithBgBlock.BackgroundImage;
+        const imageUrl = getStrapiMedia(
+          imageFile?.formats?.medium?.url || imageFile?.url || "/fallback-section.webp"
+        );
+      
+        pageData.Blocks = pageData.Blocks.map((block: any) =>
+          block.__component === "blocks.text-with-background-image"
+            ? {
+                ...textWithBgBlock,
+                BackgroundImage: imageUrl,
+              }
+            : block
+        );
+      }
+    }
+    
+
+    // Extract and merge slider block data
     const sliderPageData = sliderData?.data?.length > 0 ? sliderData.data[0] : null;
     if (sliderPageData?.Blocks) {
       const sliderBlocks = sliderPageData.Blocks.filter(
@@ -131,6 +168,7 @@ const fetchPageData = async (slug: string) => {
       }
     }
 
+    // Extract ourService block data
     const ourServicesPageData = ourServicesData?.data?.length > 0 ? ourServicesData.data[0] : null;
     if (ourServicesPageData?.Blocks) {
       const ourServicesBlocks = ourServicesPageData.Blocks.filter(
@@ -144,6 +182,7 @@ const fetchPageData = async (slug: string) => {
       }
     }
 
+    // Extract about block data
     const aboutPageData = aboutData?.data?.length > 0 ? aboutData.data[0] : null;
     if (aboutPageData?.Blocks) {
       const aboutBlocks = aboutPageData.Blocks.find((block:any) => block.__component === "blocks.about");
@@ -161,39 +200,69 @@ const fetchPageData = async (slug: string) => {
         });
       }
     }
-  
-    const skillsPageData = skillsData?.data?.length > 0 ? skillsData.data[0] : null;
-      if (skillsPageData?.Blocks) {
-        const skillsBlock = skillsPageData.Blocks.find((block: any) => block.__component === "blocks.skills");
 
-        if (skillsBlock) {
-          pageData.Blocks = (pageData.Blocks || []).map((block: any) => {
-            if (block.__component === "blocks.skills") {
-              return {
-                ...block,
-                Skills: skillsBlock.Skills || [],
-                SkillImage: skillsBlock.SkillImage || [],
-              };
+    // Extract skills block data
+    const skillsPageData = skillsData?.data?.length > 0 ? skillsData.data[0] : null;
+    if (skillsPageData?.Blocks) {
+      const skillsBlock = skillsPageData.Blocks.find(
+        (block: any) => block.__component === "blocks.skills"
+      );
+    
+      if (skillsBlock) {
+        const enrichedSkillImage = skillsBlock.SkillImage
+          ? {
+              ...skillsBlock.SkillImage,
+              url: getStrapiMedia(
+                skillsBlock.SkillImage?.formats?.medium?.url ||
+                skillsBlock.SkillImage?.url ||
+                '/fallback-image.webp'
+              ),
             }
-            return block;
-          });
+          : null;
+      
+        pageData.Blocks = (pageData.Blocks || []).map((block: any) => {
+          if (block.__component === "blocks.skills") {
+            return {
+              ...block,
+              Skills: skillsBlock.Skills || [],
+              SkillImage: enrichedSkillImage,
+            };
+          }
+          return block;
+        });
+      }
+    }
+    
+
+        // Extract servicesLarge block data
+      const servicesPageData = servicesLargeData?.data?.length > 0 ? servicesLargeData.data[0] : null;
+      if (servicesPageData?.Blocks) {
+        const servicesLargeBlock = servicesPageData.Blocks.find(
+          (block: any) => block.__component === "blocks.services-large"
+        );
+      
+        if (servicesLargeBlock) {
+          const enrichedServices = (servicesLargeBlock.Services || []).map((service: any) => ({
+            ...service,
+            BackgroundImage: {
+              url: getStrapiMedia(
+                service.BackgroundImage?.formats?.medium?.url ||
+                service.BackgroundImage?.url ||
+                '/fallback-image.webp'
+              ),
+            },
+          }));
+      
+          // Replace block in pageData
+          pageData.Blocks = (pageData.Blocks || []).map((block: any) =>
+            block.__component === "blocks.services-large"
+              ? { ...servicesLargeBlock, Services: enrichedServices }
+              : block
+          );
         }
       }
 
-    const servicesPageData = servicesLargeData?.data?.length > 0 ? servicesLargeData.data[0] : null;
-
-    if (servicesPageData?.Blocks) {
-      const servicesLargeBlock = servicesPageData.Blocks.find(
-        (block: any) => block.__component === "blocks.services-large"
-      );
-
-      if (servicesLargeBlock) {
-        pageData.Blocks = (pageData.Blocks || []).map((block: any) =>
-          block.__component === "blocks.services-large" ? servicesLargeBlock : block
-        );
-      }
-    }
-
+    // Extract serviceForm block data
     const servicesFormPageData = servicesFormData?.data?.length > 0 ? servicesFormData.data[0] : null;
     if (servicesFormPageData?.Blocks) {
       const servicesFormBlock = servicesFormPageData.Blocks.find(
@@ -207,6 +276,7 @@ const fetchPageData = async (slug: string) => {
       }
     }
 
+    // Extract stackedSlider block data
     const stackedSliderPageData = stackedSliderData?.data?.length > 0 ? stackedSliderData.data[0] : null;
     if (stackedSliderPageData?.Blocks) {
       const stackedSliderBlock = stackedSliderPageData.Blocks.find(
@@ -220,6 +290,7 @@ const fetchPageData = async (slug: string) => {
       }
     }
 
+    // Extract printingForm block data
     const printingFormPageData = printingFormData?.data?.[0] || null;
     if (!printingFormPageData) return null;
 

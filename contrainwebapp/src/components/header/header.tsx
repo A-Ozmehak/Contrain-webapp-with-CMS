@@ -99,7 +99,7 @@ const Header: React.FC = () => {
 
   return (
     <header className={styles.header}>
-      <a href='/'><Image src="/logo/logo-big-shadow.png" alt="contrain logo" className={styles.logo} width={125} height={80} /></a>
+      <a href='/'><Image src="/logo/Contrain_logo-white-19.svg" alt="contrain logo" className={styles.logo} width={150} height={100} /></a>
 
       {isDesktop ? (
         // ✅ Desktop Menu

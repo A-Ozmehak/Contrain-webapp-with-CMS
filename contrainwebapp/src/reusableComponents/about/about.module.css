@@ -1,7 +1,10 @@
 .aboutContainer {
+    padding: 20px;
+}
+
+.aboutContent {
     max-width: 1300px;
     margin: 30px auto;
-    padding: 20px;
     display: flex;
     align-items: center;
     justify-content: center;

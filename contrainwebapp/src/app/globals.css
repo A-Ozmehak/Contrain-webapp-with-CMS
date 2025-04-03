@@ -12,6 +12,12 @@
   --blue: linear-gradient(90deg, rgba(0,242,255,1) 0%, rgba(0,187,255,1) 100%);
   --textBlue: #A5C3D6;
   --black: #000000;
+  --bg-dark-navy: #101C26;
+  --bg-darker-navy: #0C171F;
+  --bg-teal: #00C2A8;
+  --bg-light-gray: #F7F9FA;
+  --bg-steel: #1B2A35;
+  --bg-violet: #5C4DFF;
 
   --background: hsl(0 0% 100%);
   --foreground: hsl(240 10% 3.9%);
@@ -131,19 +137,28 @@
   }
 }
 
-/* :root {
-  --background-color: #0C161E;
-  --foreground: #171717;
-  --white: #ffffff;
-  --purple: rgba(113,0,184,1);
-  --blue: linear-gradient(90deg, rgba(0,242,255,1) 0%, rgba(0,187,255,1) 100%);
-  --textBlue: #A5C3D6;
-  --black: #000000;
-} */
+.bg-dark-navy {
+  background-color: var(--bg-dark-navy);
+  color: var(--white);
+}
+
+.bg-darker-navy {
+  background-color: var(--bg-darker-navy);
+  color: var(--white);
+}
+
+.bg-steel {
+  background-color: var(--bg-steel);
+  color: var(--white);
+}
+
+.bg-violet {
+  background-color: var(--bg-violet);
+  color: var(--white);
+}
 
 @media (prefers-color-scheme: dark) {
   :root {
-    
     --foreground: #ededed;
   }
 }
@@ -180,11 +195,11 @@ a {
 }
 
 .typewriterTitle h1 {
-  overflow: hidden; /* Ensures the content is not revealed until the animation */
-  border-right: .15em solid var(--white); /* The typwriter cursor */
-  white-space: nowrap; /* Keeps the content on a single line */
-  margin: 0 auto; /* Gives that scrolling effect as the typing happens */
-  letter-spacing: .15em; /* Adjust as needed */
+  overflow: hidden;
+  border-right: .15em solid var(--white);
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: .15em;
   animation: 
     typing 3.5s steps(40, end),
     blink-caret .75s step-end infinite;
@@ -276,6 +291,16 @@ h6 {
 #page--produktdesign #heroContainer,
 #page--3d-utskifter #heroContainer {
   height: 780px;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  /* color: white; */
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 2rem 1.5rem;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
 }
 
 @media (max-width: 1200px) {

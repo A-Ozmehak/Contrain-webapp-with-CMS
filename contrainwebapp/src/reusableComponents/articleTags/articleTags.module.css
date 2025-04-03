@@ -29,7 +29,7 @@
   text-align: center;
 
   flex: 1 1 calc(25% - 0.4rem);
-  max-width: calc(25% - 0.4rem);
+  max-width: calc(40% - 0.4rem);
   box-sizing: border-box;
 }
 

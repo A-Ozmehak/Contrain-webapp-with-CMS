@@ -2,75 +2,102 @@ import { getStrapiURL, getStrapiMedia } from '@/utils';
 
 // ✅ Fetch home page data
 const fetchHomePageData = async () => {
-    const apiUrl = getStrapiURL(`/api/pages?populate=*&filters[Slug][$eq]=/`);
-    const heroDataUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.hero][populate][BackgroundImage]=true&populate[Blocks][on][blocks.hero][populate][TypewriterTexts]=true
-`);
-    const sliderImagesUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.slider][populate][Images][populate]=*`);
-    const ourServicesUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.our-services][populate][Service][populate]=*`);
-    const aboutUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.about][populate][AboutKeyPoints][populate]=*&populate[Blocks][on][blocks.about][populate][AboutImages][populate]=*`);
-    const skillsUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.skills][populate][Skills][populate]=*&populate[Blocks][on][blocks.skills][populate][SkillImage][populate]=*`);
-    const stackedSliderUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.stacked-slider][populate][Images][populate]=*`);
+  const apiUrl = getStrapiURL(`/api/pages?populate=*&filters[Slug][$eq]=/`);
+  const heroDataUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.hero][populate][BackgroundImage]=true&populate[Blocks][on][blocks.hero][populate][TypewriterTexts]=true`);
+  const textWithBackgroundUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.text-with-background-image][populate][BackgroundImage]=true`);    
+  const sliderImagesUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.slider][populate][Images][populate]=*`);
+  const ourServicesUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.our-services][populate][Service][populate]=*`);
+  const aboutUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.about][populate][AboutKeyPoints][populate]=*&populate[Blocks][on][blocks.about][populate][AboutImages][populate]=*`);
+  const skillsUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.skills][populate][Skills][populate]=*&populate[Blocks][on][blocks.skills][populate][SkillImage][populate]=*`);
+  const stackedSliderUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=/&populate[Blocks][on][blocks.stacked-slider][populate][Images][populate]=*`);
 
-    const [res, heroRes, sliderRes, ourServicesRes, aboutRes, skillsRes, stackedSliderRes] = await Promise.all([
-      fetch(apiUrl, { cache: 'no-store' }),
-      fetch(heroDataUrl, { cache: 'no-store' }),
-      fetch(sliderImagesUrl, { cache: 'no-store' }),
-      fetch(ourServicesUrl, { cache: 'no-store' }),
-      fetch(aboutUrl, { cache: 'no-store' }),
-      fetch(skillsUrl, { cache: 'no-store' }),
-      fetch(stackedSliderUrl, { cache: 'no-store' }),
-    ]);
+  const [res, heroRes, sliderRes, ourServicesRes, aboutRes, skillsRes, stackedSliderRes, textWithBackgroundRes] = await Promise.all([
+    fetch(apiUrl, { cache: 'no-store' }),
+    fetch(heroDataUrl, { cache: 'no-store' }),
+    fetch(sliderImagesUrl, { cache: 'no-store' }),
+    fetch(ourServicesUrl, { cache: 'no-store' }),
+    fetch(aboutUrl, { cache: 'no-store' }),
+    fetch(skillsUrl, { cache: 'no-store' }),
+    fetch(stackedSliderUrl, { cache: 'no-store' }),
+    fetch(textWithBackgroundUrl, { cache: 'no-store'})
+  ]);
   
-    if (!res.ok || 
-      !heroRes.ok || 
-      !sliderRes.ok || 
-      !ourServicesRes.ok || 
-      !aboutRes.ok || 
-      !skillsRes.ok ||
-      !stackedSliderRes.ok
-    ) 
-      return null;
+  if (!res.ok || 
+    !heroRes.ok || 
+    !sliderRes.ok || 
+    !ourServicesRes.ok || 
+    !aboutRes.ok || 
+    !skillsRes.ok ||
+    !stackedSliderRes.ok ||
+    !textWithBackgroundRes.ok
+  ) 
+    return null;
   
-    const data = await res.json();
-    const heroData = await heroRes.json();
-    const sliderData = await sliderRes.json();
-    const ourServicesData = await ourServicesRes.json();
-    const aboutData = await aboutRes.json();
-    const skillsData = await skillsRes.json();
-    const stackedSliderData = await stackedSliderRes.json();
+  const data = await res.json();
+  const heroData = await heroRes.json();
+  const sliderData = await sliderRes.json();
+  const ourServicesData = await ourServicesRes.json();
+  const aboutData = await aboutRes.json();
+  const skillsData = await skillsRes.json();
+  const stackedSliderData = await stackedSliderRes.json();
+  const textWithBackgroundData = await textWithBackgroundRes.json();
   
-    const pageData = data?.data?.length > 0 ? data.data[0] : null;
-    if (!pageData) return null;
+  const pageData = data?.data?.length > 0 ? data.data[0] : null;
+  if (!pageData) return null;
   
-    // Ensure Blocks exists
-    pageData.Blocks = pageData.Blocks || [];
+  // Ensure Blocks exists
+  pageData.Blocks = pageData.Blocks || [];
   
-    // 🔹 Merge Hero Block in Correct Position
-    const heroPageData = heroData?.data?.length > 0 ? heroData.data[0] : null;
-    if (heroPageData?.Blocks) {
-      const heroBlock = heroPageData.Blocks.find(
-        (block: any) => block.__component === "blocks.hero"
+  // 🔹 Merge Hero Block in Correct Position
+  const heroPageData = heroData?.data?.length > 0 ? heroData.data[0] : null;
+  if (heroPageData?.Blocks) {
+    const heroBlock = heroPageData.Blocks.find(
+      (block: any) => block.__component === "blocks.hero"
+    );
+    
+    if (heroBlock) {
+      const imageFile = heroBlock.BackgroundImage;
+      const backgroundImageUrl = getStrapiMedia(
+        imageFile?.formats?.medium?.url || imageFile?.url || "/fallback-hero.webp"
       );
     
-      if (heroBlock) {
-        // 🖼️ Enrich the BackgroundImage
-        const imageFile = heroBlock.BackgroundImage;
-        const backgroundImageUrl = getStrapiMedia(
-          imageFile?.formats?.medium?.url || imageFile?.url || "/fallback-hero.webp"
-        );
-    
-        // 🔄 Replace the block in the pageData and inject enriched BackgroundImage
-        pageData.Blocks = pageData.Blocks.map((block: any) =>
-          block.__component === "blocks.hero"
-            ? {
-                ...heroBlock,
-                BackgroundImage: backgroundImageUrl,
-              }
-            : block
-        );
-      }
+      pageData.Blocks = pageData.Blocks.map((block: any) =>
+        block.__component === "blocks.hero"
+          ? {
+              ...heroBlock,
+              BackgroundImage: backgroundImageUrl,
+            }
+          : block
+      );
     }
-  
+  }
+
+  // Extract textWithBg block data
+  const textWithBgData = textWithBackgroundData?.data?.length > 0 ? textWithBackgroundData.data[0] : null;
+  if (textWithBgData?.Blocks) {
+    const textWithBgBlock = textWithBgData.Blocks.find(
+      (block: any) => block.__component === "blocks.text-with-background-image"
+    );
+    
+    if (textWithBgBlock?.BackgroundImage) {
+      const imageFile = textWithBgBlock.BackgroundImage;
+    
+      const imageUrl = getStrapiMedia(
+        imageFile?.formats?.medium?.url || imageFile?.url || "/fallback-section.webp"
+      );
+    
+      pageData.Blocks = pageData.Blocks.map((block: any) =>
+        block.__component === "blocks.text-with-background-image"
+          ? {
+              ...textWithBgBlock,
+              BackgroundImage: imageUrl,
+            }
+          : block
+      );
+    }
+  }
+    
+  // Extract and merge slider block data
   const sliderPageData = sliderData?.data?.length > 0 ? sliderData.data[0] : null;
   if (sliderPageData?.Blocks) {
     const sliderBlock = sliderPageData.Blocks.find((block: any) => block.__component === "blocks.slider");
@@ -164,38 +191,53 @@ const fetchHomePageData = async () => {
     }
   }
 
-    const skillsPageData = skillsData?.data?.length > 0 ? skillsData.data[0] : null;
-      if (skillsPageData?.Blocks) {
-        const skillsBlock = skillsPageData.Blocks.find((block: any) => block.__component === "blocks.skills");
-  
-        if (skillsBlock) {
-          pageData.Blocks = (pageData.Blocks || []).map((block: any) => {
-            if (block.__component === "blocks.skills") {
-              return {
-                ...block,
-                Skills: skillsBlock.Skills || [],
-                SkillImage: skillsBlock.SkillImage || [],
-              };
-            }
-            return block;
-          });
+  // Extract skills block data
+  const skillsPageData = skillsData?.data?.length > 0 ? skillsData.data[0] : null;
+  if (skillsPageData?.Blocks) {
+    const skillsBlock = skillsPageData.Blocks.find(
+      (block: any) => block.__component === "blocks.skills"
+    );
+    
+    if (skillsBlock) {
+      const enrichedSkillImage = skillsBlock.SkillImage
+      ? {
+            ...skillsBlock.SkillImage,
+            url: getStrapiMedia(
+              skillsBlock.SkillImage?.formats?.medium?.url ||
+              skillsBlock.SkillImage?.url ||
+              '/fallback-image.webp'
+            ),
         }
-      }
+        : null;
+      
+      pageData.Blocks = (pageData.Blocks || []).map((block: any) => {
+        if (block.__component === "blocks.skills") {
+          return {
+            ...block,
+            Skills: skillsBlock.Skills || [],
+            SkillImage: enrichedSkillImage,
+          };
+        }
+        return block;
+      });
+    }
+  }
 
-      const stackedSliderPageData = stackedSliderData?.data?.length > 0 ? stackedSliderData.data[0] : null;
-      if (stackedSliderPageData?.Blocks) {
-        const stackedSliderBlock = stackedSliderPageData.Blocks.find(
-          (block: any) => block.__component === "blocks.stacked-slider"
+  // Extract stackedSlider block data
+    const stackedSliderPageData = stackedSliderData?.data?.length > 0 ? stackedSliderData.data[0] : null;
+    if (stackedSliderPageData?.Blocks) {
+      const stackedSliderBlock = stackedSliderPageData.Blocks.find(
+        (block: any) => block.__component === "blocks.stacked-slider"
+      );
+  
+      if (stackedSliderBlock) {
+        pageData.Blocks = (pageData.Blocks || []).map((block: any) =>
+          block.__component === "blocks.stacked-slider" ? stackedSliderBlock : block
         );
-  
-        if (stackedSliderBlock) {
-          pageData.Blocks = (pageData.Blocks || []).map((block: any) =>
-            block.__component === "blocks.stacked-slider" ? stackedSliderBlock : block
-          );
-        }
       }
+    }
   
-    return pageData;
-  };
+  return pageData;
+};
 
 export default fetchHomePageData;
