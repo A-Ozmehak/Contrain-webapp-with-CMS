@@ -47,18 +47,34 @@ const ProjectDetailsComponent: React.FC<ProjectDetailsProps> = ({
         <div className={styles.shortProjectDetailsContainer}>
             <div className={styles.projectTitles}>
                 <p>{ProjectNameLabel}</p>
-                <p>{ClientLabel}</p>
-                <p>{ProjecttypeLabel}</p>
-                <p>{ProjectlengthLabel}</p>
-                <p>{ProjectManagerLabel}</p>
+                {ClientInput &&
+                    <p>{ClientLabel}</p>
+                }
+                {ProjecttypeInput &&
+                    <p>{ProjecttypeLabel}</p>
+                }
+                {ProjectlengthInput &&
+                    <p>{ProjectlengthLabel}</p>
+                }
+                {ProjectManagerInput &&
+                    <p>{ProjectManagerLabel}</p>
+                }
             </div>
             
             <div className={styles.projectDetail}>
                 <p>{ProjectNameInput}</p>
-                <p>{ClientInput}</p>
-                <p>{ProjecttypeInput}</p>
-                <p>{ProjectlengthInput}</p>
-                <p>{ProjectManagerInput}</p>
+                {ClientInput &&
+                    <p>{ClientInput}</p>  
+                }
+                {ProjecttypeInput &&
+                    <p>{ProjecttypeInput}</p>
+                }
+                {ProjectlengthInput &&
+                    <p>{ProjectlengthInput}</p>
+                }
+                {ProjectManagerInput &&
+                    <p>{ProjectManagerInput}</p>
+                }
             </div>
         </div>
         

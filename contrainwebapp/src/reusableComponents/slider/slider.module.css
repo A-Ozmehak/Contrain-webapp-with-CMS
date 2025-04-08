@@ -5,6 +5,7 @@
   justify-content: center;
   padding: 20px 0;
   height: 600px;
+  width: 100%;
 }
 
 .sliderContainer h4 {
@@ -92,8 +93,8 @@
   }
 
 @media (max-width: 1200px) {
-    .sliderContainer {
-      width: 1000px;
+    .sliderContent {
+      max-width: 1000px;
     }
   }
 
@@ -101,7 +102,10 @@
 @media (max-width: 1024px) {
     .sliderContainer {
       height: 300px;
-      width: 700px;
+    }
+
+    .sliderContent {
+      max-width: 700px;
     }
   }
   
@@ -110,6 +114,9 @@
     .sliderContainer {
       height: 250px;
       padding: 0 0.5rem;
-      width: 350px;
+    }
+
+    .sliderContent {
+      max-width: 350px;
     }
   }

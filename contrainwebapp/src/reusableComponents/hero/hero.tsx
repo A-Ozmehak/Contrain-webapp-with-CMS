@@ -16,10 +16,11 @@ interface HeroProps {
 const HeroComponent: React.FC<HeroProps> = ({ Title, SubText, TypewriterTexts = [], BackgroundImage, ShowButton, ButtonLabel, ButtonUrl }) => {
   const isMobile = useIsMobile(); // Detect if mobile
   const typewriterTextsArray = TypewriterTexts.map((item) => item.Text);
+  const showStaticTitle = isMobile || typewriterTextsArray.length === 0;
 
   return (
     <div id="heroContainer" className={styles.heroContainer}>
-      <div id='heroImageWrapper' className={styles.imageWrapper}>
+      <div id="heroImageWrapper" className={styles.imageWrapper}>
         <img
           src={BackgroundImage || '/microcontroller.webp'}
           alt="background"
@@ -27,7 +28,7 @@ const HeroComponent: React.FC<HeroProps> = ({ Title, SubText, TypewriterTexts = 
           id='heroImage'
         />
         <div className={styles.typewriterContainer}>
-          {isMobile ? (
+          {showStaticTitle ? (
             <h1 className={styles.typewriterTitle}>{Title}</h1>
           ) : (
             <div>
