@@ -47,7 +47,8 @@ const fetchPageData = async (slug: string) => {
     const servicesFormUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.services-form][populate]=*`);
     const stackedSliderUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.stacked-slider][populate][Images][populate]=*`);
     const printingFormUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.printing-form][populate][MaterialOptions]=*&populate[Blocks][on][blocks.printing-form][populate][ColorOptions]=*&populate[Blocks][on][blocks.printing-form][populate][DeliveryTimeOptions]=*&populate[Blocks][on][blocks.printing-form][populate][ExtraServicesOptions]=*`);
-
+    const expandingCardsUrl = getStrapiURL(`/api/pages?filters[Slug][$eq]=${formattedSlug}&populate[Blocks][on][blocks.expanding-cards][populate][Content][populate][Image]=true`);  
+    
     // Fetch both general page data and hero-specific data in parallel
     const [res, 
       heroRes, 
@@ -60,6 +61,7 @@ const fetchPageData = async (slug: string) => {
       stackedSliderRes, 
       printingFormRes,
       textWithBackgroundRes,
+      expandingCardsRes
     ] = await Promise.all([
       fetch(apiUrl, { cache: 'no-store' }),
       fetch(heroDataUrl, { cache: 'no-store' }),
@@ -71,7 +73,8 @@ const fetchPageData = async (slug: string) => {
       fetch(servicesFormUrl, { cache: 'no-store' }),
       fetch(stackedSliderUrl, { cache: 'no-store' }),
       fetch(printingFormUrl, { cache: 'no-store' }),
-      fetch(textWithBackgroundUrl, { cache: 'no-store'})
+      fetch(textWithBackgroundUrl, { cache: 'no-store'}),
+      fetch(expandingCardsUrl, { cache: 'no-store' }),
     ]);
 
     if (
@@ -85,7 +88,8 @@ const fetchPageData = async (slug: string) => {
       !servicesFormRes.ok ||
       !stackedSliderRes.ok ||
       !printingFormRes.ok ||
-      !textWithBackgroundRes.ok
+      !textWithBackgroundRes.ok ||
+      !expandingCardsRes.ok
     ) 
       return null;
 
@@ -100,6 +104,7 @@ const fetchPageData = async (slug: string) => {
     const stackedSliderData = await stackedSliderRes.json();
     const printingFormData = await printingFormRes.json();
     const textWithBackgroundData = await textWithBackgroundRes.json();
+    const expandingCardData = await expandingCardsRes.json();
 
     // Extract page data
     const pageData = data?.data?.length > 0 ? data.data[0] : null;
@@ -311,6 +316,33 @@ const fetchPageData = async (slug: string) => {
           }
           return block;
         });
+      }
+    }
+
+    // Expanding Cards Block
+    const expandingCardsData = expandingCardData?.data?.[0];
+    if (expandingCardsData?.Blocks) {
+      const block = expandingCardsData.Blocks.find(
+        (b: any) => b.__component === "blocks.expanding-cards"
+      );
+    
+      if (block?.Content?.length > 0) {
+        const cards = block.Content.map((item: any) => ({
+          id: String(item.id),
+          title: item.Title || item.Text || "No title",
+          subtitle: item.Text || "",
+          icon: null,
+          backgroundUrl: getStrapiMedia(
+            item.Image?.formats?.medium?.url || item.Image?.url || "/fallback.webp"
+          ),
+        }));
+        
+        pageData.Blocks = pageData.Blocks.map((b: any) =>
+          b.__component === "blocks.expanding-cards"
+            ? { ...b, items: cards }
+            : b
+        );
+        
       }
     }
 

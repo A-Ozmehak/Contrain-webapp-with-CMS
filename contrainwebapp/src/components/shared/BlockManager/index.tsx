@@ -17,6 +17,7 @@ import ServicesLargeComponent from '@/reusableComponents/servicesLarge/servicesL
 import ServiceFormComponent from '@/reusableComponents/servicesForm/serviceForm';
 import StackedCarousel from '@/reusableComponents/ui/stackedCarousel/stackedCarousel';
 import ProjectDetailsComponent from '@/reusableComponents/projectDetails/projectDetails';
+import ExpandingCardsComponent from '@/reusableComponents/ui/expanding-cards/expanding-cards';
 
 interface BlockProps {
   __component: string;
@@ -45,6 +46,7 @@ const blockRegistry: { [key: string]: React.ElementType } = {
     'blocks.services-form': ServiceFormComponent,
     'blocks.stacked-slider': StackedCarousel,
     'blocks.project-details': ProjectDetailsComponent,
+    'blocks.expanding-cards': ExpandingCardsComponent,
    
   // Add more blocks here
 };
@@ -114,7 +116,6 @@ const BlockManager: React.FC<BlockManagerProps> = ({ blocks }) => {
         }
 
         if (block.__component === 'blocks.printing-form') {
-
           return (
             <Component
               key={`${block.__component}-${block.id}`}
@@ -127,6 +128,15 @@ const BlockManager: React.FC<BlockManagerProps> = ({ blocks }) => {
           );
         }
 
+        if (block.__component === 'blocks.expanding-cards') {
+          return (
+            <Component
+              key={`${block.__component}-${block.id}`}
+              items={block.items || []}
+            />
+          );
+        }
+        
         // 🔹 Default render for all other blocks
         return (
           <Component key={`${block.__component}-${block.id}`} {...block} />
