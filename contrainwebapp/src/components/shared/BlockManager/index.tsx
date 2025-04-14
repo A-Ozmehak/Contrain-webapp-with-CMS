@@ -1,5 +1,6 @@
 import React from 'react';
 import { getStrapiMedia } from '@/utils';
+import { normalizeImageFromBlock } from '@/utils/image';
 import ContactFormComponent from '@/reusableComponents/contactForm/contactForm';
 import ContactInfoComponent from '@/reusableComponents/contactInfo/contactInfo';
 import SocialMediaComponent from '@/reusableComponents/socialMedia/socialMedia';
@@ -60,25 +61,24 @@ const BlockManager: React.FC<BlockManagerProps> = ({ blocks }) => {
         }
 
         if (block.__component === 'blocks.slider') {
-          const slides = (block.Images || []).map((item: any) => {
-            return {
-              image: item.Image,
-              HoverTitle: item.HoverTitle,
-              HoverDescription: item.HoverDescription,
-              Url: item.Url,
-            };
-          });
+          const slides = (block.Images || []).map((item: any) => ({
+            image: normalizeImageFromBlock(item.Image),
+            HoverTitle: item.HoverTitle,
+            HoverDescription: item.HoverDescription,
+            Url: item.Url,
+            Alt: item.Alt || 'Slider image',
+          }));
         
           return (
             <Component
               key={`${block.__component}-${block.id}`}
               Images={slides}
-              SectionTitle={block.SectionTitle || ""}
-              BackgroundColor={block.BackgroundColor || ""}
+              SectionTitle={block.SectionTitle || ''}
+              BackgroundColor={block.BackgroundColor || ''}
             />
           );
         }
-
+        
         // 🔹 Fix "Service" → "Services"
         if (block.__component === 'blocks.our-services') {
           return (
