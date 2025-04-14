@@ -9,6 +9,7 @@ export interface ArticleItem {
   Title: string;
   Text: string;
   Tags: string; // comma-separated tag string
+  Slug: string;
 }
 
 export interface TagItem {
@@ -81,6 +82,7 @@ const fetchArticlePageData = async (): Promise<ArticlePageData | null> => {
         Title: item.Title || "No Title",
         Text: item.Text || "No content available.",
         Tags: item.Tags || "",
+        Slug: item.Slug
       };
     });
 

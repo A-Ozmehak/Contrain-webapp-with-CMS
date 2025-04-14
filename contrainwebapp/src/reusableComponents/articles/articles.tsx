@@ -16,6 +16,7 @@ interface CategoryItem {
     Category: string;
     Title: string;
     Text: string;
+    Slug: string;
   }
   
   interface ArticlesProps {

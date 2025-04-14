@@ -13,6 +13,7 @@ interface HeroProps {
 const HeroComponent: React.FC<HeroProps> = ({ Title, SubText, TypewriterTexts = [], BackgroundImageUrl }) => {
   const isMobile = useIsMobile();
   const typewriterTextsArray = TypewriterTexts.map((item) => item.Text);
+  const showStaticTitle = isMobile || typewriterTextsArray.length === 0;
 
   return (
     <div className={styles.articleHeroContainer}>
@@ -23,7 +24,7 @@ const HeroComponent: React.FC<HeroProps> = ({ Title, SubText, TypewriterTexts = 
           className={styles.articleBackgroundImage}
         />
         <div className={styles.articleTypewriterContainer}>
-          {isMobile ? (
+          {showStaticTitle ? (
             <h1 className={styles.typewriterTitle}>{Title}</h1>
           ) : (
             <div>

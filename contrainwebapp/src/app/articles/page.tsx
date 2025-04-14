@@ -1,4 +1,5 @@
 import fetchArticlePageData from "@/utils/fetchArticlePageData";
+import fetchLatestArticles from "@/utils/fetchLatestArticles";
 import ArticlePageClient from "@/components/articlePageContent/articlePage";
 import { getStrapiURL, getStrapiMedia } from '@/utils';
 
@@ -32,7 +33,10 @@ export async function generateMetadata() {
 }
 
 export default async function ArticlePage() {
-  const pageData = await fetchArticlePageData();
-  
-  return <ArticlePageClient data={pageData} />;
+  const [pageData, latestArticles] = await Promise.all([
+    fetchArticlePageData(),
+    fetchLatestArticles(),
+  ]);  
+
+  return <ArticlePageClient data={pageData} latestArticles={latestArticles} />;
 }

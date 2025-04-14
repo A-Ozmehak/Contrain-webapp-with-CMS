@@ -2,6 +2,7 @@
 
 import styles from './article.module.css';
 import ReactMarkdown from 'react-markdown';
+import Link from 'next/link';
 
 interface ArticleItem {
   Image: string;
@@ -9,7 +10,8 @@ interface ArticleItem {
   Date: string;
   Category: string;
   Title: string;
-  Text: string; // Markdown content
+  Text: string;
+  Slug: string;
 }
 
 const ArticleComponent: React.FC<ArticleItem> = ({
@@ -19,6 +21,7 @@ const ArticleComponent: React.FC<ArticleItem> = ({
   Category,
   Title,
   Text,
+  Slug,
 }) => {
   return (
     <div className={styles.articleContainer}>
@@ -34,13 +37,11 @@ const ArticleComponent: React.FC<ArticleItem> = ({
         <p className={styles.articleCategory}>{Category}</p>
         <h3>{Title}</h3>
 
-        {/* ✅ Render Markdown properly */}
         <div className={styles.articleDescription}>
           <ReactMarkdown>{Text}</ReactMarkdown>
         </div>
-
-        <button className={styles.articleButton}>Läs mer</button>
-      </div>
+          <Link className={styles.articleButton} href={Slug}>Läs mer</Link>
+        </div>
     </div>
   );
 };

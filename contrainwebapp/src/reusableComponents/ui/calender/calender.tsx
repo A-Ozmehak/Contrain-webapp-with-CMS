@@ -97,23 +97,7 @@ export default function CalendarComponent({
     }
 
     if (isSelected) {
-      switch (variant) {
-        case "gradient":
-          return cn(baseStyles, "bg-white/20 font-semibold text-white");
-        case "neon":
-          return cn(
-            baseStyles,
-            "bg-emerald-500/20 font-semibold text-emerald-400 [text-shadow:0_0_10px_rgba(16,185,129,0.8)]",
-          );
-        case "candy":
-          return cn(baseStyles, "bg-white/30 font-semibold text-white");
-        default:
-          return cn(
-            baseStyles,
-            "bg-primary font-semibold text-primary-foreground",
-          );
-      }
-    }
+      return "relative flex h-8 w-8 items-center justify-center rounded-lg text-sm transition-colors bg-indigo-600 text-white font-semibold shadow";    }
 
     if (isCurrentDate) {
       switch (variant) {
@@ -169,7 +153,7 @@ export default function CalendarComponent({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       className={cn(
-        "w-[320px] rounded-xl p-4 shadow-lg backdrop-blur-xs",
+        "w-[335px] p-3 rounded-xl p-4 shadow-lg backdrop-blur-xs",
         getVariantStyles(),
         className,
       )}
@@ -255,6 +239,11 @@ export default function CalendarComponent({
                 isCurrentDate,
                 isCurrentMonth,
               )}
+              style={
+                isSelected && variant === "gradient"
+                  ? { backgroundColor: 'var(--purple)' }
+                  : undefined
+              }
             >
               {isHovered && variant === "artistic" && (
                 <motion.div
