@@ -1,4 +1,3 @@
-// utils/fetchLatestArticles.ts
 import { getStrapiURL, getStrapiMedia } from '@/utils';
 
 export default async function fetchLatestArticles() {

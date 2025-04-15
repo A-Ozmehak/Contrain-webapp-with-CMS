@@ -1,4 +1,3 @@
-// utils/image.ts
 import { getStrapiMedia } from './index';
 
 export function normalizeImageFromBlock(imageInput: any, fallback = '/fallback.webp') {

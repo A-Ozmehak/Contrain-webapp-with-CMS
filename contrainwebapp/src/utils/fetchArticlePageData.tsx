@@ -8,7 +8,7 @@ export interface ArticleItem {
   Category: string;
   Title: string;
   Text: string;
-  Tags: string; // comma-separated tag string
+  Tags: string;
   Slug: string;
 }
 
@@ -26,7 +26,6 @@ export interface ArticlePageData {
   heroData: {
     Title?: string;
     SubText?: string;
-    // BackgroundImageUrl?: string | null;
   };
   articles: ArticleItem[];
   categories: CategoryItem[];
@@ -86,7 +85,6 @@ const fetchArticlePageData = async (): Promise<ArticlePageData | null> => {
       };
     });
 
-    // ✅ Extract unique tag list
     const rawTags = formattedArticles
       .map((article) => article.Tags)
       .filter(Boolean)

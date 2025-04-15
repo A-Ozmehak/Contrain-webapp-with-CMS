@@ -14,7 +14,7 @@ interface HeroProps {
 }
 
 const HeroComponent: React.FC<HeroProps> = ({ Title, SubText, TypewriterTexts = [], BackgroundImage, ShowButton, ButtonLabel, ButtonUrl }) => {
-  const isMobile = useIsMobile(); // Detect if mobile
+  const isMobile = useIsMobile();
   const typewriterTextsArray = TypewriterTexts.map((item) => item.Text);
   const showStaticTitle = isMobile || typewriterTextsArray.length === 0;
 

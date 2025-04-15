@@ -49,10 +49,8 @@ export default function CalendarComponent({
   const monthEnd = endOfMonth(currentMonth);
   const daysInMonth = eachDayOfInterval({ start: monthStart, end: monthEnd });
 
-  // Get day names with Sunday as first day
   const dayNames = ["Mån", "Tis", "Ons", "Tors", "Fre", "Lör", "Sön"];
 
-  // Calculate padding days for the first week
   const firstDayOfMonth = monthStart.getDay();
   const paddingDays = Array.from(
     { length: firstDayOfMonth },

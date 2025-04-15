@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import styles from './typewriterTitle.module.css';
 
 interface TypewriterTextProps {
-  texts?: string[]; // Optional prop
+  texts?: string[];
 }
 
 const TypewriterTitle: React.FC<TypewriterTextProps> = ({ texts = [] }) => {
@@ -23,7 +23,7 @@ const TypewriterTitle: React.FC<TypewriterTextProps> = ({ texts = [] }) => {
 
     if (!isDeleting && displayedText === currentText) {
       if (isSingleText) {
-        return; // ✅ Stop animation if only one text and it's complete
+        return;
       }
       timeout = setTimeout(() => setIsDeleting(true), 1000);
     } else if (isDeleting && displayedText === '') {

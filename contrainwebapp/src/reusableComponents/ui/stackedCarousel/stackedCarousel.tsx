@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 import styles from "./stackedCarousel.module.css";
 import { useBackgroundClass } from '@/hooks/useBackgroundColor';
 
-// ✅ Props for the component
 interface StackedCarouselProps {
   slides: {
     image: string;

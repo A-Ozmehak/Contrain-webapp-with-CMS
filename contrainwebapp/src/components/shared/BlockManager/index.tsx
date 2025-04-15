@@ -81,7 +81,6 @@ const BlockManager: React.FC<BlockManagerProps> = ({ blocks }) => {
           );
         }
         
-        // 🔹 Fix "Service" → "Services"
         if (block.__component === 'blocks.our-services') {
           return (
             <Component
