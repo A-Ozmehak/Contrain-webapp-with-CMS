@@ -1,12 +1,15 @@
 .expandingCardCard {
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    background-color: rgba(0, 0, 0, 0.6);
-    position: absolute;
-    bottom: -7px;
-    left: 0;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
 }
 
 .expandingCardTitle {
@@ -19,4 +22,11 @@
   .expandingCardSubTitle {
     color: rgba(255, 255, 255, 0.8);
     font-size: 0.875rem;
+  }
+
+  @media (min-width: 640px) {
+    .expandingCardCard {
+      flex-direction: row;
+      align-items: center;
+    }
   }

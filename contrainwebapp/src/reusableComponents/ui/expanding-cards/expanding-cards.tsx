@@ -23,7 +23,7 @@ export default function ExpandingCardsComponent({ items, className }: ExpandingC
   return (
     <div
       className={cn(
-        "flex min-h-[400px] w-full min-w-[600px] max-w-[900px] items-stretch gap-2 px-4",
+        "flex flex-wrap justify-center min-h-[400px] w-full max-w-[900px] items-stretch gap-2 px-4",
         className,
       )}
     >
@@ -33,8 +33,8 @@ export default function ExpandingCardsComponent({ items, className }: ExpandingC
           className={cn(
             "ease-[cubic-bezier(0.05,0.61,0.41,0.95)] relative cursor-pointer overflow-hidden bg-cover bg-center transition-all duration-700",
             activeId === item.id
-              ? "flex-[10_1_0%] rounded-[40px]"
-              : "flex-[1_1_0%] rounded-[30px]",
+            ? "flex-[10_1_0%] sm:flex-[10_1_0%] w-full sm:w-auto rounded-[40px]"
+            : "flex-[1_1_0%] sm:flex-[1_1_0%] w-full sm:w-auto rounded-[30px]",
           )}
           style={{
             backgroundImage: `url(${item.backgroundUrl})`,
@@ -50,11 +50,8 @@ export default function ExpandingCardsComponent({ items, className }: ExpandingC
             )}
           />
 
-          <div className="">
+          <div>
             <div className={styles.expandingCardCard}>
-              <div>
-                {item.icon}
-              </div>
               <div className="ml-3 text-white">
                 <div
                     className={cn(

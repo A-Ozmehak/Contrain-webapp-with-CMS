@@ -130,10 +130,11 @@ const BlockManager: React.FC<BlockManagerProps> = ({ blocks }) => {
 
         if (block.__component === 'blocks.expanding-cards') {
           return (
-            <Component
-              key={`${block.__component}-${block.id}`}
-              items={block.items || []}
-            />
+            <div className="w-full flex justify-center" key={`${block.__component}-${block.id}`}>
+              <Component
+                items={block.items || []}
+              />
+            </div>
           );
         }
         

@@ -44,7 +44,7 @@ const SliderComponent: React.FC<SliderProps> = ({ Images = [], BackgroundColor, 
         >
           {Images.length > 0 ? (
             Images.map((item) => (
-              <SwiperSlide key={`slide-${item.id}-${item.Url}`} className={styles.swiperSlide}>
+              <SwiperSlide key={`slide-${item.id}-${item.Url || item.Alt || item.HoverTitle || Math.random()}`} className={styles.swiperSlide}>
                 <a href={item.Url || '#'} className={styles.imageLink}>
                   <div className={styles.sliderImageWrapper}>
                     <img
