@@ -30,7 +30,7 @@
     padding: 0.5rem;
     margin-bottom: 1rem;
     background-color: rgba(129,144,160,0.13);
-    color: var(--black);
+    color: var(--white);
     width: 100%;
     max-width: 885px;
 }
@@ -52,7 +52,7 @@
     padding: 0.5rem;
     margin-bottom: 1rem;
     background-color:rgba(129,144,160,0.13);
-    color: var(--black);
+    color: var(--white);
     width: 100%;
     max-width: 885px;
     height: 300px;
@@ -66,19 +66,19 @@
 
 .printingFormButton {
     background-color: var(--white);
-    color: var(--black);
+    color: var(--white);
     padding: 0.5rem 1rem;
     font-size: 1.2rem;
     border: 1px solid var(--white);
     cursor: pointer;
     margin-top: 1rem;
-    background-color: #61CE70;
+    background-color: var(--purple);
     width: 100%;
     max-width: 885px;
 }
 
 .printingFormButton:hover {
-    background-color: #4F9E5D;
+    background-color: #54595F;
     border: 1px solid var(--purple);
 }
 
@@ -99,7 +99,6 @@
     width: 100%;
     max-width: 885px;
 }
-
 
 .printingFormRadio {
     display: flex;    

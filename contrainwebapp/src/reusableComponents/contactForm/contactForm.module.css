@@ -32,6 +32,7 @@
     padding: 20px 30px 55px 30px;
     width: 100%; 
     max-width: 380px; 
+    height: 458px;
 }
 
 .socialMediaContainer {
@@ -96,6 +97,19 @@
 
 .input {
     height: 40px;
+    width: 100%;
+    border: 1px solid rgba(86,104,113,0.53);
+    background-color: rgba(129,144,160,0.13);
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--white);
+    padding: 8px;
+    border-radius: 5px; 
+    margin-bottom: 10px;
+}
+
+.messageInputField {
+    height: 100px;
     width: 100%;
     border: 1px solid rgba(86,104,113,0.53);
     background-color: rgba(129,144,160,0.13);

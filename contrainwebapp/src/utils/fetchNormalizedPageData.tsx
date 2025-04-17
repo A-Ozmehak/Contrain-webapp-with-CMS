@@ -309,6 +309,30 @@ const fetchNormalizedPageData = async (slug: string) => {
         );
       }
     }
+
+    // Extract printingForm block data
+    const printingFormPageData = printingFormData?.data?.[0] || null;
+    if (!printingFormPageData) return null;
+
+    if (printingFormPageData) {
+      // Merge MaterialOptions, ColorOptions, DeliveryTimeOptions, and ExtraServicesOptions into the block data
+      const printingFormBlock = printingFormPageData.Blocks.find((block: any) => block.__component === 'blocks.printing-form');
+
+      if (printingFormBlock) {
+        pageData.Blocks = pageData.Blocks.map((block: any) => {
+          if (block.__component === 'blocks.printing-form') {
+            return {
+              ...block,
+              MaterialOptions: printingFormBlock.MaterialOptions || [],
+              ColorOptions: printingFormBlock.ColorOptions || [],
+              DeliveryTimeOptions: printingFormBlock.DeliveryTimeOptions || [],
+              ExtraServicesOptions: printingFormBlock.ExtraServicesOptions || [],
+            };
+          }
+          return block;
+        });
+      }
+    }
   
     return pageData;
   };
