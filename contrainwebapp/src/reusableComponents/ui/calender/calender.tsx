@@ -14,6 +14,7 @@ import {
   isSameMonth,
   isSameDay,
   isToday, } from "date-fns";
+  import styles from './calender.module.css';
 
 interface SketchCalendarPickerProps {
   value?: Date;
@@ -193,6 +194,7 @@ export default function CalendarComponent({
         {/* Day Names */}
         {dayNames.map((day) => (
           <div
+            id={styles.day}
             key={day}
             className={cn("text-center text-sm font-medium", getHeaderStyles())}
           >
