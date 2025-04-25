@@ -10,7 +10,7 @@ export async function generateMetadata() {
       { cache: 'no-store' }
     );
     const json = await res.json();
-    const seo = json?.data?.[0]?.Seo;
+    const seo = json?.data?.Seo;
 
     return {
       title: seo?.MetaTitle || 'Contrain – Prototyping Experts',
@@ -31,6 +31,7 @@ export async function generateMetadata() {
     };
   }
 }
+
 
 export default async function ArticlePage() {
   const [pageData, latestArticles] = await Promise.all([

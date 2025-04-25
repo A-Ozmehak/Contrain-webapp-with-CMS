@@ -1,6 +1,32 @@
 import { getStrapiURL, getStrapiMedia } from "@/utils";
 import BlockManager from '@/components/shared/BlockManager';
 
+export async function generateMetadata({ params }: { params: { slug?: string | string[] } }) {
+  const slugArray = Array.isArray(params.slug) ? params.slug : [params.slug].filter(Boolean);
+  const slug = slugArray.length > 0 ? `/${slugArray.join('/')}` : '/';
+
+  const res = await fetch(getStrapiURL(`/api/projects?filters[Slug][$eq]=${slug}&populate=Seo.MetaImage`), {
+    cache: 'no-store',
+  });
+
+  const json = await res.json();
+  const seo = json?.data?.[0]?.Seo;
+  const metaImageUrl = seo?.MetaImage?.url ? getStrapiMedia(seo.MetaImage.url) : null;
+
+  return {
+    title: seo?.MetaTitle || 'Contrain – Prototyping Experts',
+    description: seo?.MetaDescription || '',
+    openGraph: {
+      title: seo?.MetaTitle,
+      description: seo?.MetaDescription,
+      images: metaImageUrl ? [metaImageUrl] : [],
+      url: `https://www.contrain.se${slug}`,
+      type: 'website',
+    },
+    robots: seo?.PreventIndexing ? 'noindex, nofollow' : 'index, follow',
+  };
+}
+
 const fetchProjectData = async (slug: string) => {
     const formattedSlug = slug.startsWith('/') ? slug : `/${slug}`;
 

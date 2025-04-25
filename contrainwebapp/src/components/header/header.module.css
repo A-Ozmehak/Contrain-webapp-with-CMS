@@ -85,8 +85,9 @@
     color: #87A1AD;
 }
 
-.desktopNavMenuList a {
+.desktopNavMenuList li a {
     font-weight: bold;
+    color: var(--white);
 }
 
 .navMenuList li {
@@ -100,6 +101,7 @@
 .socialMedia i {
     font-size: 15px;
     margin-left: 10px;
+    color: var(--white);
 }
 
 .mobileNavMenu {

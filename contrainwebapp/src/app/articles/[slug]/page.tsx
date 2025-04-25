@@ -4,6 +4,37 @@ import styles from './articleDetail.module.css';
 import LatestArticlesComponent from "@/reusableComponents/latestArticles/latestArticles";
 import fetchLatestArticles from "@/utils/fetchLatestArticles";
 
+export async function generateMetadata({ params }: { params: { slug?: string | string[] } }) {
+    const slugArray = Array.isArray(params.slug) ? params.slug : [params.slug].filter(Boolean);
+    const slug = `/articles/${slugArray.join('/')}`;
+  
+    const res = await fetch(getStrapiURL(
+      `/api/articles?filters[Slug][$eq]=${slug}&populate[Seo][populate]=MetaImage`
+    ), {
+      cache: 'no-store',
+    });
+  
+    const json = await res.json();
+    const seo = json?.data?.[0]?.Seo;
+    const metaImageUrl = seo?.MetaImage?.url ? getStrapiMedia(seo.MetaImage.url) : null;
+  
+    return {
+      title: seo?.MetaTitle || 'Contrain – Prototyping Experts',
+      description: seo?.MetaDescription || '',
+      openGraph: {
+        title: seo?.MetaTitle,
+        description: seo?.MetaDescription,
+        images: metaImageUrl ? [metaImageUrl] : [],
+        url: `https://www.contrain.se${slug}`,
+        type: 'website',
+      },
+      robots: seo?.PreventIndexing ? 'noindex, nofollow' : 'index, follow',
+    };
+  }
+  
+  
+  
+
 const fetchArticleData = async (slug: string) => {
     const formattedSlug = slug.startsWith('/') ? slug : `/${slug}`;
   
