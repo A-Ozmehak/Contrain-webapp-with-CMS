@@ -21,7 +21,7 @@
   
   .servicesFormTextContent p {
     font-size: 1rem;
-    color: rgba(158,199,217,1);
+    color: var(--textBlue);
   }
   
   .servicesFormWrapper {
@@ -55,7 +55,7 @@
   .servicesForm input {
     width: 100%;
     height: 41px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--white);
     background-color: rgba(129,144,160,0.13);
     color: var(--white);
   }
@@ -63,7 +63,7 @@
   .servicesForm textarea {
     width: 100%;
     height: 270px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--white);
     background-color: rgba(129,144,160,0.13);
     color: var(--white);
   }
@@ -81,7 +81,7 @@
   .servicesForm button {
     padding: 12px 20px;
     background-color: var(--purple);
-    color: white;
+    color: var(--white);
     font-size: 16px;
     border: none;
     border-radius: 5px;

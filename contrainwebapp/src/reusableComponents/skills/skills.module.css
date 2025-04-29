@@ -5,6 +5,16 @@
     justify-content: center;
     padding: 30px 0;
   }
+
+  .highlightedWord {
+    color: var(--purple);
+  }
+
+  .skillsSubText {
+    max-width: 1000px;
+    text-align: center;
+    margin-top: 20px;
+  }
   
   .skillsGrid {
     display: flex;
@@ -27,6 +37,7 @@
   .imageWrapper {
     flex: 0 0 auto;
     max-width: 400px;
+    margin: 0 40px;
   }
   
   .skillImage {
@@ -50,15 +61,13 @@
   .skillCardReversed .skillText {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+    text-align: start;
   }
 
   .skillCardLeft .skillText {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-end;
+    text-align: end;
   }
 
   .skillText {
@@ -72,7 +81,7 @@
   
   .skillText p {
     font-size: 14px;
-    color: rgba(158, 199, 217, 1);
+    color: var(--textBlue);
     font-weight: 300;
     margin: 4px 0 0 0;
   }

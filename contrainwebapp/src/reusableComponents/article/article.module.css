@@ -27,7 +27,7 @@
 }
 
   .articleCategory {
-    color: #969fa9;
+    color: var(--textBlue);
     font-size: 14px;
     font-weight: 300;
     margin: 5px 0;
@@ -65,7 +65,7 @@
   display: -webkit-box;
   -webkit-line-clamp: 4;       /* 🔥 Limits text to 2 lines */
   -webkit-box-orient: vertical;
-  color: #8aaec0;
+  color: var(--textBlue);
   font-size: 1rem;
   margin-bottom: 20px;
 }
@@ -82,7 +82,7 @@
   margin: 0;
   padding: 0;
   line-height: inherit;
-  color: #8aaec0;
+  color: var(--textBlue);
 }
 
 .articleHeader {

@@ -18,8 +18,12 @@ const SkillsComponent: React.FC<SkillsProps> = ({ Title, SubText, Skills = [], S
 
   return (
     <div id='skills' className={`${styles.skillsContainer} ${backgroundClass}`.trim()}>
-      <h3>{Title}</h3>
-      <p>{SubText}</p>
+      <h3>  {Title.split(' ')[0]}{' '}
+        <span className={styles.highlightedWord}>
+          {Title.split(' ').slice(1).join(' ')}
+        </span>
+      </h3>
+      <p className={styles.skillsSubText}>{SubText}</p>
 
       <div className={styles.skillsGrid}>
         {/* Left 3 */}

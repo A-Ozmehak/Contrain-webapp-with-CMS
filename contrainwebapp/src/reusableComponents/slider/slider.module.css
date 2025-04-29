@@ -55,7 +55,7 @@
     left: 0;
     width: 100%;
     background: rgba(0, 0, 0, 0.6);
-    color: white;
+    color: var(--white);
     padding: 1rem;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -72,7 +72,7 @@
   /* Swiper Navigation buttons */
   .swiper-button-next,
   .swiper-button-prev {
-    color: white;
+    color: var(--white);
     top: 50%;
     transform: translateY(-50%);
     padding: 0.5rem 0.7rem;
@@ -81,7 +81,7 @@
   
   /* 🔵 Optional: Customize bullets */
   .swiper-pagination-bullet {
-    background-color: #fff;
+    background-color: var(--white);
     opacity: 0.7;
     margin: 0 5px;
     transition: opacity 0.3s;

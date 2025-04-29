@@ -9,5 +9,5 @@
 .copyright {
     font-size: 0.938rem;
     font-weight: 400;
-    color: #87A1AD;
+    color: var(--textBlue);
 }

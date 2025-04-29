@@ -24,7 +24,7 @@
     font-size: 1.1rem;
     line-height: 1.5;
     margin-bottom: 30px;
-    color: #9EC7D9;
+    color: var(--textBlue);
 }
 
 

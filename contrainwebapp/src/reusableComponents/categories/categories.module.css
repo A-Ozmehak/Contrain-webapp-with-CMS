@@ -32,22 +32,22 @@
 .categoryList li::before {
   content: '➤';
   font-size: 0.9rem;
-  color: #5c8292;
+  color: var(--arrowColor);
   transition: transform 0.2s ease, color 0.2s ease;
   flex-shrink: 0;
 }
 
 .categoryList li:hover {
   transform: translateX(6px);
-  color: var(--accent, #3fa3ff);
+  color: var(--accent);
 }
 
 .categoryList li:hover::before {
   transform: translateX(2px);
-  color: var(--accent, #3fa3ff);
+  color: var(--accent);
 }
 
 .categoryList li.active {
   font-weight: bold;
-  color: #1b78d6;
+  color: var(--bg-violet);
 }

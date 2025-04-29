@@ -51,6 +51,6 @@
   }
 
   .latestArticleText {
-    color: #86a7b9;
+    color: var(--textBlue);
   }
   
