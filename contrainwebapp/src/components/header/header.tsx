@@ -4,6 +4,7 @@ import Image from 'next/image';
 import styles from './header.module.css';
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface NavItem {
   id: number;
@@ -47,7 +48,6 @@ const Header: React.FC = () => {
     }
   };
 
-
   useEffect(() => {
     fetchNavItems();
     const updateMedia = () => setIsDesktop(window.innerWidth > 1400);
@@ -80,15 +80,6 @@ const Header: React.FC = () => {
     }));
   };
 
-  const handleScrollToSection = (id: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    const section = document.getElementById(id);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
-      setMenuOpen(false);
-    }
-  };
-
   if (loading) {
     return <header className={styles.header}>Loading...</header>;
   }
@@ -99,8 +90,8 @@ const Header: React.FC = () => {
 
   return (
     <header className={styles.header}>
-      <a href='/'><Image src="/logo/Contrain_logo-white-19.svg" alt="contrain logo" className={styles.logo} width={150} height={100} /></a>
-
+      <a href='/'><Image src="/logo/Contrain_logo-white-19.svg" alt="contrain logo" className={styles.logo} width={200} height={90} /></a>
+      
       {isDesktop ? (
         // ✅ Desktop Menu
         <nav className={styles.desktopNavMenu}>
@@ -109,7 +100,7 @@ const Header: React.FC = () => {
               const hasDropdown = item.title === "Tjänster" || item.title === "Om oss";
               const childItems = item.title === "Tjänster" ? servicesNav : item.title === "Om oss" ? aboutNav : [];
 
-              return hasDropdown ? (
+              return hasDropdown && childItems.length > 0 ? (
                 <li key={item.id} className={styles.dropdown}>
                   <Link href={item.url} className={styles.parentLink}>
                     {item.title}
@@ -126,8 +117,9 @@ const Header: React.FC = () => {
                 <li key={item.id}>
                   <Link href={item.url}>{item.title}</Link>
                 </li>
-              );
+              );  
             })}
+            
           </ul>
           <p>|</p>
           <div className={styles.socialMedia}>
@@ -140,62 +132,79 @@ const Header: React.FC = () => {
         // ✅ Mobile Menu
         <>
           <i id={styles.mobilIcon} className="fas fa-bars" onClick={() => setMenuOpen(!menuOpen)}></i>
-          {menuOpen && (
-            <aside ref={menuRef} className={`${styles.mobileMenu} ${styles.open}`}>
-              <button className={styles.closeButton} onClick={() => setMenuOpen(false)}>&times;</button>
-              <nav className={styles.mobileNavMenu}>
-                <ul className={styles.mobileNavMenuList}>
-                {mainNav.map((item) => {
-                    const isDropdown = item.title === "Tjänster" || item.title === "Om oss";
-                    const dropdownItems = item.title === "Tjänster" ? servicesNav : item.title === "Om oss" ? aboutNav : [];
+          <AnimatePresence>
+            {menuOpen && (
+              <>
+                <motion.div
+                  className={styles.backdrop}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 0.5 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  onClick={() => setMenuOpen(false)}
+                />
+                <motion.aside
+                  ref={menuRef}
+                  className={styles.mobileMenu}
+                  initial={{ x: '100%' }}
+                  animate={{ x: 0 }}
+                  exit={{ x: '100%' }}
+                  transition={{ type: 'tween', duration: 0.3 }}
+                >
+                  <button className={styles.closeButton} onClick={() => setMenuOpen(false)}>&times;</button>
+                  <nav className={styles.mobileNavMenu}>
+                    <ul className={styles.mobileNavMenuList}>
+                      {mainNav.map((item) => {
+                        const isDropdown = item.title === "Tjänster" || item.title === "Om oss";
+                        const dropdownItems = item.title === "Tjänster" ? servicesNav : item.title === "Om oss" ? aboutNav : [];
 
-                    return (
-                      <li key={item.id} className={styles.mobileMenuItem}>
-                        <div className={styles.mobileMenuHeader}>
-                          <Link
-                            href={item.url}
-                            onClick={() => setMenuOpen(false)}
-                            className={styles.parentLink}
-                          >
-                            {item.title}
-                          </Link>
+                        return (
+                          <li key={item.id} className={styles.mobileMenuItem}>
+                            <div className={styles.mobileMenuHeader}>
+                              <Link
+                                href={item.url}
+                                onClick={() => setMenuOpen(false)}
+                                className={styles.parentLink}
+                              >
+                                {item.title}
+                              </Link>
 
-                          {isDropdown && (
-                            <button
-                              onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                setDropdownOpen((prev) => ({
-                                  ...prev,
-                                  [item.title]: !prev[item.title],
-                                }));
-                              }}
-                              className={styles.dropdownToggle}
-                              aria-label="Toggle Dropdown"
-                            >
-                              {dropdownOpen[item.title] ? "▲" : "▼"}
-                            </button>
-                          )}
-                        </div>
+                              {isDropdown && dropdownItems.length > 0 && (
+                                <button
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    handleToggleDropdown(item.title);
+                                  }}
+                                  className={styles.dropdownToggle}
+                                  aria-label="Toggle Dropdown"
+                                >
+                                  {dropdownOpen[item.title] ? "▲" : "▼"}
+                                </button>
+                              )}
+                            </div>
 
-                        {isDropdown && dropdownOpen[item.title] && (
-                          <ul className={styles.mobileDropdownMenu}>
-                            {dropdownItems.map((sub) => (
-                              <li key={sub.id}>
-                                <Link href={sub.url} onClick={() => setMenuOpen(false)}>
-                                  {sub.title}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </li>
-                    );
-                  })}
-                </ul>
-              </nav>
-            </aside>
-          )}
+                            {isDropdown && dropdownItems.length > 0 && dropdownOpen[item.title] && (
+                              <ul className={styles.mobileDropdownMenu}>
+                                {dropdownItems.map((sub) => (
+                                  <li key={sub.id}>
+                                    <Link href={sub.url} onClick={() => setMenuOpen(false)}>
+                                      {sub.title}
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </nav>
+                </motion.aside>
+              </>
+            )}
+          </AnimatePresence>
+
         </>
       )}
     </header>

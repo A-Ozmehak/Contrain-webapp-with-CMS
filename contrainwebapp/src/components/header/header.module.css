@@ -3,6 +3,9 @@
     justify-content: space-between;
     align-items: center;
     padding: 0 2rem;
+    z-index: 1;
+    position: relative;
+    z-index: 100;
 }
 
 #mobilIcon {
@@ -18,20 +21,25 @@
 .mobileMenu {
     position: fixed;
     top: 0;
-    right: -100%;
+    right: 0;
     width: 250px;
     height: 100%;
-    background-color: #222;
-    color: white;
+    background-color: var(--background-color);
+    color: var(--white);
     padding: 1rem;
     display: flex;
     flex-direction: column;
-    transition: right 0.3s ease-in-out;
-    z-index: 1000;
+    z-index: 99;
 }
 
-.mobileMenu.open {
-    right: 0;
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: black;
+  z-index: 90;
 }
 
 .mobileMenu ul {
@@ -45,7 +53,7 @@
 }
   
 .mobileMenu li a {
-    color: white;
+    color: var(--white);
     text-decoration: none;
 }
   
@@ -54,12 +62,12 @@
     font-size: 1.5rem;
     background: none;
     border: none;
-    color: white;
+    color: var(--white);
     cursor: pointer;
 }
   
 .closeButton:hover {
-    color: #f00;
+    color: var(--red);
 }
 
 .desktopNavMenu {
@@ -81,8 +89,8 @@
 }
 
 .desktopNavMenuList a:hover {
-    border-bottom: 1px solid white;
-    color: #87A1AD;
+    border-bottom: 1px solid var(--white);
+    color: var(--textBlue);
 }
 
 .desktopNavMenuList li a {
@@ -133,7 +141,7 @@
     position: absolute;
     top: 100%;
     left: 0;
-    background: #222;
+    background: #333;
     border-radius: 5px;
     padding: 10px;
     min-width: 150px;
@@ -162,7 +170,7 @@
   .mobileDropdownToggle {
     background: none;
     border: none;
-    color: white;
+    color: var(--white);
     font-size: 1rem;
     cursor: pointer;
   }
@@ -190,7 +198,7 @@
   .dropdownToggle {
     background: none;
     border: none;
-    color: white;
+    color: var(--white);
     font-size: 1rem;
     cursor: pointer;
     margin-left: 8px;
@@ -209,7 +217,7 @@
   }
   
   .mobileDropdownMenu li a {
-    color: white;
+    color: var(--white);
     text-decoration: none;
     font-size: 14px;
     display: block;
@@ -217,5 +225,5 @@
   }
   
   .mobileDropdownMenu li a:hover {
-    color: #87A1AD;
+    color: var(--textBlue);
   }
