@@ -1,0 +1,60 @@
+.materialContainer {
+  padding: 4rem 2rem;
+}
+
+.materialGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.materialCard {
+  background: #111827;
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.materialCard:hover {
+  transform: translateY(-5px);
+}
+
+.materialImage {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin: 0 auto 1.5rem;
+}
+
+.materialShortName {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.materialFullName {
+  font-weight: 300;
+  font-size: 0.938rem;
+  color: var(--textGray);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+}
+
+.materialDescription {
+  font-size: 1rem;
+  color: var(--textBlue);
+}
+
+/* ✅ Mobile Responsive */
+@media (max-width: 1024px) {
+  .materialGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .materialGrid {
+    grid-template-columns: 1fr;
+  }
+}

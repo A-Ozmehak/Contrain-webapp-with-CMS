@@ -1,0 +1,33 @@
+.materialListContainer {
+  padding: 2rem;
+  overflow-x: auto;
+}
+
+/* ✅ Hide on small screens */
+@media (max-width: 700px) {
+  .materialListContainer {
+    display: none;
+  }
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 1rem;
+  border-bottom: 1px solid #374151;
+  text-align: left;
+  font-size: 1rem;
+}
+
+.table th {
+  background-color: #1f2937;
+  color: #f9fafb;
+}
+
+.table td {
+  color: var(--textBlue);
+}
