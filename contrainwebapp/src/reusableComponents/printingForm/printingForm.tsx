@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import styles from './printingForm.module.css';
-import { useBackgroundClass } from '@/hooks/useBackgroundColor';
 
 interface PrintingFormProps {
+  SectionTitle?: string;
   CompanyInputLabel: string;
   CompanyPlaceholder: string;
   ContactPersonInputLabel: string;
@@ -28,10 +28,10 @@ interface PrintingFormProps {
   ExtraServicesOptions: { id: number; Option: string }[];
   MessageInputLabel: string;
   ButtonLabel: string;
-  BackgroundColor?: string;
 }
 
 const PrintingComponent: React.FC<PrintingFormProps> = ({ 
+  SectionTitle,
   CompanyInputLabel,
   CompanyPlaceholder,
   ContactPersonInputLabel, 
@@ -54,10 +54,8 @@ const PrintingComponent: React.FC<PrintingFormProps> = ({
   ExtraServicesLabel,
   ExtraServicesOptions = [],
   MessageInputLabel,
-  ButtonLabel,
-  BackgroundColor 
+  ButtonLabel, 
 }) => {
-  const backgroundClass = useBackgroundClass(BackgroundColor);
   const [status, setStatus] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
 
@@ -157,7 +155,8 @@ const PrintingComponent: React.FC<PrintingFormProps> = ({
   };
   
   return (
-    <form onSubmit={handleSubmit} className={`${styles.printingForm} ${backgroundClass}`.trim()}>
+    <form onSubmit={handleSubmit} className={styles.printingForm}>
+      <h5>{SectionTitle}</h5>
        <div className={styles.printingFormGroup}>
         <label htmlFor="printingCompanyName" className={styles.label}>{CompanyInputLabel}:</label>
         <input type="text" value={formData.companyName} onChange={handleChange} id="companyName" name="companyName" className={styles.input} required placeholder={CompanyPlaceholder} />
