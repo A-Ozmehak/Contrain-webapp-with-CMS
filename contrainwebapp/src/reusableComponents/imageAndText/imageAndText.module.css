@@ -1,0 +1,72 @@
+.imageAndTextContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 30px;
+    background-color: var(--bg-dark-navy);
+    padding: 20px;
+}
+
+.imageAndTextImageWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.imageAndTextImageWrapper img {
+    width: 100%;
+    max-width: 400px;
+    border: 3px solid var(--cyan);
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.imageAndTextContent {
+    background-color: transparent;
+    margin-bottom: 50px;
+    text-align: center; 
+}
+
+.imageAndTextContent h2 span {
+    font-size: 32px;
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 2rem;
+}
+
+.imageAndTextContent p {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--textBlue);
+}
+
+/* 🔹 For tablets and larger screens */
+@media screen and (min-width: 768px) {
+    .imageAndTextContainer {
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+        padding: 40px;
+        max-width: 1200px; 
+        margin-left: auto; 
+        margin-right: auto;
+    }
+
+    .imageAndTextImageWrapper img {
+        max-width: 700px;
+    }
+
+    .imageAndTextContent {
+        text-align: left; 
+    }
+
+    .imageAndTextContent h2 span {
+        font-size: 45px;
+    }
+
+    .imageAndTextContent p {
+        font-size: 18px;
+    }
+}

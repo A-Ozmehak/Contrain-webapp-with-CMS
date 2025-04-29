@@ -1,0 +1,9 @@
+.severalImagesContainer {
+    display: flex;
+    gap: 15px;
+}
+
+.severalImagesContainer img {
+    height: 100%;
+    width: 100%;
+}
