@@ -11,13 +11,21 @@ import TextWithBackgroundImageComponent from '@/reusableComponents/textWithBackg
 import OurServicesComponent from '@/reusableComponents/ourServices/ourServices';
 import RichTextComponent from '@/reusableComponents/richText/richText';
 import AboutComponent from '@/reusableComponents/about/about';
-import PrintingFormComponent from '@/reusableComponents/printingForm/printingForm';
 import SkillsComponent from '@/reusableComponents/skills/skills';
 import ServicesLargeComponent from '@/reusableComponents/servicesLarge/servicesLarge';
 import ServiceFormComponent from '@/reusableComponents/servicesForm/serviceForm';
 import StackedCarousel from '@/reusableComponents/ui/stackedCarousel/stackedCarousel';
 import ProjectDetailsComponent from '@/reusableComponents/projectDetails/projectDetails';
 import ExpandingCardsComponent from '@/reusableComponents/ui/expanding-cards/expanding-cards';
+import TitleSectionComponent from '@/reusableComponents/titleSection/titleSection';
+import OffertComponent from '@/reusableComponents/offertComponent/offertComponent';
+import ImageAndTextComponent from '@/reusableComponents/imageAndText/imageAndText';
+import SeveralImagesComponent from '@/reusableComponents/serveralImages/severalImages';
+import MaterialComponent from '@/reusableComponents/material/material';
+import MaterialListComponent from '@/reusableComponents/materialList/materialList';
+import TitleAndTextComponent from '@/reusableComponents/service-titleAndText/titleAndText';
+import BatchesComponent from '@/reusableComponents/batches/batches';
+import AccordionComponent from '@/reusableComponents/accordion/accordion';
 
 interface BlockProps {
   __component: string;
@@ -40,13 +48,21 @@ const blockRegistry: { [key: string]: React.ElementType } = {
     'blocks.our-services': OurServicesComponent,
     'blocks.rich-text': RichTextComponent,
     'blocks.about': AboutComponent,
-    'blocks.printing-form': PrintingFormComponent,
     'blocks.skills': SkillsComponent,
     'blocks.services-large': ServicesLargeComponent,
     'blocks.services-form': ServiceFormComponent,
     'blocks.stacked-slider': StackedCarousel,
     'blocks.project-details': ProjectDetailsComponent,
     'blocks.expanding-cards': ExpandingCardsComponent,
+    'blocks.title-section': TitleSectionComponent,
+    'blocks.offert-component': OffertComponent,
+    'blocks.image-and-text': ImageAndTextComponent,
+    'blocks.several-images': SeveralImagesComponent,
+    'blocks.material': MaterialComponent,
+    'blocks.material-list': MaterialListComponent,
+    'blocks.service-title-and-text': TitleAndTextComponent,
+    'blocks.batches': BatchesComponent,
+    'blocks.accordion': AccordionComponent
    
   // Add more blocks here
 };
@@ -136,7 +152,70 @@ const BlockManager: React.FC<BlockManagerProps> = ({ blocks }) => {
             </div>
           );
         }
-        
+
+          if (block.__component === "blocks.offert-component") {
+            return (
+              <OffertComponent
+                key={block.id}
+                contactInfo={block.ContactInfo}
+                offertForm={block.OffertForm}
+                PageTitle={block.PageTitle || ""}
+                PageSubTitle={block.PageSubTitle || ""}
+              />
+            );
+          }
+
+          if (block.__component === 'blocks.contact-form') {
+            return (
+              <ContactFormComponent
+                key={`${block.__component}-${block.id}`}
+                {...block}
+                BackgroundImage={block.BackgroundImage || ""}
+              />
+            );
+          }
+
+          if (block.__component === 'blocks.image-and-text') {
+            return (
+              <ImageAndTextComponent
+                key={`${block.__component}-${block.id}`}
+                Image={block.Image}
+                Alt={block.Alt}
+                TextContent={block.TextContent}
+              />
+            );
+          }
+
+          if (block.__component === "blocks.several-images") {
+            return (
+              <SeveralImagesComponent
+                key={block.id}
+                Image={block.Image || []}
+              />
+            );
+          }
+
+          if (block.__component === "blocks.service-title-and-text") {
+            return (
+              <TitleAndTextComponent
+                key={block.id}
+                Services={block.Service}
+                Image={block.Image}
+              />
+            );
+          }
+
+          if (block.__component === "blocks.accordion") {
+            return (
+              <AccordionComponent
+                key={block.id}
+                AccordionItem={block.AccordionItem}
+              />
+            );
+          }
+          
+          
+          
         // 🔹 Default render for all other blocks
         return (
           <Component key={`${block.__component}-${block.id}`} {...block} />

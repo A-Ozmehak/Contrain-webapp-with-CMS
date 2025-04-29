@@ -18,25 +18,50 @@ const fetchNormalizedPageData = async (slug: string) => {
       servicesLarge: buildUrl("populate[Blocks][on][blocks.services-large][populate][Services][populate]=*"),
       servicesForm: buildUrl("populate[Blocks][on][blocks.services-form][populate]=*"),
       stackedSlider: buildUrl("populate[Blocks][on][blocks.stacked-slider][populate][Images][populate]=*"),
-      printingForm: buildUrl("populate[Blocks][on][blocks.printing-form][populate][MaterialOptions]=*&populate[Blocks][on][blocks.printing-form][populate][ColorOptions]=*&populate[Blocks][on][blocks.printing-form][populate][DeliveryTimeOptions]=*&populate[Blocks][on][blocks.printing-form][populate][ExtraServicesOptions]=*"),
       expandingCards: buildUrl("populate[Blocks][on][blocks.expanding-cards][populate][Content][populate][Image]=true"),
-    };
+      offertComponent: buildUrl(
+        [
+          "populate[Blocks][on][blocks.offert-component][populate][ContactInfo][populate][SocialMedia]=*",
+          "populate[Blocks][on][blocks.offert-component][populate][OffertForm][populate][MaterialOptions]=*",
+          "populate[Blocks][on][blocks.offert-component][populate][OffertForm][populate][ColorOptions]=*",
+          "populate[Blocks][on][blocks.offert-component][populate][OffertForm][populate][DeliveryTimeOptions]=*",
+          "populate[Blocks][on][blocks.offert-component][populate][OffertForm][populate][ExtraServicesOptions]=*",
+        ].join('&')
+      ),
+      contactForm: buildUrl("populate[Blocks][on][blocks.contact-form][populate]=BackgroundImage"),
+      imageAndText: buildUrl("populate[Blocks][on][blocks.image-and-text][populate]=Image"),
+      severalImages: buildUrl("populate[Blocks][on][blocks.several-images][populate][Image][populate]=Image"),
+      material: buildUrl("populate[Blocks][on][blocks.material][populate][MaterialDescription][populate]=MaterialImage"),
+      materialList: buildUrl("populate[Blocks][on][blocks.material-list][populate][MaterialList][populate]=*"),
+      serviceTitleAndText: buildUrl("populate[Blocks][on][blocks.service-title-and-text][populate][Image]=true&populate[Blocks][on][blocks.service-title-and-text][populate][Service]=*"),
+      batches: buildUrl("populate[Blocks][on][blocks.batches][populate][Batches][populate]=BackgroundImage"),
+      accordion: buildUrl("populate[Blocks][on][blocks.accordion][populate][AccordionItem][populate]=*"),
+    }
   
     const [
       res, heroRes, sliderRes, ourServicesRes, aboutRes,
       skillsRes, servicesLargeRes, servicesFormRes, stackedSliderRes,
-      printingFormRes, textWithBackgroundRes, expandingCardsRes
+      textWithBackgroundRes, expandingCardsRes, offertComponentRes, contactFormRes, 
+      imageAndTextRes, severalImagesRes, materialRes, materialListRes, 
+      serviceTitleAndTextRes, batchesRes, accordionRes  
     ] = await Promise.all([
       fetch(urls.full), fetch(urls.hero), fetch(urls.slider), fetch(urls.ourServices),
       fetch(urls.about), fetch(urls.skills), fetch(urls.servicesLarge),
-      fetch(urls.servicesForm), fetch(urls.stackedSlider), fetch(urls.printingForm),
-      fetch(urls.textWithBg), fetch(urls.expandingCards)
+      fetch(urls.servicesForm), fetch(urls.stackedSlider),
+      fetch(urls.textWithBg), fetch(urls.expandingCards),
+      fetch(urls.offertComponent), fetch(urls.contactForm),
+      fetch(urls.imageAndText), fetch(urls.severalImages),
+      fetch(urls.material), fetch(urls.materialList),
+      fetch(urls.serviceTitleAndText), fetch(urls.batches),
+      fetch(urls.accordion)
     ]);
   
     const allResponses = [
       res, heroRes, sliderRes, ourServicesRes, aboutRes,
       skillsRes, servicesLargeRes, servicesFormRes, stackedSliderRes,
-      printingFormRes, textWithBackgroundRes, expandingCardsRes
+      textWithBackgroundRes, expandingCardsRes, contactFormRes, imageAndTextRes,
+      severalImagesRes,  materialRes, materialListRes, serviceTitleAndTextRes, 
+      batchesRes, accordionRes 
     ];
   
     if (allResponses.some(r => !r.ok)) return null;
@@ -44,7 +69,9 @@ const fetchNormalizedPageData = async (slug: string) => {
     const [
       data, heroData, sliderData, ourServicesData, aboutData,
       skillsData, servicesLargeData, servicesFormData, stackedSliderData,
-      printingFormData, textWithBgData, expandingCardData
+      textWithBgData, expandingCardData, contactFormData, imageAndTextData,
+      severalImagesData, materialData, materialListData, serviceTitleAndTextData,
+      batchesData, accordionData 
     ] = await Promise.all(allResponses.map(res => res.json()));
   
     const pageData = data?.data?.[0];
@@ -310,30 +337,216 @@ const fetchNormalizedPageData = async (slug: string) => {
       }
     }
 
-    // Extract printingForm block data
-    const printingFormPageData = printingFormData?.data?.[0] || null;
-    if (!printingFormPageData) return null;
-
-    if (printingFormPageData) {
-      // Merge MaterialOptions, ColorOptions, DeliveryTimeOptions, and ExtraServicesOptions into the block data
-      const printingFormBlock = printingFormPageData.Blocks.find((block: any) => block.__component === 'blocks.printing-form');
-
-      if (printingFormBlock) {
-        pageData.Blocks = pageData.Blocks.map((block: any) => {
-          if (block.__component === 'blocks.printing-form') {
-            return {
-              ...block,
-              MaterialOptions: printingFormBlock.MaterialOptions || [],
-              ColorOptions: printingFormBlock.ColorOptions || [],
-              DeliveryTimeOptions: printingFormBlock.DeliveryTimeOptions || [],
-              ExtraServicesOptions: printingFormBlock.ExtraServicesOptions || [],
-            };
-          }
-          return block;
-        });
+    // Extract offertComponent block data
+    const offertComponentData = offertComponentRes?.ok ? await offertComponentRes.json() : null;
+    if (offertComponentData?.data?.[0]?.Blocks) {
+      const offertBlock = offertComponentData.data[0].Blocks.find(
+        (block: any) => block.__component === "blocks.offert-component"
+      );
+    
+      if (offertBlock) {
+        pageData.Blocks = pageData.Blocks.map((block: any) =>
+          block.__component === "blocks.offert-component" ? offertBlock : block
+        );
       }
     }
-  
+
+    // Merge Contact Form Background Image
+    const contactFormPageData = contactFormData?.data?.length > 0 ? contactFormData.data[0] : null;
+
+    if (contactFormPageData?.Blocks) {
+      const contactFormBlock = contactFormPageData.Blocks.find(
+        (block: any) => block.__component === "blocks.contact-form"
+      );
+
+      if (contactFormBlock) {
+        const imageFile = contactFormBlock.BackgroundImage;
+        const backgroundImageUrl = getStrapiMedia(
+          imageFile?.formats?.medium?.url ||
+          imageFile?.url ||
+          "/fallback-contact.webp"
+        );
+
+        pageData.Blocks = pageData.Blocks.map((block: any) =>
+          block.__component === "blocks.contact-form"
+            ? {
+                ...block,
+                BackgroundImage: backgroundImageUrl,
+              }
+            : block
+        );
+      }
+    }
+
+    // 🖼 Merge ImageAndText block
+    const imageAndTextPageData = imageAndTextData?.data?.length > 0 ? imageAndTextData.data[0] : null;
+    if (imageAndTextPageData?.Blocks) {
+      const imageAndTextBlock = imageAndTextPageData.Blocks.find(
+        (block: any) => block.__component === "blocks.image-and-text"
+      );
+
+      if (imageAndTextBlock?.Image) {
+        const imageUrl = getStrapiMedia(
+          imageAndTextBlock.Image?.formats?.medium?.url || imageAndTextBlock.Image?.url || "/fallback-image.webp"
+        );
+
+        pageData.Blocks = pageData.Blocks.map((block: any) =>
+          block.__component === "blocks.image-and-text"
+            ? { ...block, Image: imageUrl }
+            : block
+        );
+      }
+    }
+
+    // Extract Several Images block data
+    const severalImagesPageData = severalImagesData?.data?.length > 0 ? severalImagesData.data[0] : null;
+
+    if (severalImagesPageData?.Blocks) {
+      const severalImagesBlock = severalImagesPageData.Blocks.find(
+        (block: any) => block.__component === "blocks.several-images"
+      );
+
+      if (severalImagesBlock?.Image?.length > 0) {
+        const enrichedImages = severalImagesBlock.Image.map((item: any) => {
+          const imageFile = item.Image; // 🛠 you must go into .Image inside .Image
+
+          return {
+            id: item.id,
+            Image: getStrapiMedia(
+              imageFile?.formats?.medium?.url || imageFile?.url || "/fallback-image.webp"
+            ),
+            Alt: imageFile?.alternativeText || "", // safer
+          };
+        });
+
+        pageData.Blocks = pageData.Blocks.map((block: any) =>
+          block.__component === "blocks.several-images"
+            ? { ...block, Image: enrichedImages }
+            : block
+        );
+      }
+    }
+
+    // Material Block
+    const materialPageData = materialData?.data?.length > 0 ? materialData.data[0] : null;
+    if (materialPageData?.Blocks) {
+      const materialBlock = materialPageData.Blocks.find(
+        (block: any) => block.__component === "blocks.material"
+      );
+
+      if (materialBlock?.MaterialDescription?.length > 0) {
+        const enrichedDescriptions = materialBlock.MaterialDescription.map((item: any) => ({
+          id: item.id,
+          MaterialShortName: item.MaterialShortName,
+          MaterialFullName: item.MaterialFullName,
+          Description: item.Description,
+          MaterialImage: getStrapiMedia(
+            item.MaterialImage?.formats?.medium?.url || item.MaterialImage?.url || "/fallback-material.webp"
+          )
+        }));
+
+        pageData.Blocks = pageData.Blocks.map((block: any) =>
+          block.__component === "blocks.material"
+            ? { ...block, MaterialDescription: enrichedDescriptions }
+            : block
+        );
+      }
+    }
+
+    // Material List Block
+    const materialListPageData = materialListData?.data?.length > 0 ? materialListData.data[0] : null;
+    if (materialListPageData?.Blocks) {
+      const materialListBlock = materialListPageData.Blocks.find(
+        (block: any) => block.__component === "blocks.material-list"
+      );
+
+      if (materialListBlock?.MaterialList?.length > 0) {
+        pageData.Blocks = pageData.Blocks.map((block: any) =>
+          block.__component === "blocks.material-list"
+            ? { ...block, MaterialList: materialListBlock.MaterialList }
+            : block
+        );
+      }
+    }
+
+    // Extract service-title-and-text block data
+    const serviceTitleAndTextPageData = serviceTitleAndTextData?.data?.length > 0 ? serviceTitleAndTextData.data[0] : null;
+
+    if (serviceTitleAndTextPageData?.Blocks) {
+      const serviceTitleAndTextBlock = serviceTitleAndTextPageData.Blocks.find(
+        (block: any) => block.__component === "blocks.service-title-and-text"
+      );
+
+      if (serviceTitleAndTextBlock) {
+        const globalImage = serviceTitleAndTextBlock.Image
+          ? getStrapiMedia(
+              serviceTitleAndTextBlock.Image?.formats?.medium?.url ||
+              serviceTitleAndTextBlock.Image?.url ||
+              "/fallback-service-title.webp"
+            )
+          : null;
+
+        pageData.Blocks = pageData.Blocks.map((block: any) =>
+          block.__component === "blocks.service-title-and-text"
+            ? {
+                ...block,
+                Service: serviceTitleAndTextBlock.Service || [],
+                Image: globalImage,
+              }
+            : block
+        );
+      }
+    }
+
+    // Extract batches block data
+    const batchesPageData = batchesData?.data?.length > 0 ? batchesData.data[0] : null;
+    if (batchesPageData?.Blocks) {
+      const batchesBlock = batchesPageData.Blocks.find(
+        (block: any) => block.__component === "blocks.batches"
+      );
+    
+      if (batchesBlock?.Batches?.length > 0) {
+        const enrichedBatches = batchesBlock.Batches.map((batch: any) => ({
+          id: batch.id,
+          Title: batch.Title,
+          Description: batch.Description,
+          ButtonLabel: batch.ButtonLabel,
+          ButtonUrl: batch.ButtonUrl,
+          BackgroundImage: getStrapiMedia(
+            batch.BackgroundImage?.formats?.medium?.url || batch.BackgroundImage?.url || "/fallback-batch.webp"
+          ),
+        }));
+    
+        pageData.Blocks = pageData.Blocks.map((block: any) =>
+          block.__component === "blocks.batches"
+            ? { ...block, Batches: enrichedBatches }
+            : block
+        );
+      }
+    }
+
+    // Extract accordion block data
+    const accordionPageData = accordionData?.data?.length > 0 ? accordionData.data[0] : null;
+    if (accordionPageData?.Blocks) {
+      const accordionBlock = accordionPageData.Blocks.find(
+        (block: any) => block.__component === "blocks.accordion"
+      );
+
+      if (accordionBlock?.AccordionItem?.length > 0) {
+        const enrichedAccordion = accordionBlock.AccordionItem.map((accordion: any) => ({
+          id: accordion.id,
+          Title: accordion.Title,
+          Text: accordion.Text
+        }));
+
+        pageData.Blocks = pageData.Blocks.map((block: any) =>
+          block.__component === "blocks.accordion"
+            ? { ...block, AccordionItem: enrichedAccordion }
+            : block
+        );
+      }
+    }
+    
     return pageData;
   };
   
