@@ -9,11 +9,13 @@ interface HeroProps {
   TypewriterTexts?: Array<{ id: number; Text: string }>; 
   BackgroundImage?: string;
   ShowButton: boolean;
-  ButtonLabel?: string;
-  ButtonUrl?: string;
+  ButtonWithBackgroundLabel?: string;
+  ButtonWithBackgroundUrl?: string;
+  BorderButtonLabel?: string;
+  BorderButtonUrl?: string;
 }
 
-const HeroComponent: React.FC<HeroProps> = ({ Title, SubText, TypewriterTexts = [], BackgroundImage, ShowButton, ButtonLabel, ButtonUrl }) => {
+const HeroComponent: React.FC<HeroProps> = ({ Title, SubText, TypewriterTexts = [], BackgroundImage, ShowButton, ButtonWithBackgroundLabel, ButtonWithBackgroundUrl, BorderButtonLabel, BorderButtonUrl }) => {
   const isMobile = useIsMobile();
   const typewriterTextsArray = TypewriterTexts.map((item) => item.Text);
   const showStaticTitle = isMobile || typewriterTextsArray.length === 0;
@@ -29,21 +31,28 @@ const HeroComponent: React.FC<HeroProps> = ({ Title, SubText, TypewriterTexts = 
         />
         <div className={styles.typewriterContainer}>
           {showStaticTitle ? (
-            <h1 className={styles.typewriterTitle}>{Title}</h1>
+            <div>
+              <h1 className={styles.typewriterTitle}>{Title}</h1>
+              <h2 className={styles.subtitle}>{SubText}</h2>
+            </div>
           ) : (
             <div>
               {typewriterTextsArray.length > 0 && <TypewriterTitle texts={typewriterTextsArray} />}
               <h2 className={styles.subtitle}>{SubText}</h2>
             </div>
           )}
-
-          {ShowButton && (
-            <a href={ButtonUrl || '/'} className={styles.heroButton}>
-              {ButtonLabel || 'Learn More'}
-            </a>
-          )}
+            
+              {ShowButton && (
+                <div className={styles.heroButtonsContainer}>
+                  <a href={ButtonWithBackgroundUrl} className={styles.heroFirstButton}>
+                    {ButtonWithBackgroundLabel}
+                  </a>
+                  <a href={BorderButtonUrl} className={styles.heroSecondButton}>
+                    {BorderButtonLabel}
+                  </a>
+                </div>
+              )}     
         </div>
-       
       </div>
     </div>
   );
