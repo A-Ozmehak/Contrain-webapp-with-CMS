@@ -79,7 +79,7 @@ const fetchNormalizedPageData = async (slug: string) => {
   
     pageData.Blocks = pageData.Blocks || [];
   
-      // 🔹 Merge Hero Block in Correct Position
+  // 🔹 Merge Hero Block in Correct Position
   const heroPageData = heroData?.data?.length > 0 ? heroData.data[0] : null;
   if (heroPageData?.Blocks) {
     const heroBlock = heroPageData.Blocks.find(

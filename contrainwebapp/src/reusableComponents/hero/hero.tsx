@@ -2,6 +2,7 @@
 import useIsMobile from '@/hooks/useIsMobile';
 import TypewriterTitle from '@/components/typewriterTexts/typewriterTexts';
 import styles from './hero.module.css';
+import Image from 'next/image';
 
 interface HeroProps {
   Title?: string;
@@ -23,10 +24,12 @@ const HeroComponent: React.FC<HeroProps> = ({ Title, SubText, TypewriterTexts = 
   return (
     <div id="heroContainer" className={styles.heroContainer}>
       <div id="heroImageWrapper" className={styles.imageWrapper}>
-        <img
+        <Image
           src={BackgroundImage || '/microcontroller.webp'}
           alt="background"
           className={styles.backgroundImage}
+          width={800}
+          height={600}
           id='heroImage'
         />
         <div className={styles.typewriterContainer}>

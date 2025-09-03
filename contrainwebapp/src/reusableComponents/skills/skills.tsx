@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import styles from './skills.module.css';
 import { useBackgroundClass } from '@/hooks/useBackgroundColor';
 
@@ -42,7 +43,7 @@ const SkillsComponent: React.FC<SkillsProps> = ({ Title, SubText, Skills = [], S
         {/* Center image */}
         {SkillImage?.url && (
           <div className={styles.imageWrapper}>
-            <img src={SkillImage.url} alt="Skill" className={styles.skillImage} />
+            <Image src={SkillImage.url} alt="Skill" height="400" width="400" className={styles.skillImage} />
           </div>
         )}
 

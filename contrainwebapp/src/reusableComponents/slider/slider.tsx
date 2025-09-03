@@ -8,6 +8,7 @@ import 'swiper/css/autoplay';
 import 'swiper/css/navigation';
 import styles from './slider.module.css';
 import { useBackgroundClass } from '@/hooks/useBackgroundColor';
+import Image from 'next/image';
 
 interface SliderProps {
   Images: Array<{
@@ -47,10 +48,12 @@ const SliderComponent: React.FC<SliderProps> = ({ Images = [], BackgroundColor, 
               <SwiperSlide key={`slide-${item.id}-${item.Url || item.Alt || item.HoverTitle || Math.random()}`} className={styles.swiperSlide}>
                 <a href={item.Url || '#'} className={styles.imageLink}>
                   <div className={styles.sliderImageWrapper}>
-                    <img
+                    <Image
                       src={item.image || '/microservices.webp'}
                       alt={item.Alt || 'Image'}
                       className={styles.sliderImage}
+                      height={100}
+                      width={100}
                     />
                     <div className={styles.hoverOverlay}>
                       <h3>{item.HoverTitle}</h3>
