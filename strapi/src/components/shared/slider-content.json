@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_shared_slider_contents",
+  "info": {
+    "displayName": "Slider Content",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Text": {
+      "type": "string",
+      "required": true
+    },
+    "Title": {
+      "type": "string"
+    }
+  }
+}

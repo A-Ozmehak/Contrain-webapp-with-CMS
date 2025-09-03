@@ -1,0 +1,104 @@
+{
+  "collectionName": "components_blocks_printing_forms",
+  "info": {
+    "displayName": "Printing Form",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "CompanyInputLabel": {
+      "type": "string",
+      "default": "Företagsnamn"
+    },
+    "CompanyPlaceholder": {
+      "type": "string"
+    },
+    "ContactPersonInputLabel": {
+      "type": "string",
+      "default": "Kontaktperson"
+    },
+    "ContactPersonPlaceholder": {
+      "type": "string"
+    },
+    "EmailInputLabel": {
+      "type": "string",
+      "default": "E-post"
+    },
+    "EmailPlaceholder": {
+      "type": "string"
+    },
+    "PhoneInputLabel": {
+      "type": "string",
+      "default": "Telefonnummer"
+    },
+    "PhonePlaceholder": {
+      "type": "string"
+    },
+    "ProjectDescriptionInputLabel": {
+      "type": "string",
+      "default": "Projektbeskrivning"
+    },
+    "ProjectDescriptionPlaceholder": {
+      "type": "string"
+    },
+    "FileInputLabel": {
+      "type": "string",
+      "default": "3d modell (.stl, .3mf, .gcode)"
+    },
+    "QuantityInputLabel": {
+      "type": "string",
+      "default": "Antal exemplar"
+    },
+    "MaterialRadioLabel": {
+      "type": "string",
+      "default": "Materialval"
+    },
+    "MaterialOptions": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.form-options"
+    },
+    "ColorLabel": {
+      "type": "string",
+      "default": "Färg"
+    },
+    "ColorOptions": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.form-options"
+    },
+    "DeliveryTimeLabel": {
+      "type": "string",
+      "default": "Leveranstid"
+    },
+    "DeliveryTimeOptions": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.form-options"
+    },
+    "DeliveryDateLabel": {
+      "type": "string",
+      "default": "Önskat leveransdatum"
+    },
+    "ExtraServicesLabel": {
+      "type": "string",
+      "default": "Extra tjänster"
+    },
+    "ExtraServicesOptions": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.form-options"
+    },
+    "MessageInputLabel": {
+      "type": "string",
+      "default": "Övrigt meddelande"
+    },
+    "ButtonLabel": {
+      "type": "string",
+      "default": "Skicka offertförfrågan"
+    },
+    "SectionTitle": {
+      "type": "string"
+    }
+  }
+}

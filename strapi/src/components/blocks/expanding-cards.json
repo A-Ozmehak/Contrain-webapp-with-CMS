@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_blocks_expanding_cards",
+  "info": {
+    "displayName": "Expanding Cards",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Content": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.slider-content"
+    }
+  }
+}

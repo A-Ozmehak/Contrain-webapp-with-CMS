@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_blocks_rich_texts",
+  "info": {
+    "displayName": "Rich Text",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "RichText": {
+      "type": "blocks"
+    },
+    "BackgroundColor": {
+      "type": "enumeration",
+      "enum": [
+        "Default",
+        "Dark navy",
+        "Darker navy",
+        "Steel",
+        "Violet"
+      ]
+    }
+  }
+}

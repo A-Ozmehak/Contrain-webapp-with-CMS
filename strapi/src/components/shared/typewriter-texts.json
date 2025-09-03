@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_shared_typewriter_texts",
+  "info": {
+    "displayName": "TypewriterTexts",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Text": {
+      "type": "string"
+    }
+  }
+}

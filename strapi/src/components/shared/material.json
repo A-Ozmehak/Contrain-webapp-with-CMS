@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_shared_materials",
+  "info": {
+    "displayName": "Material"
+  },
+  "options": {},
+  "attributes": {
+    "MaterialImage": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "MaterialShortName": {
+      "type": "string"
+    },
+    "MaterialFullName": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "text"
+    }
+  }
+}

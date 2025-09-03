@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_blocks_sliders",
+  "info": {
+    "displayName": "Slider",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Images": {
+      "displayName": "Images",
+      "type": "component",
+      "repeatable": true,
+      "component": "blocks.images"
+    },
+    "BackgroundColor": {
+      "type": "enumeration",
+      "enum": [
+        "Default",
+        "Dark navy",
+        "Darker navy",
+        "Steel",
+        "Violet"
+      ]
+    },
+    "SectionTitle": {
+      "type": "string"
+    }
+  }
+}

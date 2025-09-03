@@ -1,0 +1,38 @@
+{
+  "collectionName": "components_blocks_abouts",
+  "info": {
+    "displayName": "About",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "AboutText": {
+      "type": "text"
+    },
+    "AboutKeyPoints": {
+      "displayName": "AboutKeyPoints",
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.about-key-points"
+    },
+    "AboutImages": {
+      "displayName": "AboutImages",
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.about-images"
+    },
+    "BackgroundColor": {
+      "type": "enumeration",
+      "enum": [
+        "Default",
+        "Dark navy",
+        "Darker navy",
+        "Steel",
+        "Violet"
+      ]
+    }
+  }
+}

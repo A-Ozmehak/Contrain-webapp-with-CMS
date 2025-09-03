@@ -1,0 +1,62 @@
+{
+  "collectionName": "components_blocks_project_details",
+  "info": {
+    "displayName": "Project Details",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "ProjectNameLabel": {
+      "type": "string",
+      "default": "Projektnamn"
+    },
+    "ProjectNameInput": {
+      "type": "string"
+    },
+    "ClientLabel": {
+      "type": "string",
+      "default": "Klient"
+    },
+    "ClientInput": {
+      "type": "string"
+    },
+    "ProjecttypeLabel": {
+      "type": "string",
+      "default": "Projekttyp"
+    },
+    "ProjecttypeInput": {
+      "type": "string"
+    },
+    "ProjectlengthLabel": {
+      "type": "string",
+      "default": "Projektlängd"
+    },
+    "ProjectlengthInput": {
+      "type": "string"
+    },
+    "ProjectManagerLabel": {
+      "type": "string",
+      "default": "Projektansvarig"
+    },
+    "ProjectManagerInput": {
+      "type": "string"
+    },
+    "BackgroundColor": {
+      "type": "enumeration",
+      "enum": [
+        "Default",
+        "Dark navy",
+        "Darker navy",
+        "Steel",
+        "Violet"
+      ]
+    },
+    "ProjectText": {
+      "type": "blocks"
+    },
+    "ProjectTextTitle": {
+      "type": "string",
+      "default": "Om Projektet"
+    }
+  }
+}

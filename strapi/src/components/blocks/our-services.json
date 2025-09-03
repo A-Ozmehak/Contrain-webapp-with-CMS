@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_blocks_our_services",
+  "info": {
+    "displayName": "Our Services",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "SubText": {
+      "type": "text"
+    },
+    "Service": {
+      "displayName": "Service",
+      "type": "component",
+      "repeatable": true,
+      "component": "blocks.service"
+    },
+    "BackgroundColor": {
+      "type": "enumeration",
+      "enum": [
+        "Default",
+        "Dark navy",
+        "Darker navy",
+        "Steel",
+        "Violet"
+      ]
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_blocks_stacked_sliders",
+  "info": {
+    "displayName": "Stacked Slider",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Images": {
+      "displayName": "Images",
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.images"
+    },
+    "BackgroundColor": {
+      "type": "enumeration",
+      "enum": [
+        "Default",
+        "Dark navy",
+        "Darker navy",
+        "Steel",
+        "Violet"
+      ]
+    },
+    "SectionTitle": {
+      "type": "string"
+    }
+  }
+}

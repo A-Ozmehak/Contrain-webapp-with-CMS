@@ -1,0 +1,81 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pages",
+  "info": {
+    "singularName": "page",
+    "pluralName": "pages",
+    "displayName": "Page",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "Title": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Slug": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Seo": {
+      "displayName": "Seo",
+      "type": "component",
+      "repeatable": false,
+      "component": "seo.seo",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "Blocks": {
+      "type": "dynamiczone",
+      "components": [
+        "blocks.hero",
+        "blocks.contact-form",
+        "blocks.text-with-background-image",
+        "blocks.quote",
+        "blocks.slider",
+        "blocks.our-services",
+        "blocks.rich-text",
+        "blocks.printing-form",
+        "blocks.about",
+        "blocks.skills",
+        "blocks.services-large",
+        "blocks.services-form",
+        "blocks.stacked-slider",
+        "blocks.expanding-cards",
+        "blocks.title-section",
+        "blocks.offert-component",
+        "blocks.several-images",
+        "blocks.image-and-text",
+        "blocks.material",
+        "blocks.material-list",
+        "blocks.service-title-and-text",
+        "blocks.batches",
+        "blocks.accordion",
+        "blocks.test"
+      ],
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    }
+  }
+}

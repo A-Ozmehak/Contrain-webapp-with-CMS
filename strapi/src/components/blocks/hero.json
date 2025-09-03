@@ -1,0 +1,49 @@
+{
+  "collectionName": "components_blocks_heroes",
+  "info": {
+    "displayName": "Hero",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "BackgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Title": {
+      "type": "string",
+      "required": true
+    },
+    "SubText": {
+      "type": "string"
+    },
+    "ShowButton": {
+      "type": "boolean"
+    },
+    "ButtonWithBackgroundLabel": {
+      "type": "string"
+    },
+    "ButtonWithBackgroundUrl": {
+      "type": "string"
+    },
+    "TypewriterTexts": {
+      "displayName": "TypewriterTexts",
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.typewriter-texts"
+    },
+    "BorderButtonLabel": {
+      "type": "string"
+    },
+    "BorderButtonUrl": {
+      "type": "string"
+    }
+  }
+}

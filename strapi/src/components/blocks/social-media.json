@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_blocks_social_medias",
+  "info": {
+    "displayName": "Social Media",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "FacebookUrl": {
+      "type": "string"
+    },
+    "FacebookIcon": {
+      "type": "string"
+    },
+    "LinkedInUrl": {
+      "type": "string"
+    },
+    "LinkedInIcon": {
+      "type": "string"
+    },
+    "InstagramUrl": {
+      "type": "string"
+    },
+    "InstagramIcon": {
+      "type": "string"
+    },
+    "SubText": {
+      "type": "string"
+    }
+  }
+}

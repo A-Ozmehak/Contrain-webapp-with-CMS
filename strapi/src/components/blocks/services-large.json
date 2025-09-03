@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_blocks_services_larges",
+  "info": {
+    "displayName": "Services Large",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Services": {
+      "displayName": "ServicesHero",
+      "type": "component",
+      "repeatable": true,
+      "component": "blocks.services-hero"
+    },
+    "BackgroundColor": {
+      "type": "enumeration",
+      "enum": [
+        "Default",
+        "Dark navy",
+        "Darker navy",
+        "Steel",
+        "Violet"
+      ]
+    }
+  }
+}

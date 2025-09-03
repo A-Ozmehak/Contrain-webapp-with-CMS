@@ -1,0 +1,40 @@
+{
+  "collectionName": "components_shared_contact_infos",
+  "info": {
+    "displayName": "ContactInfo",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Email": {
+      "type": "string"
+    },
+    "Phone": {
+      "type": "string"
+    },
+    "Address": {
+      "type": "string"
+    },
+    "City": {
+      "type": "string"
+    },
+    "Country": {
+      "type": "string"
+    },
+    "SocialMediaSectionTitle": {
+      "type": "string"
+    },
+    "SocialMedia": {
+      "displayName": "SocialMedia",
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.social-media"
+    },
+    "SubText": {
+      "type": "string"
+    }
+  }
+}

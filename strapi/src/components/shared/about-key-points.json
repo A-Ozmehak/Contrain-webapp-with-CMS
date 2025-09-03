@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_shared_about_key_points",
+  "info": {
+    "displayName": "AboutKeyPoints"
+  },
+  "options": {},
+  "attributes": {
+    "Icon": {
+      "type": "string"
+    },
+    "Text": {
+      "type": "string"
+    }
+  }
+}

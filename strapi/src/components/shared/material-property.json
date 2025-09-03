@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_shared_material_properties",
+  "info": {
+    "displayName": "MaterialProperty",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "Sustainability": {
+      "type": "string"
+    },
+    "Flexibility": {
+      "type": "string"
+    },
+    "Endurance": {
+      "type": "string"
+    },
+    "Details": {
+      "type": "string"
+    },
+    "Usage": {
+      "type": "string"
+    }
+  }
+}

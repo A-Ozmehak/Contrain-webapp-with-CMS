@@ -1,0 +1,45 @@
+{
+  "collectionName": "components_blocks_material_lists",
+  "info": {
+    "displayName": "Material List",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "MaterialNameLabel": {
+      "type": "string",
+      "default": "Material",
+      "required": true
+    },
+    "MaterialSustainabilityLabel": {
+      "type": "string",
+      "default": "Hållbarhet",
+      "required": true
+    },
+    "MaterialFlexibilityLabel": {
+      "type": "string",
+      "default": "Flexibilitet",
+      "required": true
+    },
+    "MaterialEnduranceLabel": {
+      "type": "string",
+      "default": " Tålighet (°C)",
+      "required": true
+    },
+    "MaterialDetailsLabel": {
+      "type": "string",
+      "default": "Detaljer",
+      "required": true
+    },
+    "MaterialUsageLabel": {
+      "type": "string",
+      "default": "Användning",
+      "required": true
+    },
+    "MaterialList": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.material-property"
+    }
+  }
+}

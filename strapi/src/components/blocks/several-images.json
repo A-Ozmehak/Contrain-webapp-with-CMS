@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_blocks_several_images",
+  "info": {
+    "displayName": "Several Images",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Image": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.image-without-url"
+    }
+  }
+}

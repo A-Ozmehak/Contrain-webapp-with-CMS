@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_article_sections_heroes",
+  "info": {
+    "displayName": "Hero",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "SubText": {
+      "type": "text"
+    },
+    "TypewriterTexts": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.typewriter-texts"
+    }
+  }
+}

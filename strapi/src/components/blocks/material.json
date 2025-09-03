@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_blocks_materials",
+  "info": {
+    "displayName": "Material",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "MaterialDescription": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.material"
+    }
+  }
+}

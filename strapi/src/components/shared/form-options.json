@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_shared_form_options",
+  "info": {
+    "displayName": "FormOptions"
+  },
+  "options": {},
+  "attributes": {
+    "Option": {
+      "type": "string"
+    }
+  }
+}

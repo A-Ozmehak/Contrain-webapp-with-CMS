@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_blocks_offert_components",
+  "info": {
+    "displayName": "Offert Component",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "OffertForm": {
+      "type": "component",
+      "repeatable": false,
+      "component": "blocks.printing-form"
+    },
+    "ContactInfo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.contact-info"
+    },
+    "PageTitle": {
+      "type": "string"
+    },
+    "PageSubTitle": {
+      "type": "text"
+    }
+  }
+}

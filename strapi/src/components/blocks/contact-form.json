@@ -1,0 +1,95 @@
+{
+  "collectionName": "components_blocks_contact_forms",
+  "info": {
+    "displayName": "Contact Form",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "FormTitle": {
+      "type": "string",
+      "default": "Skicka oss ett Meddelande"
+    },
+    "NameLabel": {
+      "type": "string",
+      "default": "Namn"
+    },
+    "EmailLabel": {
+      "type": "string",
+      "default": " E-post"
+    },
+    "MessageLabel": {
+      "type": "string",
+      "default": " Meddelande"
+    },
+    "CompanyName": {
+      "type": "string",
+      "default": "Contrain"
+    },
+    "Email": {
+      "type": "string",
+      "default": "info@contrain.se"
+    },
+    "Phone": {
+      "type": "string",
+      "default": "+46 (0) 705 61 46 56"
+    },
+    "Address": {
+      "type": "string",
+      "default": "Karl Johansgatan 152"
+    },
+    "City": {
+      "type": "string",
+      "default": "Göteborg"
+    },
+    "SectionTitle": {
+      "type": "string",
+      "default": "Låt oss Börja din resa"
+    },
+    "SectionSubText": {
+      "type": "text",
+      "default": "Ta steget och förverkliga din drömvision"
+    },
+    "SocialMediaSectionTitle": {
+      "type": "string",
+      "default": "Kontakta oss"
+    },
+    "FacebookUrl": {
+      "type": "string",
+      "default": "https://www.facebook.com/contrainrobot"
+    },
+    "InstagramUrl": {
+      "type": "string",
+      "default": "https://www.instagram.com/contrain_robot/"
+    },
+    "LinkedInUrl": {
+      "type": "string",
+      "default": "https://www.linkedin.com/company/contrain-ab/"
+    },
+    "SocialMediaSubText": {
+      "type": "string",
+      "default": "Följ oss på social medier"
+    },
+    "BackgroundColor": {
+      "type": "enumeration",
+      "enum": [
+        "Default",
+        "Dark navy",
+        "Darker navy",
+        "Steel",
+        "Violet"
+      ]
+    },
+    "BackgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}

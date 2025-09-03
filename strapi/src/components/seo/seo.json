@@ -1,0 +1,37 @@
+{
+  "collectionName": "components_seo_seos",
+  "info": {
+    "displayName": "Seo"
+  },
+  "options": {},
+  "attributes": {
+    "MetaTitle": {
+      "type": "string"
+    },
+    "MetaDescription": {
+      "type": "text"
+    },
+    "MetaComponent": {
+      "displayName": "Meta",
+      "type": "component",
+      "repeatable": true,
+      "component": "seo.meta"
+    },
+    "PreventIndexing": {
+      "type": "boolean"
+    },
+    "StructureData": {
+      "type": "json"
+    },
+    "MetaImage": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

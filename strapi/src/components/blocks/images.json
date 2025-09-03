@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_blocks_images",
+  "info": {
+    "displayName": "Images",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Image": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Url": {
+      "type": "string"
+    },
+    "Alt": {
+      "type": "string"
+    },
+    "HoverTitle": {
+      "type": "string"
+    },
+    "HoverDescription": {
+      "type": "string"
+    }
+  }
+}

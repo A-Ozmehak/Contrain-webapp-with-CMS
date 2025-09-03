@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_blocks_batches",
+  "info": {
+    "displayName": "Batches"
+  },
+  "options": {},
+  "attributes": {
+    "Batches": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.text-with-button"
+    }
+  }
+}

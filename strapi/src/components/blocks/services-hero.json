@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_blocks_services_heroes",
+  "info": {
+    "displayName": "Services Hero",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "BackgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Title": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "text"
+    },
+    "Url": {
+      "type": "string"
+    },
+    "TypewriterTexts": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.typewriter-texts"
+    }
+  }
+}

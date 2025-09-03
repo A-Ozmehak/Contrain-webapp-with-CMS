@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_article_sections_article_heroes",
+  "info": {
+    "displayName": "Article Hero",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "SubText": {
+      "type": "string"
+    },
+    "TypewriterTexts": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.typewriter-texts"
+    },
+    "BackgroundImage": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

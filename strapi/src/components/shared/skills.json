@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_shared_skills",
+  "info": {
+    "displayName": "Skills",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Icon": {
+      "type": "string"
+    },
+    "SkillTitle": {
+      "type": "string"
+    },
+    "SkillText": {
+      "type": "text"
+    }
+  }
+}

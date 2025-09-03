@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_blocks_text_with_background_images",
+  "info": {
+    "displayName": "TextWithBackgroundImage",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "BackgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "SectionTitle": {
+      "type": "string"
+    },
+    "SubText": {
+      "type": "text"
+    },
+    "ButtonLabel": {
+      "type": "string"
+    },
+    "ButtonUrl": {
+      "type": "string"
+    }
+  }
+}

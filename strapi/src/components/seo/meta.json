@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_seo_metas",
+  "info": {
+    "displayName": "Meta"
+  },
+  "options": {},
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "Content": {
+      "type": "string"
+    }
+  }
+}

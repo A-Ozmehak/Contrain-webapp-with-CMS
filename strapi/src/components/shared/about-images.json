@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_about_images",
+  "info": {
+    "displayName": "AboutImages"
+  },
+  "options": {},
+  "attributes": {
+    "Image": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "ImageAltText": {
+      "type": "string"
+    }
+  }
+}

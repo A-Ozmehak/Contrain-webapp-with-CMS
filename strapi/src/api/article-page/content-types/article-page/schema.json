@@ -1,0 +1,40 @@
+{
+  "kind": "singleType",
+  "collectionName": "article_pages",
+  "info": {
+    "singularName": "article-page",
+    "pluralName": "article-pages",
+    "displayName": "Article Page",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "pluginOptions": {}
+    },
+    "Hero": {
+      "displayName": "Article Hero",
+      "type": "component",
+      "repeatable": false,
+      "component": "article-sections.article-hero",
+      "pluginOptions": {}
+    },
+    "ArticleTags": {
+      "displayName": "Tags",
+      "type": "component",
+      "repeatable": true,
+      "component": "article-sections.tags",
+      "pluginOptions": {}
+    },
+    "Seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "seo.seo",
+      "pluginOptions": {}
+    }
+  }
+}

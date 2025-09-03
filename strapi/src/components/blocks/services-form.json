@@ -1,0 +1,53 @@
+{
+  "collectionName": "components_blocks_services_forms",
+  "info": {
+    "displayName": "Services Form",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "SectionTitle": {
+      "type": "string"
+    },
+    "SubText": {
+      "type": "text"
+    },
+    "FormTitle": {
+      "type": "string",
+      "default": "Skaffa denna fantastiska tjänst"
+    },
+    "NameInputLabel": {
+      "type": "string",
+      "default": "Namn"
+    },
+    "EmailInputLabel": {
+      "type": "string",
+      "default": " E-post"
+    },
+    "SubjectInputLabel": {
+      "type": "string",
+      "default": "Ämne"
+    },
+    "MessageInputLabel": {
+      "type": "string",
+      "default": " Meddelande"
+    },
+    "ButtonLabel": {
+      "type": "string",
+      "default": "Skicka"
+    },
+    "ButtonUrl": {
+      "type": "string"
+    },
+    "BackgroundColor": {
+      "type": "enumeration",
+      "enum": [
+        "Default",
+        "Dark navy",
+        "Darker navy",
+        "Steel",
+        "Violet"
+      ]
+    }
+  }
+}

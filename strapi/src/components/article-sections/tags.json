@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_article_sections_tags",
+  "info": {
+    "displayName": "Tags"
+  },
+  "options": {},
+  "attributes": {
+    "TagName": {
+      "type": "string"
+    }
+  }
+}
